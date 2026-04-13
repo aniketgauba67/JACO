@@ -1,0 +1,829 @@
+region_id,region,anchor_county,county_name,SCH_NAME,LEA_NAME,school_level,school_type,zip5
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Albert Chapman Elementary School,Dublin City,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Alcott Elementary School,Westerville City,Elementary,Regular School,43082
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Alum Creek Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Arrowhead Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Berkshire Middle School,Olentangy Local,Middle,Regular School,43021
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Big Walnut Early Learning Center at Harrison Street,Big Walnut Local,Prekindergarten,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Big Walnut Elementary School,Big Walnut Local,Elementary,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Big Walnut High School,Big Walnut Local,High,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Big Walnut Intermediate School,Big Walnut Local,Elementary,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Big Walnut Middle School,Big Walnut Local,Middle,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Buckeye Valley East Elementary School,Buckeye Valley Local,Elementary,Regular School,43003
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Buckeye Valley Local High School,Buckeye Valley Local,High,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Buckeye Valley Local Middle School,Buckeye Valley Local,Middle,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Buckeye Valley West Elementary School,Buckeye Valley Local,Elementary,Regular School,43061
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Cheshire Elementary,Olentangy Local,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,David Smith Elementary School,Delaware City,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Delaware Area Career Center South Campus,Delaware Area Career Center,High,Career and Technical School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Ervin Carlisle Elementary School,Delaware City,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Fouse Elementary School,Westerville City,Elementary,Regular School,43082
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Freedom Trail Elementary,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,General Rosecrans Elementary,Big Walnut Local,Elementary,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Genoa Middle School,Westerville City,Middle,Regular School,43082
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Glen Oak Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Heritage Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Heritage Middle School,Westerville City,Middle,Regular School,43082
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Hyatts Middle School,Olentangy Local,Middle,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Hylen Souders Elementary School,Big Walnut Local,Elementary,Regular School,43021
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Indian Springs Elementary,Olentangy Local,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,James Conger Elementary School,Delaware City,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,John C Dempsey Middle School,Delaware City,Middle,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Johnnycake Corners Elementary School,Olentangy Local,Elementary,Regular School,43021
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Laura Woodward Elementary School,Delaware City,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Liberty Elementary School,Worthington City,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Liberty Tree Elementary School,Olentangy Local,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Oak Creek Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Berlin High School,Olentangy Local,High,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Berlin Middle School,Olentangy Local,Middle,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy High School,Olentangy Local,High,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Liberty High School,Olentangy Local,High,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Liberty Middle School,Olentangy Local,Middle,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Meadows Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Orange Middle School,Olentangy Local,Middle,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Preschool at DACC,Olentangy Local,Prekindergarten,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Shanahan Middle School,Olentangy Local,Middle,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Olentangy Shanahan Preschool,Olentangy Local,Prekindergarten,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Orange High School,Olentangy Local,High,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Prairie Run Elementary School,Big Walnut Local,Elementary,Regular School,43074
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Robert F Schultz Elementary School,Delaware City,Elementary,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Rutherford B Hayes High School,Delaware City,High,Regular School,43015
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Scioto Ridge Elementary School,Olentangy Local,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Shale Meadows Elementary School,Olentangy Local,Elementary,Regular School,43035
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Sutter Park Preschool,Worthington City,Prekindergarten,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Tyler Run Elementary School,Olentangy Local,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Walnut Creek Elementary,Olentangy Local,Elementary,Regular School,43021
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Westerville Central High School,Westerville City,High,Regular School,43082
+1.0,Group 1 - Columbus Core,Franklin,Delaware,Wyandot Run Elementary School,Olentangy Local,Elementary,Regular School,43065
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Amanda-Clearcreek Elementary School,Amanda-Clearcreek Local,Elementary,Regular School,43102
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Amanda-Clearcreek High School,Amanda-Clearcreek Local,High,Regular School,43102
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Amanda-Clearcreek Middle School,Amanda-Clearcreek Local,Middle,Regular School,43102
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Amanda-Clearcreek Primary School,Amanda-Clearcreek Local,Elementary,Regular School,43102
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Berne Union Elementary School,Berne Union Local,Elementary,Regular School,43155
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Berne Union High School,Berne Union Local,High,Regular School,43155
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bloom Carroll Intermediate School,Bloom-Carroll Local,Elementary,Regular School,43112
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bloom Carroll Primary School,Bloom-Carroll Local,Elementary,Regular School,43112
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bloom-Carroll High School,Bloom-Carroll Local,High,Regular School,43112
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bloom-Carroll Middle School,Bloom-Carroll Local,Middle,Regular School,43112
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bremen Elementary School,Fairfield Union Local,Elementary,Regular School,43107
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Bridges,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Diley Middle School,Pickerington Local,Middle,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Early Childhood Center 1,Lancaster City,Prekindergarten,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Fairfield Career Center,Eastland-Fairfield Career & Technical Schools,High,Career and Technical School,43112
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Fairfield Elementary School,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Fairfield Union High School,Fairfield Union Local,High,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Fairfield Union Rushville Middle School,Fairfield Union Local,Middle,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,General Sherman Junior High School,Lancaster City,Middle,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Gorsuch West Elementary School,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Harmon Middle School,Pickerington Local,Middle,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Heritage Elementary School,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Lancaster High School,Lancaster City,High,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Liberty Union Elementary School,Liberty Union-Thurston Local,Elementary,Regular School,43105
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Liberty Union High School,Liberty Union-Thurston Local,High,Regular School,43105
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Liberty Union Middle School,Liberty Union-Thurston Local,Middle,Regular School,43105
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Medill Elementary School,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Millersport Elementary School,Walnut Township Local,Elementary,Regular School,43046
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Millersport Jr/Sr High School,Walnut Township Local,High,Regular School,43046
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Mt. Pleasant Elementary School,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington Academy,Pickerington Local,High,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington Elementary School,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington High School Central,Pickerington Local,High,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington High School North,Pickerington Local,High,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington Lakeview Junior High,Pickerington Local,Middle,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pickerington Ridgeview Junior High School,Pickerington Local,Middle,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Pleasantville Elementary School,Fairfield Union Local,Elementary,Regular School,43148
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Sycamore Creek Elementary School,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Tallmadge Elementary School,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Tarhe Trails Elementary School,Lancaster City,Elementary,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Thomas Ewing Junior High School,Lancaster City,Middle,Regular School,43130
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Toll Gate Elementary,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Toll Gate Middle School,Pickerington Local,Middle,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fairfield,Violet Elementary School,Pickerington Local,Elementary,Regular School,43147
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Belle Aire Intermediate,Washington Court House City,Elementary,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Cherry Hill Primary,Washington Court House City,Elementary,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Miami Trace Elementary School,Miami Trace Local,Elementary,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Miami Trace High School,Miami Trace Local,High,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Miami Trace Middle School,Miami Trace Local,Middle,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Washington High School,Washington Court House City,High,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Fayette,Washington Middle School,Washington Court House City,Middle,Regular School,43160
+1.0,Group 1 - Columbus Core,Franklin,Franklin,A+ Arts Academy,A+ Arts Academy,Elementary,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,A+ Children's Academy,A+ Children's Academy,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Alpine Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Alton Darby Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Alton Hall Elementary School,South-Western City,Elementary,Regular School,43119
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ann Simpson Davis Middle School,Dublin City,Middle,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Annehurst Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Arts & College Preparatory Academy,Arts & College Preparatory Academy,High,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Arts Impact Middle School (Aims),Columbus City Schools District,Middle,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Asbury Elementary School,Groveport Madison Local,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Avalon Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Avery Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Avondale Elementary School,Columbus City Schools District,Elementary,Regular School,43222
+1.0,Group 1 - Columbus Core,Franklin,Franklin,BCS Online School,Bexley City,High,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Baldwin Road Junior High School,Reynoldsburg City,Middle,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Barrington Road Elementary School,Upper Arlington City,Elementary,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Beacon Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Beechcroft High School,Columbus City Schools District,High,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Beechwood Elementary School,Whitehall City,Elementary,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Berwick Alternative K-8 School,Columbus City Schools District,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Beulah Park Middle School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Bexley High School,Bexley City,High,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Bexley Middle School,Bexley City,Middle,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Binns Elementary School,Columbus City Schools District,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Blacklick Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43004
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Blendon Middle School,Westerville City,Middle,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Bluffsview Elementary School,Worthington City,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Bolton Crossing Elementary,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Bridge Gate Community School,Bridge Gate Community School,Other,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Briggs High School,Columbus City Schools District,High,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Britton Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Broadleigh Elementary School,Columbus City Schools District,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Brookside Elementary School,Worthington City,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Brown Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Buckeye Middle School,Columbus City Schools District,Middle,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Buckeye Woods Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Burbank Early Childhood School,Upper Arlington City,Prekindergarten,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Burroughs Elementary School,Columbus City Schools District,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Canal Winchester High School,Canal Winchester Local,High,Regular School,43110
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Canal Winchester Middle School,Canal Winchester Local,Middle,Regular School,43110
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Capital City Career Prep High School,Capital City Career Prep High School,High,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Capital Collegiate Preparatory Academy,Capital Collegiate Preparatory Academy,Elementary,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Capital High School,Capital High School,High,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cassady Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cassingham Elementary School,Bexley City,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cedarwood Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Centennial High School,Columbus City Schools District,High,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Central Crossing High School,South-Western City,High,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Central High School,Central High School,High,Regular School,43222
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Central Point Preparatory Academy,Central Point Preparatory Academy,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cesar Chavez College Preparatory School,Cesar Chavez College Preparatory School,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Champion Middle School,Columbus City Schools District,Middle,Regular School,43203
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Chapelfield Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Charles School at Ohio Dominican University,Charles School at Ohio Dominican University,High,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cherrington Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Clinton Elementary School,Columbus City Schools District,Elementary,Regular School,43202
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Colerain Elementary School,Columbus City Schools District,Elementary,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Colonial Hills Elementary School,Worthington City,Elementary,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Africentric Early College ES,Columbus City Schools District,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Africentric Early College High School,Columbus City Schools District,High,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Africentric Early College Middle School,Columbus City Schools District,Middle,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Alternative High School,Columbus City Schools District,High,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Arts & Technology Academy,Columbus Arts & Technology Academy,Other,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Bilingual Academy-North,Columbus Bilingual Academy-North,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus City Preparatory School for Boys,Columbus City Schools District,Middle,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus City Preparatory School for Girls,Columbus City Schools District,Middle,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Downtown High School,Columbus City Schools District,High,Career and Technical School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Humanities Arts and Technology Academy,Columbus Humanities Arts and Technology Academy,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus International High School,Columbus City Schools District,High,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Online Academy,Columbus City Schools District,High,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Performance Academy,Columbus Performance Academy,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Preparatory Academy,Columbus Preparatory Academy,Other,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Preparatory and Fitness Academy,Columbus Preparatory and Fitness Academy,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Columbus Spanish Immersion K-7 School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Como Elementary School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cornerstone Academy Community School,Cornerstone Academy Community School,Other,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Cranbrook Elementary School,Columbus City Schools District,Elementary,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Daniel Wright Elementary School,Dublin City,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Darby Creek Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Darby Woods Elementary School,South-Western City,Elementary,Regular School,43119
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Darbydale Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Deer Run Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Devonshire Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dominion Middle School,Columbus City Schools District,Middle,Regular School,43202
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dublin Coffman High School,Dublin City,High,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dublin Jerome High School,Dublin City,High,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dublin Preschool,Dublin City,Prekindergarten,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dublin Scioto High School,Dublin City,High,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Dunloe Elementary School,Groveport Madison Local,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Duxberry Park Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eakin Elementary School,Columbus City Schools District,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Early Childhood Education and Family Center,Columbus City Schools District,Prekindergarten,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Early College Academy,Early College Academy,High,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Early Learning Center,Westerville City,Prekindergarten,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Early Learning Center,Ohio Deaf and Blind Education Services,Prekindergarten,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,East Bridge Academy of Excellence,East Bridge Academy of Excellence,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,East Columbus Elementary School,Columbus City Schools District,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,East Franklin Elementary School,South-Western City,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,East High School,Columbus City Schools District,High,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,East Linden Elementary School,Columbus City Schools District,Elementary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eastgate Elementary School,Columbus City Schools District,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Easthaven Elementary School,Columbus City Schools District,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eastland Career Center,Eastland-Fairfield Career & Technical Schools,High,Career and Technical School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eastland Preparatory Academy,Eastland Preparatory Academy,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eastmoor Academy,Columbus City Schools District,High,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ecole Kenwood French Immersion,Columbus City Schools District,Elementary,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Educational Academy for Boys & Girls,Educational Academy for Boys & Girls,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Eli Pinney Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Emerson Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Etna Road Elementary School,Whitehall City,Elementary,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Evening Street Elementary School,Worthington City,Elementary,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Everest Elementary School,Licking Heights Local,Elementary,Regular School,43004
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Fairmoor Elementary School,Columbus City Schools District,Elementary,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Fairwood Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Finland Elementary School,South-Western City,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Finland Middle School,South-Western City,Middle,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Flex High School,Flex High School,High,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Focus Learning Academy of Central Columbus,Focus Learning Academy of Central Columbus,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Focus Learning Academy of Northern Columbus,Focus Learning Academy of Northern Columbus,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Focus Learning Academy of Southeastern Columbus,Focus Learning Academy of Southeastern Columbus,High,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Focus Learning Academy of Southwestern Columbus,Focus Learning Academy of Southwestern Columbus,High,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Focus North High School,Focus North High School,High,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Forest Park Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Fort Hayes Arts and Academic HS,Columbus City Schools District,High,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Fort Hayes Career Center,Columbus City Schools District,High,Career and Technical School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Franklin Heights High School,South-Western City,High,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Franklin Learning Academy,Franklin Learning Academy,Elementary,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Franklin Woods Intermediate School,South-Western City,Middle,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Franklinton High School,Franklinton High School,High,Regular School,43222
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Franklinton Prep High School,Franklinton Prep High School,High,Regular School,43222
+1.0,Group 1 - Columbus Core,Franklin,Franklin,French Run Elementary School,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gables Elementary School,Columbus City Schools District,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gahanna East Middle School,Gahanna-Jefferson City,Middle,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gahanna Lincoln High School - OLS,Gahanna-Jefferson City,High,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gahanna South Middle School,Gahanna-Jefferson City,Middle,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gahanna West Middle School,Gahanna-Jefferson City,Middle,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Gahanna- Jefferson  Clark Hall,Gahanna-Jefferson City,Prekindergarten,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Galloway Ridge Intermediate School,South-Western City,Middle,Regular School,43119
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Georgian Heights Alt Elementary School,Columbus City Schools District,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Glacier Ridge Elementary,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Glendening Elementary School,Groveport Madison Local,Elementary,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Goshen Lane Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Graham Elementary and Middle School,Graham Elementary and Middle School,Elementary,Regular School,43201
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Graham School The,Graham School The,High,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Granby Elementary School,Worthington City,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Grandview Heights High School,Grandview Heights Schools,High,Regular School,43212
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Great River Connections Academy,Great River Connections Academy,Other,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Great Western Academy,Great Western Academy,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Greensview Elementary School,Upper Arlington City,Elementary,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Griffith Thomas Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Grove City High School,South-Western City,High,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Community School,Groveport Community School,Elementary,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Elementary School,Groveport Madison Local,Elementary,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Madison High School,Groveport Madison Local,High,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Madison Middle School Central,Groveport Madison Local,Middle,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Madison Middle School North,Groveport Madison Local,Middle,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Groveport Madison Middle School South,Groveport Madison Local,Middle,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton Elementary School,Hamilton Local,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton Intermediate School,Hamilton Local,Middle,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton Local Preschool,Hamilton Local,Prekindergarten,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton Middle School,Hamilton Local,Middle,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton STEM Academy (K-6),Columbus City Schools District,Elementary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hamilton Township High School,Hamilton Local,High,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hanby Building Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hastings Middle School,Upper Arlington City,Middle,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hawthorne Elementary School,Westerville City,Elementary,Regular School,43231
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hayes Intermediate School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Henry Karrer Middle School,Dublin City,Middle,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Herbert Mills Elementary School,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,High Point Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Highland Elementary School,Columbus City Schools District,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Highland Park Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Bradley High School,Hilliard City,High,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard City School District Preschool,Hilliard City,Prekindergarten,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Crossing Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Darby High School,Hilliard City,High,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Davidson High School,Hilliard City,High,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Heritage Middle School,Hilliard City,Middle,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Horizon Elementary School,Hilliard City,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Memorial Middle School,Hilliard City,Middle,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Online Academy,Hilliard City,High,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Station Sixth Grade Elementary School,Hilliard City,Middle,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Tharp Sixth Grade Elementary School,Hilliard City,Middle,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilliard Weaver Middle School,Hilliard City,Middle,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hilltonia Middle School,Columbus City Schools District,Middle,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hoffman Trails Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Holt Crossing Intermediate School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hopewell Elementary,Dublin City,Elementary,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Horizon Science Academy Columbus,Horizon Science Academy Columbus,High,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Horizon Science Academy Columbus Middle School,Horizon Science Academy Columbus Middle School,Middle,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Horizon Science Academy Elementary School,Horizon Science Academy Elementary School,Elementary,Regular School,43231
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Hubbard Elementary School,Columbus City Schools District,Elementary,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Huber Ridge Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Huy/A.G. Bell Elementary School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Imagine Columbus Primary Academy,Imagine Columbus Primary Academy,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Independence High School,Columbus City Schools District,High,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Indian Run Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Indian Springs Elementary School,Columbus City Schools District,Elementary,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Indian Trail Elementary School,Canal Winchester Local,Elementary,Regular School,43110
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Indianola Informal K-8 School,Columbus City Schools District,Elementary,Regular School,43202
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Innis Elementary School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,International Acad Of Columbus,International Acad Of Columbus,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,J W Reason Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,JC Sommer Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Jackson Middle School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,James A Harmon Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Jefferson Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,John Sells Middle School,Dublin City,Middle,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Johnson Park Middle School,Columbus City Schools District,Middle,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Jones Middle School,Upper Arlington City,Middle,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,KIPP Columbus,KIPP Columbus,Other,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Kae Avenue Elementary School,Whitehall City,Elementary,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Kids Care Elementary,Kids Care Elementary,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Kilbourne Middle School,Worthington City,Middle,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Larson Middle School,Grandview Heights Schools,Middle,Regular School,43212
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Leawood Elementary School,Columbus City Schools District,Elementary,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Legacy Academy of Excellence,Legacy Academy of Excellence,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Liberty Elementary School,Columbus City Schools District,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Lil Cruiser Campus,Groveport Madison Local,Prekindergarten,Regular School,43125
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Lincoln Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Lincoln High School,Gahanna-Jefferson City,High,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Lincoln Park Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Lindbergh Elementary School,Columbus City Schools District,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Linden Park Neighborhood Early Childhood Education Center,Columbus City Schools District,Prekindergarten,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Linden STEM Academy (K-6),Columbus City Schools District,Elementary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Linden-McKinley STEM Academy,Columbus City Schools District,High,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Livingston Elementary School,Columbus City Schools District,Elementary,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Madison Elementary School,Groveport Madison Local,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Maize Road Elementary School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Marion-Franklin High School,Columbus City Schools District,High,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mark Twain Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mary Emma Bailey Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Maryland Elementary School,Bexley City,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mason Run High School,Mason Run High School,High,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,McVay Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mccord Middle School,Worthington City,Middle,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Medina Middle School,Columbus City Schools District,Middle,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Metro Early College High School,Metro Early College High School,High,Regular School,43210
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Midnimo Cross Cultural Middle School,Midnimo Cross Cultural Middle School,Middle,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mifflin Alternative Middle School,Columbus City Schools District,Middle,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Mifflin High School,Columbus City Schools District,High,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Minerva France Elementary School,Westerville City,Elementary,Regular School,43231
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Minerva Park Middle School,Westerville City,Middle,Regular School,43231
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Moler Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Monterey Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Montrose Elementary School,Bexley City,Elementary,Regular School,43209
+1.0,Group 1 - Columbus Core,Franklin,Franklin,New Albany Early Learning Center,New Albany-Plain Local,Elementary,Regular School,43054
+1.0,Group 1 - Columbus Core,Franklin,Franklin,New Albany High School,New Albany-Plain Local,High,Regular School,43054
+1.0,Group 1 - Columbus Core,Franklin,Franklin,New Albany Intermediate School,New Albany-Plain Local,Middle,Regular School,43054
+1.0,Group 1 - Columbus Core,Franklin,Franklin,New Albany Middle School,New Albany-Plain Local,Middle,Regular School,43054
+1.0,Group 1 - Columbus Core,Franklin,Franklin,New Albany Primary School,New Albany-Plain Local,Elementary,Regular School,43054
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Noble Academy-Columbus,Noble Academy-Columbus,Elementary,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,North Columbus Preparatory Academy,North Columbus Preparatory Academy,Elementary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,North Linden Elementary School,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,North Woods Career Prep High School,North Woods Career Prep High School,High,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Northgate Intermediate,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Northland High School,Columbus City Schools District,High,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Northland Preparatory and Fitness Academy,Northland Preparatory and Fitness Academy,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Northtowne Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Norton Middle School,South-Western City,Middle,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Norwich Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Oakland Park Alternative Elementary,Columbus City Schools District,Elementary,Regular School,43224
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Oakmont  Elementary School,Columbus City Schools District,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ohio Achievement Charter Schools Inc. dba Millennium Commun,Ohio Achievement Charter Schools Inc. dba Millennium Commun,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ohio Avenue Elementary School,Columbus City Schools District,Elementary,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ohio Connections Academy Inc,Ohio Connections Academy Inc,Other,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ohio Construction Academy,Ohio Construction Academy,High,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Olde Orchard Alt Elementary School,Columbus City Schools District,Elementary,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Olde Sawmill Elementary School,Dublin City,Elementary,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Park Street Intermediate School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Parkmoor Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Parsons Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Patriot Preparatory Academy,Patriot Preparatory Academy,Other,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Performance Academy Eastland,Performance Academy Eastland,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Perry Middle School,Worthington City,Middle,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Phoenix Middle School,Worthington City,Middle,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Pleasant View Middle School,South-Western City,Middle,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Pointview Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Prairie Lincoln Elementary School,South-Western City,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Prairie Norton Elementary School,South-Western City,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Renaissance Academy dba Bessie Sherrod Price Preparatory Aca,Renaissance Academy dba Bessie Sherrod Price Preparatory Aca,Elementary,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Reynoldsburg High School,Reynoldsburg City,High,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Richard Avenue Elementary School,South-Western City,Elementary,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ridgeview Middle School,Columbus City Schools District,Middle,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Ridgewood Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Riverside Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Road to Success Academy,Road to Success Academy,Secondary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Robert Frost Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Rose Hill Elementary School,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Rosemore Middle School,Whitehall City,Middle,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Royal Manor Elementary School,Gahanna-Jefferson City,Elementary,Regular School,43230
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Salem Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Scioto Darby Elementary School,Hilliard City,Elementary,Regular School,43026
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Scottish Corners Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Scottwood Elementary School,Columbus City Schools District,Elementary,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Sedalia Elementary,Groveport Madison Local,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Shady Lane Elementary School,Columbus City Schools District,Elementary,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Sherwood Middle School,Columbus City Schools District,Middle,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Siebert Elementary School,Columbus City Schools District,Elementary,Regular School,43206
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Slate Hill Elementary School,Worthington City,Elementary,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Slate Ridge Elementary School,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South Columbus Preparatory Academy at German Village,South Columbus Preparatory Academy at German Village,Elementary,Regular School,43206
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South Columbus Preparatory Academy at Southfield,South Columbus Preparatory Academy at Southfield,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South High School,Columbus City Schools District,High,Regular School,43206
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South Mifflin STEM Academy (K-6),Columbus City Schools District,Elementary,Regular School,43219
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South Scioto Academy,South Scioto Academy,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South-Western Career Academy,South-Western City,High,Career and Technical School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,South-Western Preschool Center,South-Western City,Prekindergarten,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Southwood Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Special Education Center,Columbus City Schools District,Other,Regular School,43205
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Starling PK-8,Columbus City Schools District,Elementary,Regular School,43222
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Stevenson Elementary,Grandview Heights Schools,Elementary,Regular School,43212
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Stewart Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43206
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Stiles Elementary School,South-Western City,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Stiles Family Center,South-Western City,Prekindergarten,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Sullivant Avenue Community School,Sullivant Avenue Community School,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Sullivant Elementary School,Columbus City Schools District,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Summit Academy Community School-Columbus,Summit Academy Community School-Columbus,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Summit Academy Transition High School-Columbus,Summit Academy Transition High School-Columbus,High,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Summit Road Elementary,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Taylor Road Elementary School,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,The Academy for Urban Scholars,The Academy for Urban Scholars,High,Regular School,43203
+1.0,Group 1 - Columbus Core,Franklin,Franklin,The Bostic Head Start Center,South-Western City,Prekindergarten,Regular School,43123
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Thomas Worthington High School,Worthington City,High,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Tremont Elementary School,Upper Arlington City,Elementary,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Trevitt Elementary School,Columbus City Schools District,Elementary,Regular School,43203
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Tussing Elementary School,Pickerington Local,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,United Schools Columbus,United Schools Columbus,Elementary,Regular School,43215
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Unity Academy,Unity Academy,Secondary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Upper Arlington High School,Upper Arlington City,High,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Upper Arlington Online Academy,Upper Arlington City,High,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Valley Forge Elementary School,Columbus City Schools District,Elementary,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Valleyview Elementary School,Columbus City Schools District,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Waggoner Road Elementary,Reynoldsburg City,Elementary,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Waggoner Road Junior High,Reynoldsburg City,Middle,Regular School,43068
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Walnut Ridge High School,Columbus City Schools District,High,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Walnut Springs Middle School,Westerville City,Middle,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Washington Elementary School,Hilliard City,Elementary,Regular School,43016
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Watkins Elementary School,Columbus City Schools District,Elementary,Regular School,43207
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Wedgewood Middle School,Columbus City Schools District,Middle,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Weinland Park Elementary School,Columbus City Schools District,Elementary,Regular School,43201
+1.0,Group 1 - Columbus Core,Franklin,Franklin,West Broad Elementary School,Columbus City Schools District,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,West Franklin Elementary School,South-Western City,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,West High School,Columbus City Schools District,High,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,West Mound Elementary School,Columbus City Schools District,Elementary,Regular School,43223
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westerville-North High School,Westerville City,High,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westerville-South High School,Westerville City,High,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westgate Alternative Elementary School,Columbus City Schools District,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westland High School,South-Western City,High,Regular School,43119
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westmoor Middle School,Columbus City Schools District,Middle,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westside Academy,Westside Academy,Elementary,Regular School,43228
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Westwood Preparatory Academy,Westwood Preparatory Academy,Other,Regular School,43201
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Whetstone High School,Columbus City Schools District,High,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Whitehall Preparatory and Fitness Academy,Whitehall Preparatory and Fitness Academy,Elementary,Regular School,43227
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Whitehall Yearling High School,Whitehall City,High,Regular School,43213
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Whittier Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Wickliffe Elementary School,Upper Arlington City,Elementary,Regular School,43221
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Wilder Elementary School,Westerville City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Willard Grizzell Middle School,Dublin City,Middle,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Wilson Hill Elementary School,Worthington City,Elementary,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Winchester Trail Elementary,Canal Winchester Local,Elementary,Regular School,43110
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Windermere Elementary School,Upper Arlington City,Elementary,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Windsor STEM Academy (K-6),Columbus City Schools District,Elementary,Regular School,43211
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Winterset Elementary School,Columbus City Schools District,Elementary,Regular School,43220
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Woodcrest Elementary School,Columbus City Schools District,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Woodward Park Middle School,Columbus City Schools District,Middle,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,World Language Middle School,Columbus City Schools District,Middle,Regular School,43214
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Worthington Estates Elementary School,Worthington City,Elementary,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Worthington Hills Elementary School,Worthington City,Elementary,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Worthington Kilbourne High School,Worthington City,High,Regular School,43235
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Worthington Park Elementary School,Worthington City,Elementary,Regular School,43081
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Worthingway Middle School,Worthington City,Middle,Regular School,43085
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Wyandot Elementary School,Dublin City,Elementary,Regular School,43017
+1.0,Group 1 - Columbus Core,Franklin,Franklin,YB Columbus Community School,YB Columbus Community School,High,Regular School,43201
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Yorktown Middle School,Columbus City Schools District,Middle,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Zenith Academy,Zenith Academy,Other,Regular School,43229
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Zenith Academy East,Zenith Academy East,Elementary,Regular School,43232
+1.0,Group 1 - Columbus Core,Franklin,Franklin,Zenith Academy West,Zenith Academy West,Elementary,Regular School,43204
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Ashville Elementary School,Teays Valley Local,Elementary,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Circleville Elementary School,Circleville City,Elementary,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Circleville High School,Circleville City,High,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Circleville Middle School,Circleville City,Middle,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Logan Elm Elementary School,Logan Elm Local,Elementary,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Logan Elm Middle/High School,Logan Elm Local,High,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Ralph C Starkey (Cjcf),Buckeye United School District,High,Regular School,43113
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Scioto Elementary School,Teays Valley Local,Elementary,Regular School,43116
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,South Bloomfield Elementary,Teays Valley Local,Elementary,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Teays Valley Digital Academy,Teays Valley Local,High,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Teays Valley East Middle School,Teays Valley Local,Middle,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Teays Valley High School,Teays Valley Local,High,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Teays Valley West Middle School,Teays Valley Local,Middle,Regular School,43116
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Walnut Elementary School,Teays Valley Local,Elementary,Regular School,43103
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Westfall Elementary School,Westfall Local,Elementary,Regular School,43164
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Westfall High School,Westfall Local,High,Regular School,43164
+1.0,Group 1 - Columbus Core,Franklin,Pickaway,Westfall Middle School,Westfall Local,Middle,Regular School,43164
+1.0,Group 1 - Columbus Core,Franklin,Union,Abraham Depp Elementary,Dublin City,Elementary,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Bunsold Middle School,Marysville Exempted Village,Middle,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Canaan Middle School,Jonathan Alder Local,Middle,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Creekview Intermediate Elementary School,Marysville Exempted Village,Middle,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Edgewood Elementary School,Marysville Exempted Village,Elementary,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Eversole Run Middle School,Dublin City,Middle,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Fairbanks Elementary School,Fairbanks Local,Elementary,Regular School,43045
+1.0,Group 1 - Columbus Core,Franklin,Union,Fairbanks High School,Fairbanks Local,High,Regular School,43045
+1.0,Group 1 - Columbus Core,Franklin,Union,Fairbanks Middle School,Fairbanks Local,Middle,Regular School,43045
+1.0,Group 1 - Columbus Core,Franklin,Union,Jonathan Alder High School,Jonathan Alder Local,High,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Jonathan Alder Junior High,Jonathan Alder Local,Middle,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Marysville High School,Marysville Exempted Village,High,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Marysville STEM Early College High School,Marysville Exempted Village,High,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Mill Valley Elementary School,Marysville Exempted Village,Elementary,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Navin Elementary School,Marysville Exempted Village,Elementary,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,North Union Elementary School,North Union Local School District,Elementary,Regular School,43344
+1.0,Group 1 - Columbus Core,Franklin,Union,North Union High School,North Union Local School District,High,Regular School,43344
+1.0,Group 1 - Columbus Core,Franklin,Union,North Union Middle School,North Union Local School District,Middle,Regular School,43344
+1.0,Group 1 - Columbus Core,Franklin,Union,Northwood Elementary,Marysville Exempted Village,Elementary,Regular School,43040
+1.0,Group 1 - Columbus Core,Franklin,Union,Plain City Elementary School,Jonathan Alder Local,Elementary,Regular School,43064
+1.0,Group 1 - Columbus Core,Franklin,Union,Raymond Elementary School,Marysville Exempted Village,Elementary,Regular School,43067
+1.0,Group 1 - Columbus Core,Franklin,Union,Tolles Career & Technical Center,Tolles Career & Technical Center,High,Career and Technical School,43064
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Centerburg Elementary School,Centerburg Local,Elementary,Regular School,43011
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Centerburg High School,Centerburg Local,High,Regular School,43011
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Centerburg Middle School,Centerburg Local,Middle,Regular School,43011
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Columbia Elementary School,Mount Vernon City,Elementary,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Dan Emmett Elementary School,Mount Vernon City,Elementary,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Danville Elementary School,Danville Local,Elementary,Regular School,43014
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Danville High School,Danville Local,High,Regular School,43014
+2.0,Group 2 - Newark / East-Central,Licking,Knox,East Elementary School,Mount Vernon City,Elementary,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,East Knox Elementary School,East Knox Local,Elementary,Regular School,43028
+2.0,Group 2 - Newark / East-Central,Licking,Knox,East Knox Junior/Senior High School,East Knox Local,High,Regular School,43028
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Fredericktown Elementary School,Fredericktown Local,Elementary,Regular School,43019
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Fredericktown High School,Fredericktown Local,High,Regular School,43019
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Fredericktown Middle School,Fredericktown Local,Middle,Regular School,43019
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Knox County Career Center,Knox County JVSD,High,Career and Technical School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Mount Vernon High School,Mount Vernon City,High,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Mount Vernon Middle School,Mount Vernon City,Middle,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Pleasant Street Elementary School,Mount Vernon City,Elementary,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Twin Oak Elementary School,Mount Vernon City,Elementary,Regular School,43050
+2.0,Group 2 - Newark / East-Central,Licking,Knox,Wiggin Street Elementary School,Mount Vernon City,Elementary,Regular School,43022
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Ben Franklin Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Broad Peak Elementary,Licking Heights Local,Elementary,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Career and Technology Educational Centers,Career and Technology Educational Centers,High,Career and Technical School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Carson Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Cherry Valley Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Etna Elementary,Southwest Licking Local,Elementary,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Garfield Elementary School,Heath City,Elementary,Regular School,43056
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Granville Elementary School,Granville Exempted Village,Elementary,Regular School,43023
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Granville High School,Granville Exempted Village,High,Regular School,43023
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Granville Intermediate School,Granville Exempted Village,Middle,Regular School,43023
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Granville Middle School,Granville Exempted Village,Middle,Regular School,43023
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Heath High School,Heath City,High,Regular School,43056
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Heath Middle School,Heath City,Middle,Regular School,43056
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Heritage Middle School,Newark City,Middle,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Hillview Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,JOHNSTOWN INTERMEDIATE SCHOOL,Johnstown-Monroe Local,Elementary,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Jackson Intermediate,Lakewood Local,Elementary,Regular School,43025
+2.0,Group 2 - Newark / East-Central,Licking,Licking,John Clem Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Johnstown Elementary School,Johnstown-Monroe Local,Elementary,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Johnstown High School,Johnstown-Monroe Local,High,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Johnstown Middle School,Johnstown-Monroe Local,Middle,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Kirkersville Elementary School,Southwest Licking Local,Elementary,Regular School,43033
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Lakewood Elementary School,Lakewood Local,Elementary,Regular School,43025
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Lakewood High School,Lakewood Local,High,Regular School,43025
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Lakewood Middle School,Lakewood Local,Middle,Regular School,43025
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Legend Elementary,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Liberty Middle School,Newark City,Middle,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Heights High School,Licking Heights Local,High,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Heights Middle School,Licking Heights Local,Middle,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Valley Elementary School,Licking Valley Local,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Valley High School,Licking Valley Local,High,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Valley Middle School,Licking Valley Local,Middle,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Licking Valley Online Learning School,Licking Valley Local,High,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Lima Ridge Elementary,Licking Heights Local,Elementary,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Little Learners Preschool,Newark City,Prekindergarten,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,McGuffey Elementary School,Newark City,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,NCS Digital,Newark City,Other,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Newark High School,Newark City,High,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Newton Elementary School,North Fork Local,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Northridge Elementary,Northridge Local,Elementary,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Northridge High School,Northridge Local,High,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Northridge Middle School,Northridge Local,Middle,Regular School,43031
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Par Excellence Academy dba Par Excellence STEM Academy,Par Excellence Academy dba Par Excellence STEM Academy,Elementary,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Pataskala Elementary School,Southwest Licking Local,Elementary,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Pathfinders Preschool,Licking Heights Local,Prekindergarten,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,SWL Digital Academy,Southwest Licking Local,High,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Southwest Licking Early Learning Center,Southwest Licking Local,Prekindergarten,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Stevenson Elementary School,Heath City,Elementary,Regular School,43056
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Summit Station Intermediate,Licking Heights Local,Middle,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Utica Elementary School,North Fork Local,Elementary,Regular School,43080
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Utica High School,North Fork Local,High,Regular School,43080
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Utica Middle School,North Fork Local,Middle,Regular School,43080
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Watkins Intermediate School,Southwest Licking Local,Elementary,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Watkins Memorial High School,Southwest Licking Local,High,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Watkins Middle School,Southwest Licking Local,Middle,Regular School,43062
+2.0,Group 2 - Newark / East-Central,Licking,Licking,Wilson Middle School,Newark City,Middle,Regular School,43055
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Crooksville Elementary School,Crooksville Exempted Village,Elementary,Regular School,43731
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Crooksville High School,Crooksville Exempted Village,High,Regular School,43731
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Crooksville Middle School,Crooksville Exempted Village,Middle,Regular School,43731
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Glenford Elementary School,Northern Local,Elementary,Regular School,43739
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Junction City Elementary School,New Lexington School District,Elementary,Regular School,43748
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Millcreek Elementary School,Southern Local,Elementary,Regular School,43730
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Miller High School,Southern Local,High,Regular School,43730
+2.0,Group 2 - Newark / East-Central,Licking,Perry,New Lexington Elementary School,New Lexington School District,Elementary,Regular School,43764
+2.0,Group 2 - Newark / East-Central,Licking,Perry,New Lexington High School,New Lexington School District,High,Regular School,43764
+2.0,Group 2 - Newark / East-Central,Licking,Perry,New Lexington Middle School,New Lexington School District,Middle,Regular School,43764
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Sheridan High School,Northern Local,High,Regular School,43076
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Sheridan Middle School,Northern Local,Middle,Regular School,43076
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Somerset Elementary School,Northern Local,Elementary,Regular School,43783
+2.0,Group 2 - Newark / East-Central,Licking,Perry,Thornville Elementary School,Northern Local,Elementary,Regular School,43076
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Alexander Elementary School,Alexander Local,Elementary,Regular School,45710
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Alexander Jr. / Sr. High School,Alexander Local,High,Regular School,45710
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Amesville Elementary School,Federal Hocking Local,Elementary,Regular School,45711
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Athens High School,Athens City School District,High,Regular School,45780
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Athens Middle School,Athens City School District,Middle,Regular School,45701
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Coolville Elementary School,Federal Hocking Local,Elementary,Regular School,45723
+3.0,Group 3 - Southeast Cluster,Athens,Athens,East Elementary School,Athens City School District,Elementary,Regular School,45701
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Federal Hocking High School,Federal Hocking Local,High,Regular School,45778
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Federal Hocking Local Schools,Federal Hocking Local,Other,Regular School,45778
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Federal Hocking Middle School,Federal Hocking Local,Middle,Regular School,45778
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Morrison Gordon Elementary School,Athens City School District,Elementary,Regular School,45701
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Nelsonville-York Elementary School,Nelsonville-York City,Elementary,Regular School,45764
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Nelsonville-York High School,Nelsonville-York City,High,Regular School,45764
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Nelsonville-York Junior High School,Nelsonville-York City,Middle,Regular School,45764
+3.0,Group 3 - Southeast Cluster,Athens,Athens,The Plains Intermediate School,Athens City School District,Middle,Regular School,45780
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Tri-County Career Center Building,Tri-County Career Center,High,Career and Technical School,45764
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Trimble Elementary School,Trimble Local,Elementary,Regular School,45732
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Trimble High School,Trimble Local,High,Regular School,45732
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Trimble Junior High,Trimble Local,Middle,Regular School,45732
+3.0,Group 3 - Southeast Cluster,Athens,Athens,Trimble Learning Academy,Trimble Local,High,Regular School,45732
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Central Elementary School,Logan-Hocking Local,Elementary,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Chieftain Elementary School,Logan-Hocking Local,Elementary,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Green Elementary School,Logan-Hocking Local,Elementary,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Hocking Hills Elementary School,Logan-Hocking Local,Elementary,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Logan High School,Logan-Hocking Local,High,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Logan-Hocking Middle School,Logan-Hocking Local,Middle,Regular School,43138
+3.0,Group 3 - Southeast Cluster,Athens,Hocking,Union Furnace Elementary School,Logan-Hocking Local,Elementary,Regular School,43158
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Eastern Elementary School,Eastern Local,Elementary,Regular School,45772
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Eastern High School,Eastern Local,High,Regular School,45772
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Meigs High School,Meigs Local,High,Regular School,45769
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Meigs Intermediate School,Meigs Local,Elementary,Regular School,45760
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Meigs Middle School,Meigs Local,Middle,Regular School,45769
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Meigs Primary School,Meigs Local,Elementary,Regular School,45760
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Southern Elementary School,Southern Local,Elementary,Regular School,45771
+3.0,Group 3 - Southeast Cluster,Athens,Meigs,Southern High School,Southern Local,High,Regular School,45771
+3.0,Group 3 - Southeast Cluster,Athens,Morgan,East Elementary School,Morgan Local,Elementary,Regular School,43756
+3.0,Group 3 - Southeast Cluster,Athens,Morgan,Morgan High School,Morgan Local,High,Regular School,43756
+3.0,Group 3 - Southeast Cluster,Athens,Morgan,Morgan Junior High School,Morgan Local,Middle,Regular School,43756
+3.0,Group 3 - Southeast Cluster,Athens,Morgan,South Elementary School,Morgan Local,Elementary,Regular School,43787
+3.0,Group 3 - Southeast Cluster,Athens,Morgan,West Elementary School,Morgan Local,Elementary,Regular School,43758
+3.0,Group 3 - Southeast Cluster,Athens,Vinton,Central Elementary,Vinton County Local,Elementary,Regular School,45651
+3.0,Group 3 - Southeast Cluster,Athens,Vinton,South Elementary,Vinton County Local,Elementary,Regular School,45634
+3.0,Group 3 - Southeast Cluster,Athens,Vinton,Vinton County High School,Vinton County Local,High,Regular School,45651
+3.0,Group 3 - Southeast Cluster,Athens,Vinton,Vinton County Middle School,Vinton County Local,Middle,Regular School,45651
+3.0,Group 3 - Southeast Cluster,Athens,Vinton,West Elementary,Vinton County Local,Elementary,Regular School,45651
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Belpre Blue Sky Academy,Belpre City,Other,Regular School,45714
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Belpre Elementary School,Belpre City,Elementary,Regular School,45714
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Belpre High School,Belpre City,High,Regular School,45714
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Beverly-Center Elementary School,Fort Frye Local,Elementary,Regular School,45715
+3.0,Group 3 - Southeast Cluster,Athens,Washington,BlueSky Virtual Academy,Wolf Creek Local,High,Regular School,45786
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Fort Frye High School,Fort Frye Local,High,Regular School,45715
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Fort Frye Middle School,Fort Frye Local,Middle,Regular School,45715
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Frontier High/Middle School,Frontier Local,High,Regular School,45767
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Frontier Local Virtual School,Frontier Local,High,Regular School,45767
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Lowell Elementary School,Fort Frye Local,Elementary,Regular School,45744
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Marietta Elementary School,Marietta City,Elementary,Regular School,45750
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Marietta High School,Marietta City,High,Regular School,45750
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Matamoras Elementary School,Frontier Local,Elementary,Regular School,45767
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Newport Elementary School,Frontier Local,Elementary,Regular School,45768
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Phillips School,Marietta City,Elementary,Regular School,45750
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Salem-Liberty Elementary School,Fort Frye Local,Elementary,Regular School,45745
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Warren Elementary School,Warren Local,Elementary,Regular School,45784
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Warren High School,Warren Local,High,Regular School,45784
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Warren Middle School,Warren Local,Middle,Regular School,45784
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Washington County CC Barrett Bld,Washington County Career Center District,High,Career and Technical School,45750
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Washington School,Marietta City,Elementary,Regular School,45750
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Waterford Elementary School,Wolf Creek Local,Elementary,Regular School,45786
+3.0,Group 3 - Southeast Cluster,Athens,Washington,Waterford High School,Wolf Creek Local,High,Regular School,45786
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Addaville Elementary School,Gallia County Local,Elementary,Regular School,45631
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Buckeye Hills Career Center,Gallia-Jackson-Vinton,High,Career and Technical School,45674
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Gallia Academy High School,Gallipolis City,High,Regular School,45631
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Gallia Academy Middle School,Gallipolis City,Middle,Regular School,45631
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Green Elementary School,Gallipolis City,Elementary,Regular School,45631
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Hannan Trace Elementary School,Gallia County Local,Elementary,Regular School,45623
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Rio Grande Elementary School,Gallipolis City,Elementary,Regular School,45674
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,River Valley High School,Gallia County Local,High,Regular School,45614
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,River Valley Middle School,Gallia County Local,Middle,Regular School,45614
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,South Gallia High School,Gallia County Local,High,Regular School,45623
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,South Gallia Middle School,Gallia County Local,Middle,Regular School,45623
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Southern Ohio Digital Academy,Gallia County Local,Other,Regular School,45674
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Southwestern Elementary School,Gallia County Local,Elementary,Regular School,45658
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Vinton Elementary School,Gallia County Local,Elementary,Regular School,45686
+4.0,Group 4 - Southern Corridor,Jackson,Gallia,Washington Elementary School,Gallipolis City,Elementary,Regular School,45631
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Bundy Elementary School,Wellston City,Elementary,Regular School,45692
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Jackson High School,Jackson City,High,Regular School,45640
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Jackson Middle School,Jackson City,Middle,Regular School,45640
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Jackson Northview Elementary School,Jackson City,Elementary,Regular School,45640
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Jackson Southview Elementary School,Jackson City,Elementary,Regular School,45640
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Jackson Westview Elementary School,Jackson City,Elementary,Regular School,45640
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Oak Hill Elementary,Oak Hill Union Local,Elementary,Regular School,45656
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Oak Hill Middle/High School,Oak Hill Union Local,High,Regular School,45656
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Wellston High School,Wellston City,High,Regular School,45692
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Wellston Intermediate School,Wellston City,Elementary,Regular School,45692
+4.0,Group 4 - Southern Corridor,Jackson,Jackson,Wellston Middle School,Wellston City,Middle,Regular School,45692
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Eastern High School,Eastern Local School District,High,Regular School,45613
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Eastern Intermediate Elementary School,Eastern Local School District,Elementary,Regular School,45613
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Eastern Middle School,Eastern Local School District,Middle,Regular School,45613
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Eastern Primary Elementary School,Eastern Local School District,Elementary,Regular School,45613
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Jasper Elementary School,Scioto Valley Local,Elementary,Regular School,45661
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Piketon Jr/Sr High School,Scioto Valley Local,High,Regular School,45661
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Vern Riffe Career Technology C,Pike County Area,High,Career and Technical School,45661
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Waverly High School,Waverly City,High,Regular School,45690
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Waverly Intermediate School,Waverly City,Elementary,Regular School,45690
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Waverly Junior High School,Waverly City,Middle,Regular School,45690
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Waverly Primary School,Waverly City,Elementary,Regular School,45690
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Western Elementary School,Western Local,Middle,Regular School,45646
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Western High School,Western Local,High,Regular School,45646
+4.0,Group 4 - Southern Corridor,Jackson,Pike,Western Primary,Western Local,Elementary,Regular School,45646
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Adena Elementary School,Adena Local,Elementary,Regular School,45628
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Adena High School,Adena Local,High,Regular School,45628
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Adena Middle School,Adena Local,Middle,Regular School,45628
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Buckskin Elementary School,Greenfield Exempted Village,Elementary,Regular School,45681
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Chillicothe High School,Chillicothe City,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Chillicothe Intermediate School,Chillicothe City,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Chillicothe Middle School,Chillicothe City,Middle,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Chillicothe Primary School,Chillicothe City,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Huntington Elementary School,Huntington Local,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Huntington High School,Huntington Local,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Huntington Middle School,Huntington Local,Middle,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Mt. Logan Early Childhood Center,Chillicothe City,Prekindergarten,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Paint Valley Elementary,Paint Valley Local,Elementary,Regular School,45612
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Paint Valley High School,Paint Valley Local,High,Regular School,45612
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Paint Valley Middle School,Paint Valley Local,Middle,Regular School,45612
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Pickaway-Ross Career & Technology Center,Pickaway-Ross County JVSD,Other,Career and Technical School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Rainsboro Elementary School,Greenfield Exempted Village,Elementary,Regular School,45612
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Southeastern Elementary School,Southeastern Local,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Southeastern High School,Southeastern Local,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Southeastern Middle School,Southeastern Local,Middle,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Southern Ohio Career Academy,Southern Ohio Career Academy,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Unioto Elementary,Union-Scioto Local,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Unioto High School,Union-Scioto Local,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Unioto Middle School,Union-Scioto Local,Middle,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Zane Trace Elementary School,Zane Trace Local,Elementary,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Zane Trace High School,Zane Trace Local,High,Regular School,45601
+4.0,Group 4 - Southern Corridor,Jackson,Ross,Zane Trace Middle School,Zane Trace Local,Middle,Regular School,45601
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Anna Marie Ayers Elementary School,Martins Ferry City,Elementary,Regular School,43935
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Barnesville Elementary School,Barnesville Exempted Village,Elementary,Regular School,43713
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Barnesville High School,Barnesville Exempted Village,High,Regular School,43713
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Barnesville Middle School,Barnesville Exempted Village,Middle,Regular School,43713
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Bellaire Elementary School,Bellaire Local,Elementary,Regular School,43906
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Bellaire High School,Bellaire Local,High,Regular School,43906
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Bellaire Middle School,Bellaire Local,Middle,Regular School,43906
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Belmont Career Center,Belmont-Harrison,High,Career and Technical School,43950
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Jefferson Ave Elementary School,Shadyside Local,Elementary,Regular School,43947
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Leona Ave Middle School,Shadyside Local,Elementary,Regular School,43947
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Martins Ferry High School,Martins Ferry City,High,Regular School,43935
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Martins Ferry Middle School,Martins Ferry City,Middle,Regular School,43935
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Powhatan Elementary School,Switzerland of Ohio Local,Elementary,Regular School,43942
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Shadyside High School,Shadyside Local,High,Regular School,43947
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,St Clairsville Elementary School,St Clairsville-Richland City,Elementary,Regular School,43950
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,St Clairsville High School,St Clairsville-Richland City,High,Regular School,43950
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,St Clairsville Middle School,St Clairsville-Richland City,Middle,Regular School,43950
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,The Bridgeport School DIstrict - Middle School,Bridgeport Exempted Village,Middle,Regular School,43912
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,The Bridgeport School District - Elementary,Bridgeport Exempted Village,Elementary,Regular School,43912
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,The Bridgeport School District - High School,Bridgeport Exempted Village,High,Regular School,43912
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Union Local Elementary School,Union Local,Elementary,Regular School,43718
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Union Local High School,Union Local,High,Regular School,43718
+5.0,Group 5 - Eastern Edge,Guernsey,Belmont,Union Local Middle School,Union Local,Middle,Regular School,43718
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Brook Intermediate School,Rolling Hills Local,Elementary,Regular School,43723
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Buckeye Trail Elementary,East Guernsey Local,Elementary,Regular School,43755
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Buckeye Trail High School,East Guernsey Local,High,Regular School,43755
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Buckeye Trail Middle School,East Guernsey Local,Middle,Regular School,43755
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Buffalo Campus,Mid-East Career and Technology Centers,High,Career and Technical School,43780
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Byesville Elementary School,Rolling Hills Local,Elementary,Regular School,43723
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Cambridge City Preschool,Cambridge City,Prekindergarten,Regular School,43725
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Cambridge High School,Cambridge City,High,Regular School,43725
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Cambridge Intermediate School,Cambridge City,Elementary,Regular School,43725
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Cambridge Middle School,Cambridge City,Middle,Regular School,43725
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Cambridge Primary School,Cambridge City,Elementary,Regular School,43725
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Meadowbrook High School,Rolling Hills Local,High,Regular School,43723
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Meadowbrook Middle School,Rolling Hills Local,Middle,Regular School,43723
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Preschool at Buckeye Trail High School,East Guernsey Local,Prekindergarten,Regular School,43755
+5.0,Group 5 - Eastern Edge,Guernsey,Guernsey,Secrest Elementary School,Rolling Hills Local,Elementary,Regular School,43780
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Conotton Valley Elementary,Conotton Valley Union Local,Elementary,Regular School,44695
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Conotton Valley High School,Conotton Valley Union Local,High,Regular School,44695
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Harrison Career Center,Belmont-Harrison,High,Career and Technical School,43907
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Harrison Central Elementary School,Harrison Hills City,Elementary,Regular School,43907
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Harrison Central Jr./Sr. High School,Harrison Hills City,High,Regular School,43907
+5.0,Group 5 - Eastern Edge,Guernsey,Harrison,Lakeland Academy Community School,Lakeland Academy Community School,Other,Regular School,43973
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Buckeye Local High School,Buckeye Local,High,Regular School,43943
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Buckeye Local Junior High,Buckeye Local,Middle,Regular School,43943
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Buckeye North Elementary School,Buckeye Local,Elementary,Regular School,43913
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Buckeye South Elementary School,Buckeye Local,Elementary,Regular School,43963
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Buckeye West Elementary School,Buckeye Local,Elementary,Regular School,43901
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Cross Creek Elementary,Indian Creek Local,Elementary,Regular School,43953
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,East Garfield Elementary School,Steubenville City,Elementary,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Edison High School,Edison Local,High,Regular School,43944
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Edison Jr. High School,Edison Local,Middle,Regular School,43944
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Harding Middle School,Steubenville City,Middle,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Hills Elementary School,Indian Creek Local,Elementary,Regular School,43938
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Indian Creek High School,Indian Creek Local,High,Regular School,43953
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Indian Creek Middle School Grades 5 & 6,Indian Creek Local,Middle,Regular School,43938
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Indian Creek Middle School Grades 7 & 8,Indian Creek Local,Middle,Regular School,43938
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Jefferson County,Jefferson County,High,Career and Technical School,43910
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,John E Gregg Elementary School,Edison Local,Elementary,Regular School,43908
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Karaffa Elementary,Toronto City,Prekindergarten,Regular School,43964
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,McKinley STEM Academy,Steubenville City,Elementary,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Pugliese Elementary West,Steubenville City,Elementary,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Stanton Elementary School,Edison Local,Elementary,Regular School,43930
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Steubenville High School,Steubenville City,High,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Toronto Elementary School,Toronto City,Elementary,Regular School,43964
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Toronto Jr. / Sr. High School,Toronto City,High,Regular School,43964
+5.0,Group 5 - Eastern Edge,Guernsey,Jefferson,Wells Academy,Steubenville City,Elementary,Regular School,43952
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Beallsville Elementary School,Switzerland of Ohio Local,Elementary,Regular School,43716
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Beallsville High School,Switzerland of Ohio Local,High,Regular School,43716
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Monroe Central High School,Switzerland of Ohio Local,High,Regular School,43793
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,River Elementary School,Switzerland of Ohio Local,Elementary,Regular School,43931
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,River High School,Switzerland of Ohio Local,High,Regular School,43931
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Skyvue Elementary School,Switzerland of Ohio Local,Elementary,Regular School,45734
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Swiss Hills Career Center,Switzerland of Ohio Local,High,Career and Technical School,43793
+5.0,Group 5 - Eastern Edge,Guernsey,Monroe,Woodsfield Elementary School,Switzerland of Ohio Local,Elementary,Regular School,43793
+5.0,Group 5 - Eastern Edge,Guernsey,Noble,Caldwell Elementary School,Caldwell Exempted Village,Elementary,Regular School,43724
+5.0,Group 5 - Eastern Edge,Guernsey,Noble,Caldwell High School,Caldwell Exempted Village,High,Regular School,43724
+5.0,Group 5 - Eastern Edge,Guernsey,Noble,Shenandoah Elementary School,Noble Local,Elementary,Regular School,43779
+5.0,Group 5 - Eastern Edge,Guernsey,Noble,Shenandoah High School,Noble Local,High,Regular School,43779

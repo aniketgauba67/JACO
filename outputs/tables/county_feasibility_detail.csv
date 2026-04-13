@@ -1,0 +1,26 @@
+region_id,region,anchor_county,county_name,anchor_to_county_miles,feasible_1hr_proxy,proxy_method
+1,Group 1 - Columbus Core,Franklin,Fayette,121.2,False,County centroid distance; feasible if <= 50 miles
+1,Group 1 - Columbus Core,Franklin,Union,97.6,False,County centroid distance; feasible if <= 50 miles
+1,Group 1 - Columbus Core,Franklin,Fairfield,82.5,False,County centroid distance; feasible if <= 50 miles
+1,Group 1 - Columbus Core,Franklin,Pickaway,74.2,False,County centroid distance; feasible if <= 50 miles
+1,Group 1 - Columbus Core,Franklin,Delaware,69.9,False,County centroid distance; feasible if <= 50 miles
+1,Group 1 - Columbus Core,Franklin,Franklin,0.0,True,County centroid distance; feasible if <= 50 miles
+2,Group 2 - Newark / East-Central,Licking,Perry,91.1,False,County centroid distance; feasible if <= 50 miles
+2,Group 2 - Newark / East-Central,Licking,Knox,70.3,False,County centroid distance; feasible if <= 50 miles
+2,Group 2 - Newark / East-Central,Licking,Licking,0.0,True,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Washington,100.4,False,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Hocking,84.7,False,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Vinton,79.7,False,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Morgan,73.1,False,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Meigs,57.1,False,County centroid distance; feasible if <= 50 miles
+3,Group 3 - Southeast Cluster,Athens,Athens,0.0,True,County centroid distance; feasible if <= 50 miles
+4,Group 4 - Southern Corridor,Jackson,Ross,105.7,False,County centroid distance; feasible if <= 50 miles
+4,Group 4 - Southern Corridor,Jackson,Pike,80.2,False,County centroid distance; feasible if <= 50 miles
+4,Group 4 - Southern Corridor,Jackson,Gallia,69.2,False,County centroid distance; feasible if <= 50 miles
+4,Group 4 - Southern Corridor,Jackson,Jackson,0.0,True,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Jefferson,147.9,False,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Monroe,102.7,False,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Harrison,88.9,False,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Belmont,88.4,False,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Noble,65.1,False,County centroid distance; feasible if <= 50 miles
+5,Group 5 - Eastern Edge,Guernsey,Guernsey,0.0,True,County centroid distance; feasible if <= 50 miles

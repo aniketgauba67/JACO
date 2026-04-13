@@ -1,0 +1,6 @@
+region_id,region,anchor_county,total_schools,high_need_schools,title_students_served,high_need_share
+1,Group 1 - Columbus Core,Franklin,524,54,21539.0,0.10305343511450382
+2,Group 2 - Newark / East-Central,Licking,89,9,3332.0,0.10112359550561797
+3,Group 3 - Southeast Cluster,Athens,68,12,3515.0,0.17647058823529413
+4,Group 4 - Southern Corridor,Jackson,67,14,4382.0,0.208955223880597
+5,Group 5 - Eastern Edge,Guernsey,80,4,1461.0,0.05

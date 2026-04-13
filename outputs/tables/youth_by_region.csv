@@ -1,0 +1,6 @@
+region_id,region,anchor_county,counties_in_region,youth_population,total_population,county_count
+1,Group 1 - Columbus Core,Franklin,"Delaware, Fairfield, Fayette, Franklin, Pickaway, Union",378187,1924692,6
+2,Group 2 - Newark / East-Central,Licking,"Knox, Licking, Perry",56323,284428,3
+3,Group 3 - Southeast Cluster,Athens,"Athens, Hocking, Meigs, Morgan, Vinton, Washington",36096,196547,6
+4,Group 4 - Southern Corridor,Jackson,"Gallia, Jackson, Pike, Ross",30731,164720,4
+5,Group 5 - Eastern Edge,Guernsey,"Belmont, Guernsey, Harrison, Jefferson, Monroe, Noble",35436,208173,6

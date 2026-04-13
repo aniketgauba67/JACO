@@ -1,0 +1,7 @@
+region,outreach_records,positive_responses,matched_rows,positive_response_rate,school_match_rate_within_region
+Group 1 - Columbus Core,14,0,14,0.0,1.0
+Group 2 - Newark / East-Central,4,0,3,0.0,0.75
+Group 3 - Southeast Cluster,11,1,11,0.09090909090909091,1.0
+Group 4 - Southern Corridor,15,1,15,0.06666666666666667,1.0
+Group 5 - Eastern Edge,17,4,17,0.23529411764705882,1.0
+,3,0,0,0.0,0.0

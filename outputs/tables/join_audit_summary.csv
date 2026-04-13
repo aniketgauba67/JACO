@@ -1,0 +1,12 @@
+step,matched_records,total_records,match_rate,notes
+Grouped counties present in population data,25,25,1.0,Checks whether all 25 required grouped counties appear in the population source.
+ZIPs mapped to counties,1357,1357,1.0,Uses the strongest available ZIP-to-tract ratio field to choose a county per ZIP.
+Ohio schools mapped to counties,3510,3513,0.9991460290350128,Assigns each open Ohio NCES school to a county using ZIP-based mapping.
+Ohio schools mapped to JACO regions,833,3513,0.2371192712781099,Only schools inside the 25 grouped counties receive a JACO region.
+High-need exact IRN matches,338,3513,0.09621406205522345,Exact join between NCES-derived Ohio IRN and the Title I/SSI building IRN.
+High-need exact unique-name matches,140,3513,0.03985197836606889,Exact normalized school-name match when the high-need workbook has only one school with that normalized name.
+High-need normalized-name matches,4,3513,0.001138627953316254,Fallback matching within district after school-name normalization.
+Tracker normalized-name county matches,58,64,0.90625,Primary organization-to-school match using normalized school name with county as a secondary check.
+Tracker normalized-name unique matches,2,64,0.03125,Unique normalized school-name fallback when county does not produce a direct match.
+Tracker fuzzy-name county matches,0,64,0.0,Cautious fuzzy fallback inside the same county when exact normalized matching fails.
+Tracker rows assigned to JACO regions,61,64,0.953125,Rows outside the 25 grouped counties remain unassigned and are shown as limitations.

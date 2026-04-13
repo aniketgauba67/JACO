@@ -1,0 +1,89 @@
+county_name,county_fips,total_population,youth_population,region_id,region,anchor_county,is_anchor
+Adams,001,27671,5613,,,,False
+Allen,003,100866,19991,,,,False
+Ashland,005,52420,9887,,,,False
+Ashtabula,007,96906,17717,,,,False
+Athens,009,63218,12887,3.0,Group 3 - Southeast Cluster,Athens,True
+Auglaize,011,45922,9038,,,,False
+Belmont,013,64692,10326,5.0,Group 5 - Eastern Edge,Guernsey,False
+Brown,015,44292,8396,,,,False
+Butler,017,399542,82828,,,,False
+Carroll,019,26460,4658,,,,False
+Champaign,021,38907,7037,,,,False
+Clark,023,134985,25458,,,,False
+Clermont,025,214123,38898,,,,False
+Clinton,027,42019,8179,,,,False
+Columbiana,029,99823,16743,,,,False
+Coshocton,031,37003,7241,,,,False
+Crawford,033,41626,7443,,,,False
+Cuyahoga,035,1240594,212401,,,,False
+Darke,037,51462,10096,,,,False
+Defiance,039,38644,7338,,,,False
+Delaware,041,237966,49951,1.0,Group 1 - Columbus Core,Franklin,False
+Erie,043,73841,12196,,,,False
+Fairfield,045,167762,33811,1.0,Group 1 - Columbus Core,Franklin,False
+Fayette,047,28782,5588,1.0,Group 1 - Columbus Core,Franklin,False
+Franklin,049,1356303,263268,1.0,Group 1 - Columbus Core,Franklin,True
+Fulton,051,42028,8144,,,,False
+Gallia,053,28886,5607,4.0,Group 4 - Southern Corridor,Jackson,False
+Geauga,055,95362,17731,,,,False
+Greene,057,172347,32301,,,,False
+Guernsey,059,38219,7026,5.0,Group 5 - Eastern Edge,Guernsey,True
+Hamilton,061,837359,163428,,,,False
+Hancock,063,75016,14122,,,,False
+Hardin,065,30402,6586,,,,False
+Harrison,067,14042,2427,5.0,Group 5 - Eastern Edge,Guernsey,False
+Henry,069,27536,5307,,,,False
+Highland,071,43785,8498,,,,False
+Hocking,073,27429,4922,3.0,Group 3 - Southeast Cluster,Athens,False
+Holmes,075,44668,10715,,,,False
+Huron,077,58168,11472,,,,False
+Jackson,079,32723,6477,4.0,Group 4 - Southern Corridor,Jackson,True
+Jefferson,081,63900,11254,5.0,Group 5 - Eastern Edge,Guernsey,False
+Knox,083,63848,12862,2.0,Group 2 - Newark / East-Central,Licking,False
+Lake,085,232360,37430,,,,False
+Lawrence,087,55829,10076,,,,False
+Licking,089,184898,36514,2.0,Group 2 - Newark / East-Central,Licking,True
+Logan,091,46085,8651,,,,False
+Lorain,093,322030,58930,,,,False
+Lucas,095,426291,82140,,,,False
+Madison,097,45531,7525,,,,False
+Mahoning,099,225786,38313,,,,False
+Marion,101,64976,11583,,,,False
+Medina,103,184625,33175,,,,False
+Meigs,105,21491,3750,3.0,Group 3 - Southeast Cluster,Athens,False
+Mercer,107,42648,8919,,,,False
+Miami,109,111950,21431,,,,False
+Monroe,111,13051,2219,5.0,Group 5 - Eastern Edge,Guernsey,False
+Montgomery,113,537443,100644,,,,False
+Morgan,115,13532,2339,3.0,Group 3 - Southeast Cluster,Athens,False
+Morrow,117,35927,6488,,,,False
+Muskingum,119,86582,16312,,,,False
+Noble,121,14269,2184,5.0,Group 5 - Eastern Edge,Guernsey,False
+Ottawa,123,39692,5920,,,,False
+Paulding,125,18755,3663,,,,False
+Perry,127,35682,6947,2.0,Group 2 - Newark / East-Central,Licking,False
+Pickaway,129,62158,11319,1.0,Group 1 - Columbus Core,Franklin,False
+Pike,131,27065,5266,4.0,Group 4 - Southern Corridor,Jackson,False
+Portage,133,163839,28737,,,,False
+Preble,135,40801,7624,,,,False
+Putnam,137,34206,7330,,,,False
+Richland,139,124853,22626,,,,False
+Ross,141,76046,13381,4.0,Group 4 - Southern Corridor,Jackson,False
+Sandusky,143,58866,10756,,,,False
+Scioto,145,71798,13353,,,,False
+Seneca,147,54730,10417,,,,False
+Shelby,149,47952,9566,,,,False
+Stark,151,374091,68004,,,,False
+Summit,153,538370,93328,,,,False
+Trumbull,155,200300,34452,,,,False
+Tuscarawas,157,92048,17467,,,,False
+Union,159,71721,14250,1.0,Group 1 - Columbus Core,Franklin,False
+Van Wert,161,28887,5441,,,,False
+Vinton,163,12545,2216,3.0,Group 3 - Southeast Cluster,Athens,False
+Warren,165,256059,51538,,,,False
+Washington,167,58332,9982,3.0,Group 3 - Southeast Cluster,Athens,False
+Wayne,169,116632,24085,,,,False
+Williams,171,36554,6660,,,,False
+Wood,173,133077,25963,,,,False
+Wyandot,175,21394,3966,,,,False

@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JACO Regional Strategy Report</title>
+  <style>
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f6f8fb; color: #1f2933; }
+    .page { max-width: 1120px; margin: 0 auto; padding: 36px 28px 72px; }
+    h1, h2, h3 { color: #12344d; margin: 0 0 10px; }
+    h1 { font-size: 34px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 18px; margin-top: 24px; }
+    p, li { font-size: 15px; line-height: 1.6; }
+    .hero, .section { background: white; border-radius: 16px; padding: 28px 32px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06); }
+    .section { margin-top: 22px; }
+    .hero-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+    .metric { background: #f6f9fc; border: 1px solid #e1e7ef; border-radius: 12px; padding: 16px; }
+    .metric .value { font-size: 24px; font-weight: 700; color: #0b5d7a; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; border-bottom: 1px solid #d8e1ea; padding-bottom: 10px; margin-bottom: 14px; }
+    .section-kicker { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #627d98; font-weight: 700; }
+    .callout { background: #eef6fb; border-left: 4px solid #0b5d7a; padding: 14px 16px; border-radius: 8px; }
+    .bullets { margin: 14px 0 0; padding-left: 20px; }
+    .bullets li { margin-bottom: 8px; }
+    .figure-card { margin-top: 24px; }
+    .figure-card img { width: 100%; display: block; border-radius: 12px; border: 1px solid #dde5ee; background: white; }
+    .caption { color: #52606d; margin-top: 10px; }
+    .summary-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+    .summary-table th { background: #0b5d7a; color: white; padding: 10px; text-align: left; }
+    .summary-table td { padding: 10px; border-bottom: 1px solid #e6edf3; vertical-align: top; }
+    .summary-table tr:nth-child(even) td { background: #f8fbfd; }
+    .audit { display: grid; grid-template-columns: 220px 110px 110px 1fr; gap: 10px; margin-top: 14px; font-size: 14px; }
+    .audit div { padding: 10px 12px; border-radius: 10px; background: #f8fbfd; border: 1px solid #e6edf3; }
+    .small { color: #6b7c93; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <h1>Junior Achievement of Central Ohio Regional Strategy Report</h1>
+      <p>This report translates the five required JACO service regions into a concise strategy view of youth reach, school density, need concentration, outreach performance, and anchor feasibility.</p>
+      <div class="hero-grid">
+        <div class="metric"><div class="value">Group 1 - Columbus Core</div><div>Largest youth reach region</div></div>
+        <div class="metric"><div class="value">Group 4 - Southern Corridor</div><div>Highest high-need concentration</div></div>
+        <div class="metric"><div class="value">Group 5 - Eastern Edge</div><div>Best outreach opportunity</div></div>
+        <div class="metric"><div class="value">93.8%</div><div>Tracker school-match rate</div></div>
+      </div>
+      <div class="callout" style="margin-top: 20px;">
+        <strong>Executive Summary.</strong> Group 1 - Columbus Core is the clear scale leader with 378,187 youth and 524 mapped schools, while Group 4 - Southern Corridor has the highest high-need share at 20.9%. Group 5 - Eastern Edge currently shows the strongest outreach opportunity at 23.5%. Positive outreach is defined only as tracker rows where Outcome equals Interested.
+      </div>
+      <ul class="bullets">
+        
+        <li>Group 1 - Columbus Core leads on youth reach with 378,187 youth.</li>
+        
+        <li>Group 1 - Columbus Core also has the largest school inventory at 524 schools.</li>
+        
+        <li>Group 4 - Southern Corridor has the highest identified high-need concentration at 20.9%.</li>
+        
+        <li>Group 5 - Eastern Edge has the strongest outreach opportunity based on Interested outcomes at 23.5%.</li>
+        
+        <li>Tracker-to-school matching is 93.8%, strong enough for region-level outreach interpretation.</li>
+        
+        <li>High-need matching is more limited at 13.7%, so those results should be read as directional rather than exhaustive.</li>
+        
+      </ul>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Overview</div>
+          <h2>Project Overview</h2>
+        </div>
+      </div>
+      <p>The analysis answers six planning questions for JACO: how to group counties around anchor counties, which clusters maximize youth reach, where the school inventory is deepest, where high-need schools are concentrated, what the cold-call tracker says about outreach traction, whether the anchor model looks feasible on a one-hour proxy, and how to turn all of that into a practical priority order.</p>
+      <p>Data sources used: county population data from <code>JACO.csv</code>, Ohio school inventory from the NCES file, ZIP-to-tract mapping from <code>ZIP_TRACT_122025.xlsx</code>, high-need school data from the FY25 SSI workbook, and school outreach activity from the JA cold-call tracker.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Quality Checks</div>
+          <h2>Methodology and Join Validation</h2>
+        </div>
+      </div>
+      <ul>
+        <li>Population analysis uses the latest county-level <code>YEAR</code> code in the source and youth AGEGRP values 2, 3, 4.</li>
+        <li>School assignment uses ZIP-to-county mapping with the strongest available ratio field, then maps counties into the five fixed JACO service regions.</li>
+        <li>High-need matching prioritizes exact Ohio building IRN matches, then exact unique normalized-name matches, before using cautious normalized-name fallback logic.</li>
+        <li>Cold-call matching standardizes organization names and counties, then defines positive outreach schools strictly as tracker rows where <code>Outcome = Interested</code>.</li>
+        <li>The 1-hour screen uses county centroid distance from each anchor county as a transparent proxy because no drive-time API is used.</li>
+      </ul>
+      <div class="audit">
+        <div><strong>Step</strong></div><div><strong>Matched</strong></div><div><strong>Rate</strong></div><div><strong>Notes</strong></div>
+        
+        <div>Grouped counties present in population data</div><div>25 / 25</div><div>100.0%</div><div>Checks whether all 25 required grouped counties appear in the population source.</div>
+        
+        <div>ZIPs mapped to counties</div><div>1,357 / 1,357</div><div>100.0%</div><div>Uses the strongest available ZIP-to-tract ratio field to choose a county per ZIP.</div>
+        
+        <div>Ohio schools mapped to counties</div><div>3,510 / 3,513</div><div>99.9%</div><div>Assigns each open Ohio NCES school to a county using ZIP-based mapping.</div>
+        
+        <div>Ohio schools mapped to JACO regions</div><div>833 / 3,513</div><div>23.7%</div><div>Only schools inside the 25 grouped counties receive a JACO region.</div>
+        
+        <div>High-need exact IRN matches</div><div>338 / 3,513</div><div>9.6%</div><div>Exact join between NCES-derived Ohio IRN and the Title I/SSI building IRN.</div>
+        
+        <div>High-need exact unique-name matches</div><div>140 / 3,513</div><div>4.0%</div><div>Exact normalized school-name match when the high-need workbook has only one school with that normalized name.</div>
+        
+        <div>High-need normalized-name matches</div><div>4 / 3,513</div><div>0.1%</div><div>Fallback matching within district after school-name normalization.</div>
+        
+        <div>Tracker normalized-name county matches</div><div>58 / 64</div><div>90.6%</div><div>Primary organization-to-school match using normalized school name with county as a secondary check.</div>
+        
+        <div>Tracker normalized-name unique matches</div><div>2 / 64</div><div>3.1%</div><div>Unique normalized school-name fallback when county does not produce a direct match.</div>
+        
+        <div>Tracker fuzzy-name county matches</div><div>0 / 64</div><div>0.0%</div><div>Cautious fuzzy fallback inside the same county when exact normalized matching fails.</div>
+        
+        <div>Tracker rows assigned to JACO regions</div><div>61 / 64</div><div>95.3%</div><div>Rows outside the 25 grouped counties remain unassigned and are shown as limitations.</div>
+        
+      </div>
+      <p class="small">High-need match summary: unmatched: 3031, exact_irn: 338, exact_unique_name: 140, normalized_name: 4. Tracker match summary: normalized_name_county: 58, unmatched: 4, normalized_name_unique: 2.</p>
+      <p class="small">Limitations: the NCES extract does not provide usable school coordinates, so the school-point map uses approximate county-centroid placement rather than true school locations. Tracker rows were assigned to JACO regions at a 95.3% rate, and rows outside the grouped counties remain visible as unmatched limitations rather than being forced into a school-level view.</p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Tracker Audit</div>
+          <h2>Positive-Response Classification Audit</h2>
+        </div>
+      </div>
+      <p>Positive outreach schools are defined as tracker rows where <code>Outcome = Interested</code>. The audit below shows all observed normalized outcome values, their counts, and which value is treated as positive.</p>
+      <div class="figure-card">
+        <h3>Observed Outcome Values</h3>
+        <table class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>outcome_clean</th>
+      <th>count</th>
+      <th>is_positive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>voicemail</td>
+      <td>35</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>call back</td>
+      <td>9</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>no answer</td>
+      <td>7</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>interested</td>
+      <td>6</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>not interested</td>
+      <td>6</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>(blank)</td>
+      <td>1</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+      <div class="figure-card">
+        <h3>Positive-Response Rule</h3>
+        <table class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>field</th>
+      <th>value</th>
+      <th>included_as_positive</th>
+      <th>rule</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Outcome</td>
+      <td>voicemail</td>
+      <td>False</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+    <tr>
+      <td>Outcome</td>
+      <td>call back</td>
+      <td>False</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+    <tr>
+      <td>Outcome</td>
+      <td>no answer</td>
+      <td>False</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+    <tr>
+      <td>Outcome</td>
+      <td>interested</td>
+      <td>True</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+    <tr>
+      <td>Outcome</td>
+      <td>not interested</td>
+      <td>False</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+    <tr>
+      <td>Outcome</td>
+      <td>(blank)</td>
+      <td>False</td>
+      <td>positive_response = outcome_clean == 'interested'</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+    </section>
+
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Footprint</div>
+          <h2>JACO Regional Grouping Strategy</h2>
+        </div>
+      </div>
+      <p>This map shows the five fixed county clusters and their anchor counties. It defines the service geography used throughout the rest of the analysis.</p>
+      
+      <div class="figure-card">
+        <h3>Ohio County Map with JACO Regions</h3>
+        <img src="figures/region_map.png" alt="Ohio County Map with JACO Regions">
+        <p class="caption">Each county is assigned to one of the five required JACO regions, and stars identify the anchor counties. This is the operating footprint for mobile-unit planning.</p>
+      </div>
+      
+      
+      
+      <p class="small"><strong>Limitations.</strong> The regions are fixed to the five required JACO groupings rather than optimized algorithmically from drive-time data.</p>
+      
+    </section>
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Reach</div>
+          <h2>Youth Population and Reach</h2>
+        </div>
+      </div>
+      <p>These figures show where the largest youth and total population bases sit. Together they identify which regions maximize potential mobile-unit reach.</p>
+      
+      <div class="figure-card">
+        <h3>County Population Heatmap</h3>
+        <img src="figures/county_population_heatmap.png" alt="County Population Heatmap">
+        <p class="caption">This county choropleth shows the statewide population pattern and provides context for where the JACO counties sit inside Ohio.</p>
+      </div>
+      
+      <div class="figure-card">
+        <h3>County Youth Population Heatmap</h3>
+        <img src="figures/youth_population_heatmap.png" alt="County Youth Population Heatmap">
+        <p class="caption">Youth population uses AGEGRP 2-4, corresponding to ages 5-19 in the source layout. This is the clearest county-level view of potential student reach.</p>
+      </div>
+      
+      <div class="figure-card">
+        <h3>Youth Population by Region</h3>
+        <img src="figures/youth_by_region.png" alt="Youth Population by Region">
+        <p class="caption">Group 1 is much larger than the rest of the portfolio on youth reach, making it the strongest first market if broad exposure is the priority.</p>
+      </div>
+      
+      
+      
+      <p class="small"><strong>Limitations.</strong> Population estimates rely on the latest YEAR code present in the source file and the AGEGRP structure available there, rather than a labeled calendar year field.</p>
+      
+    </section>
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Schools</div>
+          <h2>Schools and Outreach Potential</h2>
+        </div>
+      </div>
+      <p>School inventory matters because the mobile-unit strategy also depends on partnership targets. Positive outreach schools are defined as tracker rows where Outcome = Interested, and 6 matched positive schools are highlighted on the map below.</p>
+      
+      <div class="figure-card">
+        <h3>Total Schools by Region</h3>
+        <img src="figures/schools_by_region.png" alt="Total Schools by Region">
+        <p class="caption">The Columbus Core dominates school count, which matters for both outreach capacity and partnership depth.</p>
+      </div>
+      
+      <div class="figure-card">
+        <h3>School Distribution & Outreach Visualization</h3>
+        <img src="figures/schools_map.png" alt="School Distribution & Outreach Visualization">
+        <p class="caption">School locations are approximate. All schools are shown in light gray, and positive-response schools are highlighted in green.</p>
+      </div>
+      
+      <div class="figure-card">
+        <h3>Outreach Activity Map</h3>
+        <img src="figures/outreach_map.png" alt="Outreach Activity Map">
+        <p class="caption">Positive outreach schools are defined as tracker rows where Outcome = Interested. The region map summarizes 6 positive tracker rows and 6 matched positive schools.</p>
+      </div>
+      
+      
+      <div class="figure-card">
+        <h3>Schools and Outreach Summary</h3>
+        <table class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>region</th>
+      <th>anchor_county</th>
+      <th>total_schools</th>
+      <th>outreach_records</th>
+      <th>positive_responses</th>
+      <th>school_match_rate_within_region</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Group 1 - Columbus Core</td>
+      <td>Franklin</td>
+      <td>524</td>
+      <td>14</td>
+      <td>0</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <td>Group 2 - Newark / East-Central</td>
+      <td>Licking</td>
+      <td>89</td>
+      <td>4</td>
+      <td>0</td>
+      <td>75.0%</td>
+    </tr>
+    <tr>
+      <td>Group 3 - Southeast Cluster</td>
+      <td>Athens</td>
+      <td>68</td>
+      <td>11</td>
+      <td>1</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <td>Group 4 - Southern Corridor</td>
+      <td>Jackson</td>
+      <td>67</td>
+      <td>15</td>
+      <td>1</td>
+      <td>100.0%</td>
+    </tr>
+    <tr>
+      <td>Group 5 - Eastern Edge</td>
+      <td>Guernsey</td>
+      <td>80</td>
+      <td>17</td>
+      <td>4</td>
+      <td>100.0%</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+      
+      
+      <p class="small"><strong>Limitations.</strong> Because the NCES file does not include usable latitude/longitude fields, the school map uses approximate county-centroid placement with deterministic jitter instead of true school coordinates. Outreach highlighting depends on school-name matching from the tracker and therefore reflects matched Interested rows only.</p>
+      
+    </section>
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Feasibility</div>
+          <h2>1-Hour Radius Feasibility Check</h2>
+        </div>
+      </div>
+      <p>This section checks whether each anchor county appears to cover its assigned counties within a reasonable one-hour proxy. Because no drive-time API is used, the test relies on centroid-to-centroid distance and should be read as a planning screen rather than a route model.</p>
+      
+      <div class="figure-card">
+        <h3>Anchor Feasibility by Region</h3>
+        <img src="figures/one_hour_radius_feasibility.png" alt="Anchor Feasibility by Region">
+        <p class="caption">Each bar shows the farthest county-centroid distance from the anchor county inside that region. Regions entirely below the 50-mile proxy threshold appear more feasible for a one-hour anchor model.</p>
+      </div>
+      
+      
+      <div class="figure-card">
+        <h3>Feasibility Summary</h3>
+        <table class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>region</th>
+      <th>anchor_county</th>
+      <th>max_anchor_distance_miles</th>
+      <th>avg_anchor_distance_miles</th>
+      <th>counties_outside_proxy_radius</th>
+      <th>feasible_1hr_proxy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Group 1 - Columbus Core</td>
+      <td>Franklin</td>
+      <td>121.2</td>
+      <td>74.233333</td>
+      <td>5</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Group 2 - Newark / East-Central</td>
+      <td>Licking</td>
+      <td>91.1</td>
+      <td>53.800000</td>
+      <td>2</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Group 3 - Southeast Cluster</td>
+      <td>Athens</td>
+      <td>100.4</td>
+      <td>65.833333</td>
+      <td>5</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Group 4 - Southern Corridor</td>
+      <td>Jackson</td>
+      <td>105.7</td>
+      <td>63.775000</td>
+      <td>3</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>Group 5 - Eastern Edge</td>
+      <td>Guernsey</td>
+      <td>147.9</td>
+      <td>82.166667</td>
+      <td>5</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+      
+      
+      <p class="small"><strong>Limitations.</strong> The feasibility screen uses centroid distance rather than true road-network travel time, so it is best treated as a transparent proxy rather than a definitive operating test.</p>
+      
+    </section>
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Need</div>
+          <h2>High-Need Analysis</h2>
+        </div>
+      </div>
+      <p>The FY25 SSI workbook highlights a subset of high-need schools. These charts show where that need is most concentrated across the five required regions.</p>
+      
+      <div class="figure-card">
+        <h3>High-Need Schools by Region</h3>
+        <img src="figures/high_need_by_region.png" alt="High-Need Schools by Region">
+        <p class="caption">This compares total schools against the number of high-need schools identified through the SSI building allocation file.</p>
+      </div>
+      
+      <div class="figure-card">
+        <h3>High-Need Share by Region</h3>
+        <img src="figures/high_need_share_by_region.png" alt="High-Need Share by Region">
+        <p class="caption">The share view controls for size and makes Southern Corridor stand out most clearly on concentration of identified need.</p>
+      </div>
+      
+      
+      <div class="figure-card">
+        <h3>Region Summary Table</h3>
+        <table class="dataframe summary-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>region</th>
+      <th>anchor_county</th>
+      <th>counties_in_region</th>
+      <th>youth_population</th>
+      <th>total_schools</th>
+      <th>high_need_schools</th>
+      <th>high_need_share</th>
+      <th>priority_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Group 1 - Columbus Core</td>
+      <td>Franklin</td>
+      <td>Delaware, Fairfield, Fayette, Franklin, Pickaway, Union</td>
+      <td>378,187</td>
+      <td>524</td>
+      <td>54</td>
+      <td>10.3%</td>
+      <td>Scale + need</td>
+    </tr>
+    <tr>
+      <td>Group 2 - Newark / East-Central</td>
+      <td>Licking</td>
+      <td>Knox, Licking, Perry</td>
+      <td>56,323</td>
+      <td>89</td>
+      <td>9</td>
+      <td>10.1%</td>
+      <td>Selective build</td>
+    </tr>
+    <tr>
+      <td>Group 3 - Southeast Cluster</td>
+      <td>Athens</td>
+      <td>Athens, Hocking, Meigs, Morgan, Vinton, Washington</td>
+      <td>36,096</td>
+      <td>68</td>
+      <td>12</td>
+      <td>17.6%</td>
+      <td>Selective build</td>
+    </tr>
+    <tr>
+      <td>Group 4 - Southern Corridor</td>
+      <td>Jackson</td>
+      <td>Gallia, Jackson, Pike, Ross</td>
+      <td>30,731</td>
+      <td>67</td>
+      <td>14</td>
+      <td>20.9%</td>
+      <td>Need leader</td>
+    </tr>
+    <tr>
+      <td>Group 5 - Eastern Edge</td>
+      <td>Guernsey</td>
+      <td>Belmont, Guernsey, Harrison, Jefferson, Monroe, Noble</td>
+      <td>35,436</td>
+      <td>80</td>
+      <td>4</td>
+      <td>5.0%</td>
+      <td>Selective build</td>
+    </tr>
+  </tbody>
+</table>
+      </div>
+      
+      
+      <p class="small"><strong>Limitations.</strong> High-need results come from the FY25 SSI building allocation file and currently match only a subset of Ohio schools, so the need analysis should be treated as directional rather than exhaustive.</p>
+      
+    </section>
+    
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Tradeoff</div>
+          <h2>Final Tradeoff View</h2>
+        </div>
+      </div>
+      <p>The final tradeoff chart positions each region by scale and need at the same time. It is the clearest bridge from descriptive analysis to planning recommendation.</p>
+      
+      <div class="figure-card">
+        <h3>Scale vs Need Tradeoff</h3>
+        <img src="figures/strategy_tradeoff_matrix.png" alt="Scale vs Need Tradeoff">
+        <p class="caption">Bubble size represents total schools, the x-axis captures youth reach, and the y-axis captures high-need concentration.</p>
+      </div>
+      
+      
+      
+      <p class="small"><strong>Limitations.</strong> The tradeoff view combines the available reach and high-need measures, but it does not yet model travel time, staffing constraints, or partnership conversion rates.</p>
+      
+    </section>
+    
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Recommendation</div>
+          <h2>Final Recommendations</h2>
+        </div>
+      </div>
+      <p>Start with Group 1 - Columbus Core as the flagship region because it leads both on reachable youth and school inventory. Pair that with a focused second-wave strategy in Group 4 - Southern Corridor to concentrate on high-need school partnerships. For near-term outreach opportunity, Group 5 - Eastern Edge stands out on Interested-response rate. Feasibility proxy status: Group 1 - Columbus Core: stretch; Group 2 - Newark / East-Central: stretch; Group 3 - Southeast Cluster: stretch; Group 4 - Southern Corridor: stretch; Group 5 - Eastern Edge: stretch.</p>
+      <ul>
+        <li><strong>Best region for scale:</strong> Group 1 - Columbus Core with 378,187 youth and 524 schools.</li>
+        <li><strong>Best region for concentrated need:</strong> Group 4 - Southern Corridor with a 20.9% high-need school share.</li>
+        <li><strong>Best region for outreach opportunity:</strong> Group 5 - Eastern Edge with a 23.5% Interested-response rate.</li>
+        <li><strong>1-hour proxy feasibility:</strong> Group 1 - Columbus Core: stretch; Group 2 - Newark / East-Central: stretch; Group 3 - Southeast Cluster: stretch; Group 4 - Southern Corridor: stretch; Group 5 - Eastern Edge: stretch</li>
+      </ul>
+      <p class="small">Report generated automatically by <code>python run_pipeline.py</code>.</p>
+    </section>
+  </div>
+</body>
+</html>

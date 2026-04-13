@@ -1,0 +1,6 @@
+region_id,region,anchor_county,counties_in_region,county_count,total_population,youth_population,total_schools,high_need_schools,title_students_served,high_need_share,priority_label,strategy_recommendation
+1,Group 1 - Columbus Core,Franklin,"Delaware, Fairfield, Fayette, Franklin, Pickaway, Union",6,1924692,378187,524,44,17845.0,0.08396946564885496,Scale play,"Prioritize reach, partner density, and fast school pipeline development."
+2,Group 2 - Newark / East-Central,Licking,"Knox, Licking, Perry",3,284428,56323,89,6,2430.0,0.06741573033707865,Targeted build,Use selective outreach around the anchor county while building local proof points.
+3,Group 3 - Southeast Cluster,Athens,"Athens, Hocking, Meigs, Morgan, Vinton, Washington",6,196547,36096,68,4,894.0,0.058823529411764705,Targeted build,Use selective outreach around the anchor county while building local proof points.
+4,Group 4 - Southern Corridor,Jackson,"Gallia, Jackson, Pike, Ross",4,164720,30731,67,7,2374.0,0.1044776119402985,Targeted build,Use selective outreach around the anchor county while building local proof points.
+5,Group 5 - Eastern Edge,Guernsey,"Belmont, Guernsey, Harrison, Jefferson, Monroe, Noble",6,208173,35436,80,4,1461.0,0.05,Targeted build,Use selective outreach around the anchor county while building local proof points.

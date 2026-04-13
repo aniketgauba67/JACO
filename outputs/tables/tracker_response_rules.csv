@@ -1,0 +1,7 @@
+field,value,included_as_positive,rule
+Outcome,voicemail,False,positive_response = outcome_clean == 'interested'
+Outcome,call back,False,positive_response = outcome_clean == 'interested'
+Outcome,no answer,False,positive_response = outcome_clean == 'interested'
+Outcome,interested,True,positive_response = outcome_clean == 'interested'
+Outcome,not interested,False,positive_response = outcome_clean == 'interested'
+Outcome,(blank),False,positive_response = outcome_clean == 'interested'

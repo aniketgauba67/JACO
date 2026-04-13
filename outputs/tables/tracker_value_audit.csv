@@ -1,0 +1,7 @@
+outcome_clean,count,is_positive
+voicemail,35,False
+call back,9,False
+no answer,7,False
+interested,6,True
+not interested,6,False
+(blank),1,False
