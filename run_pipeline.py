@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.analysis import build_pipeline_artifacts
 from src.cleaning import LOGGER, configure_logging, ensure_directories
-from src.config import OUTPUTS_DIR, REPORT_PATH, TABLES_DIR
+from src.config import FIGURES_DIR, OUTPUTS_DIR, REPORT_PATH, TABLES_DIR
 from src.io_utils import (
     get_ohio_counties,
     load_high_need_data,
@@ -25,7 +25,7 @@ def save_table(df: pd.DataFrame, filename: str) -> None:
 
 def main() -> None:
     configure_logging()
-    ensure_directories([OUTPUTS_DIR, TABLES_DIR, REPORT_PATH.parent])
+    ensure_directories([OUTPUTS_DIR, TABLES_DIR, FIGURES_DIR, REPORT_PATH.parent])
     validate_input_files()
 
     LOGGER.info("Loading and inspecting source data.")

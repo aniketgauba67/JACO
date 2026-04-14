@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import io
 import json
+from pathlib import Path
 from typing import Any
 
 import geopandas as gpd
@@ -13,7 +14,7 @@ from plotly.offline import get_plotlyjs
 
 from src.analysis import PipelineArtifacts
 from src.cleaning import format_int, format_pct
-from src.config import OUTPUTS_DIR, REGION_COLORS, REPORT_PATH
+from src.config import FIGURES_DIR, OUTPUTS_DIR, REGION_COLORS, REPORT_PATH
 
 
 HTML_TEMPLATE = Template(
@@ -318,7 +319,20 @@ def _plotly_html(fig: go.Figure) -> str:
     return fig.to_html(full_html=False, include_plotlyjs=False, config={"displayModeBar": False, "responsive": True})
 
 
-def _outreach_map_png_html(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame) -> str:
+def _write_plotly_figure(fig: go.Figure, output_path: Path) -> None:
+    fig.update_layout(
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        font={"family": "Segoe UI, Tahoma, sans-serif", "size": 13, "color": "#172b3a"},
+        margin={"l": 32, "r": 24, "t": 54, "b": 36},
+    )
+    output_path.write_text(
+        fig.to_html(full_html=True, include_plotlyjs=True, config={"displayModeBar": False, "responsive": True}),
+        encoding="utf-8",
+    )
+
+
+def _render_outreach_map_png(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame) -> bytes:
     import matplotlib.pyplot as plt
 
     region_fill = {
@@ -400,13 +414,21 @@ def _outreach_map_png_html(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDa
     buffer = io.BytesIO()
     fig.savefig(buffer, format="png", bbox_inches="tight", facecolor="white")
     plt.close(fig)
-    encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
+    return buffer.getvalue()
+
+
+def _outreach_map_png_html(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame) -> str:
+    encoded = base64.b64encode(_render_outreach_map_png(outreach_schools, county_geo)).decode("ascii")
     return (
         "<div style='display:flex; justify-content:center;'>"
         f"<img src='data:image/png;base64,{encoded}' alt='Outreach school map' "
         "style='width:100%; max-width:980px; height:auto; border-radius:14px; border:1px solid #d9e2ec;'>"
         "</div>"
     )
+
+
+def _write_outreach_map_png(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame, output_path: Path) -> None:
+    output_path.write_bytes(_render_outreach_map_png(outreach_schools, county_geo))
 
 
 def _table_html(df: pd.DataFrame, table_id: str) -> str:
@@ -1067,6 +1089,87 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
     region_metrics = _region_metrics(artifacts)
     school_points, has_exact_coords = _school_points(artifacts)
     outreach_points, outreach_has_exact = _outreach_school_points(artifacts)
+
+    region_map_fig = _build_region_map(county_geo)
+    total_population_heatmap_fig = _build_county_heatmap(
+        county_metrics, "total_population", "Ohio County Total Population", "Blues", "Population"
+    )
+    youth_population_heatmap_fig = _build_county_heatmap(
+        county_metrics, "youth_population", "Ohio County Youth Population", "YlGnBu", "Youth population"
+    )
+    school_density_heatmap_fig = _build_county_heatmap(
+        county_metrics, "school_density_per_10k_youth", "Schools per 10,000 Youth", "Oranges", "Schools per 10k youth"
+    )
+    high_need_count_heatmap_fig = _build_county_heatmap(
+        county_metrics, "high_need_schools", "High-Need School Count", "Reds", "High-need schools"
+    )
+    high_need_share_heatmap_fig = _build_county_heatmap(
+        county_metrics, "high_need_share", "High-Need School Share", "RdPu", "High-need share"
+    )
+    outreach_activity_heatmap_fig = _build_county_heatmap(
+        county_metrics, "outreach_records", "Outreach Records by County", "PuBuGn", "Outreach records"
+    )
+    interested_outcomes_heatmap_fig = _build_county_heatmap(
+        county_metrics, "interested_outcomes", "Interested Outcomes by County", "Greens", "Interested outcomes"
+    )
+    youth_by_region_fig = _build_horizontal_bar_advanced(
+        region_metrics,
+        "youth_population",
+        "Youth Population by Region",
+        use_short_labels=True,
+        compact_text=True,
+    )
+    schools_by_region_fig = _build_horizontal_bar(region_metrics, "total_schools", "Mapped Schools by Region")
+    school_type_chart_fig = _build_school_type_chart(school_points)
+    outcome_distribution_fig = _build_outcome_distribution(artifacts.tracker_value_audit)
+    tracker_match_summary_fig = _build_match_summary(artifacts.tracker_match_summary, "rows", "Tracker Match Summary")
+    interested_rate_by_region_fig = _build_horizontal_bar(
+        region_metrics.fillna({"positive_response_rate": 0}),
+        "positive_response_rate",
+        "Interested Response Rate by Region",
+        value_type="pct",
+    )
+    outreach_records_by_region_fig = _build_horizontal_bar(
+        region_metrics.fillna({"outreach_records": 0}),
+        "outreach_records",
+        "Outreach Records by Region",
+    )
+    high_need_match_methods_fig = _build_match_summary(
+        artifacts.high_need_match_summary,
+        "school_records",
+        "High-Need Match Methods",
+    )
+    high_need_by_region_fig = _build_horizontal_bar(region_metrics, "high_need_schools", "High-Need Schools by Region")
+    high_need_share_by_region_fig = _build_horizontal_bar(
+        region_metrics,
+        "high_need_share",
+        "High-Need School Share by Region",
+        value_type="pct",
+    )
+    scale_vs_need_fig = _build_bubble(
+        region_metrics,
+        "youth_population",
+        "high_need_share",
+        "total_schools",
+        "Scale vs High-Need Concentration",
+        "Youth population",
+        "High-need school share",
+    )
+    scale_vs_outreach_fig = _build_bubble(
+        region_metrics.fillna({"outreach_records": 0, "positive_responses": 0, "high_need_share": 0}),
+        "youth_population",
+        "outreach_per_100_schools",
+        "total_schools",
+        "Youth Reach vs Outreach Intensity",
+        "Youth population",
+        "Outreach records per 100 schools",
+    )
+    anchor_distance_fig = _build_horizontal_bar(
+        region_metrics,
+        "max_anchor_distance_miles",
+        "Maximum Anchor-to-County Distance by Region",
+    )
+
     school_map_report_html = (
         _outreach_map_png_html(outreach_points, county_geo)
         if not outreach_points.empty
@@ -1111,37 +1214,37 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
     heatmap_figures = [
         {
             "title": "Total Population",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "total_population", "Ohio County Total Population", "Blues", "Population")),
+            "html": _plotly_html(total_population_heatmap_fig),
             "caption": "Hover for county, region membership, and supporting context. Dark outlines identify counties inside the fixed JACO footprint.",
         },
         {
             "title": "Youth Population",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "youth_population", "Ohio County Youth Population", "YlGnBu", "Youth population")),
+            "html": _plotly_html(youth_population_heatmap_fig),
             "caption": "Youth population is derived from the inspected AGEGRP structure in the source file rather than assumed blindly.",
         },
         {
             "title": "School Density",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "school_density_per_10k_youth", "Schools per 10,000 Youth", "Oranges", "Schools per 10k youth")),
+            "html": _plotly_html(school_density_heatmap_fig),
             "caption": "This view helps distinguish high-volume counties from counties with smaller school inventories relative to youth population.",
         },
         {
             "title": "High-Need Count",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "high_need_schools", "High-Need School Count", "Reds", "High-need schools")),
+            "html": _plotly_html(high_need_count_heatmap_fig),
             "caption": "Counts reflect schools linked to the FY25 SSI file through the current exact and fallback match logic.",
         },
         {
             "title": "High-Need Share",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "high_need_share", "High-Need School Share", "RdPu", "High-need share")),
+            "html": _plotly_html(high_need_share_heatmap_fig),
             "caption": "The share view controls for county size and highlights concentration rather than raw volume.",
         },
         {
             "title": "Outreach Activity",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "outreach_records", "Outreach Records by County", "PuBuGn", "Outreach records")),
+            "html": _plotly_html(outreach_activity_heatmap_fig),
             "caption": "This map uses tracker rows after county cleaning and reflects activity volume, not only positive outcomes.",
         },
         {
             "title": "Interested Outcomes",
-            "html": _plotly_html(_build_county_heatmap(county_metrics, "interested_outcomes", "Interested Outcomes by County", "Greens", "Interested outcomes")),
+            "html": _plotly_html(interested_outcomes_heatmap_fig),
             "caption": "Interested outcomes use only the exact rule Outcome = Interested.",
         },
     ]
@@ -1233,7 +1336,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
             "figures": [
                 {
                     "title": "Interactive Regional Footprint",
-                    "html": _plotly_html(_build_region_map(county_geo)),
+                    "html": _plotly_html(region_map_fig),
                     "caption": "The fixed regional structure is shown analytically rather than treated as an optimization output.",
                 }
             ],
@@ -1258,17 +1361,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Youth Population by Region",
-                            "html": _plotly_html(
-                                _build_horizontal_bar_advanced(
-                                    region_metrics,
-                                    "youth_population",
-                                    "Youth Population by Region",
-                                    use_short_labels=True,
-                                    show_bar_text=True,
-                                    compact_text=True,
-                                    height=400,
-                                )
-                            ),
+                            "html": _plotly_html(youth_by_region_fig),
                             "caption": "This regional view uses shorter region labels and compact bar labels so the scale stays readable while still showing population values. Hover for exact youth counts.",
                         }
                     ],
@@ -1306,7 +1399,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Mapped Schools by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "total_schools", "Mapped Schools by Region")),
+                            "html": _plotly_html(schools_by_region_fig),
                             "caption": "This view compares school inventory across the five fixed JACO regions.",
                         }
                     ],
@@ -1316,7 +1409,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "School Type Breakdown",
-                            "html": _plotly_html(_build_school_type_chart(school_points)),
+                            "html": _plotly_html(school_type_chart_fig),
                             "caption": "The stacked view helps distinguish whether regional school inventories are concentrated in similar or different school types.",
                         }
                     ],
@@ -1351,7 +1444,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Outcome Distribution",
-                            "html": _plotly_html(_build_outcome_distribution(artifacts.tracker_value_audit)),
+                            "html": _plotly_html(outcome_distribution_fig),
                             "caption": "Only the Interested category is treated as positive in the rest of the analysis.",
                         }
                     ],
@@ -1361,7 +1454,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Tracker Match Methods",
-                            "html": _plotly_html(_build_match_summary(artifacts.tracker_match_summary, "rows", "Tracker Match Summary")),
+                            "html": _plotly_html(tracker_match_summary_fig),
                             "caption": "This chart separates primary normalized-name county matches from unique-name fallback and unmatched rows.",
                         }
                     ],
@@ -1371,12 +1464,12 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Interested Response Rate by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics.fillna({"positive_response_rate": 0}), "positive_response_rate", "Interested Response Rate by Region", value_type="pct")),
+                            "html": _plotly_html(interested_rate_by_region_fig),
                             "caption": "Rates are calculated as Interested outcomes divided by outreach records within each region.",
                         },
                         {
                             "title": "Outreach Records by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics.fillna({"outreach_records": 0}), "outreach_records", "Outreach Records by Region")),
+                            "html": _plotly_html(outreach_records_by_region_fig),
                             "caption": "This volume view complements the response-rate view by showing where tracker activity is concentrated.",
                         },
                     ],
@@ -1410,7 +1503,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "High-Need Match Summary",
-                            "html": _plotly_html(_build_match_summary(artifacts.high_need_match_summary, "school_records", "High-Need Match Methods")),
+                            "html": _plotly_html(high_need_match_methods_fig),
                             "caption": "Exact IRN and exact unique-name matching are shown separately from the district-level fallback pass.",
                         }
                     ],
@@ -1420,7 +1513,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "High-Need Schools by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "high_need_schools", "High-Need Schools by Region")),
+                            "html": _plotly_html(high_need_by_region_fig),
                             "caption": "Counts are based on schools linked to the FY25 SSI workbook through the current match logic.",
                         }
                     ],
@@ -1430,7 +1523,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "High-Need Share by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "high_need_share", "High-Need School Share by Region", value_type="pct")),
+                            "html": _plotly_html(high_need_share_by_region_fig),
                             "caption": "The share view controls for school-volume differences across regions.",
                         }
                     ],
@@ -1462,7 +1555,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Scale vs High-Need Concentration",
-                            "html": _plotly_html(_build_bubble(region_metrics, "youth_population", "high_need_share", "total_schools", "Scale vs High-Need Concentration", "Youth population", "High-need school share")),
+                            "html": _plotly_html(scale_vs_need_fig),
                             "caption": "Bubble size reflects total schools, allowing scale and concentration to be compared at the same time.",
                         }
                     ],
@@ -1472,7 +1565,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Scale vs Outreach Activity",
-                            "html": _plotly_html(_build_bubble(region_metrics.fillna({"outreach_records": 0, "positive_responses": 0, "high_need_share": 0}), "youth_population", "outreach_per_100_schools", "total_schools", "Youth Reach vs Outreach Intensity", "Youth population", "Outreach records per 100 schools")),
+                            "html": _plotly_html(scale_vs_outreach_fig),
                             "caption": "This view helps compare scale against current outreach intensity, normalized by school volume.",
                         }
                     ],
@@ -1482,7 +1575,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Anchor Distance Summary",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "max_anchor_distance_miles", "Maximum Anchor-to-County Distance by Region")),
+                            "html": _plotly_html(anchor_distance_fig),
                             "caption": "Distances use county centroids and are intended as a transparent proximity screen, not a road-network model.",
                         }
                     ],
@@ -1603,6 +1696,34 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
             "body": "The anchor feasibility screen uses county centroid distance from each anchor county rather than road-network travel time. It should be interpreted as a transparent spatial proxy, not as a final operating-time model.",
         },
     ]
+
+    figure_exports: list[tuple[str, go.Figure]] = [
+        ("region_map.html", region_map_fig),
+        ("county_total_population_heatmap.html", total_population_heatmap_fig),
+        ("county_youth_population_heatmap.html", youth_population_heatmap_fig),
+        ("county_school_density_heatmap.html", school_density_heatmap_fig),
+        ("county_high_need_count_heatmap.html", high_need_count_heatmap_fig),
+        ("county_high_need_share_heatmap.html", high_need_share_heatmap_fig),
+        ("county_outreach_activity_heatmap.html", outreach_activity_heatmap_fig),
+        ("county_interested_outcomes_heatmap.html", interested_outcomes_heatmap_fig),
+        ("youth_by_region.html", youth_by_region_fig),
+        ("schools_by_region.html", schools_by_region_fig),
+        ("school_type_breakdown.html", school_type_chart_fig),
+        ("tracker_outcome_distribution.html", outcome_distribution_fig),
+        ("tracker_match_summary.html", tracker_match_summary_fig),
+        ("interested_response_rate_by_region.html", interested_rate_by_region_fig),
+        ("outreach_records_by_region.html", outreach_records_by_region_fig),
+        ("high_need_match_methods.html", high_need_match_methods_fig),
+        ("high_need_schools_by_region.html", high_need_by_region_fig),
+        ("high_need_share_by_region.html", high_need_share_by_region_fig),
+        ("scale_vs_need.html", scale_vs_need_fig),
+        ("scale_vs_outreach.html", scale_vs_outreach_fig),
+        ("anchor_distance_summary.html", anchor_distance_fig),
+    ]
+    for filename, figure in figure_exports:
+        _write_plotly_figure(figure, FIGURES_DIR / filename)
+    if not outreach_points.empty:
+        _write_outreach_map_png(outreach_points, county_geo, FIGURES_DIR / "outreach_school_map.png")
 
     html = HTML_TEMPLATE.render(
         plotly_js=get_plotlyjs(),
