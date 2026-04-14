@@ -51,8 +51,8 @@ The pipeline checks for these files before it runs and raises a clear error if a
   HTML report generation.
 - `outputs/report.html`
   Full presentation-style report.
-- `outputs/final_school_outreach_map.png`
-  Final polished school outreach map for sharing or slides.
+- `outputs/outreach_school_map.png`
+  Final outreach-only school map for sharing or slides.
 
 ## Fixed JACO Regions
 
@@ -92,7 +92,7 @@ python -m pip install -r requirements.txt
 python run_pipeline.py
 ```
 
-That command regenerates all tables, visuals, and the HTML report in `outputs/`.
+That command regenerates the report, outreach map deliverables, and summary tables in `outputs/`.
 
 ## Methodology Summary
 
@@ -110,21 +110,10 @@ That command regenerates all tables, visuals, and the HTML report in `outputs/`.
 ### Main Deliverables
 
 - [Full HTML report](/Users/aniketgauba/Documents/GitHub/JACO/outputs/report.html)
-- [Final school outreach map](/Users/aniketgauba/Documents/GitHub/JACO/outputs/final_school_outreach_map.png)
+- [Outreach school map PNG](/Users/aniketgauba/Documents/GitHub/JACO/outputs/outreach_school_map.png)
+- [Outreach school map HTML](/Users/aniketgauba/Documents/GitHub/JACO/outputs/outreach_school_map.html)
 
-### Core Figures
-
-- `outputs/figures/region_map.png`
-- `outputs/figures/county_population_heatmap.png`
-- `outputs/figures/youth_population_heatmap.png`
-- `outputs/figures/youth_by_region.png`
-- `outputs/figures/schools_by_region.png`
-- `outputs/figures/schools_map.png`
-- `outputs/figures/outreach_map.png`
-- `outputs/figures/high_need_by_region.png`
-- `outputs/figures/high_need_share_by_region.png`
-- `outputs/figures/one_hour_radius_feasibility.png`
-- `outputs/figures/strategy_tradeoff_matrix.png`
+The main visuals are embedded directly in the HTML report, and the outreach-only map is also exported as standalone PNG and HTML files in `outputs/`.
 
 ### Core Tables
 
@@ -184,4 +173,3 @@ This project is built to be both presentation-ready and inspectable. It gives re
 - a polished final report
 - cleaned summary tables
 - shareable visuals for slides or discussion
-

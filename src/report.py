@@ -295,6 +295,18 @@ def _format_nullable_int(value: Any) -> str:
     return format_int(value)
 
 
+def _format_compact_int(value: Any) -> str:
+    if pd.isna(value):
+        return "N/A"
+    value = float(value)
+    abs_value = abs(value)
+    if abs_value >= 1_000_000:
+        return f"{value / 1_000_000:.1f}M"
+    if abs_value >= 1_000:
+        return f"{value / 1_000:.0f}k"
+    return f"{int(round(value))}"
+
+
 def _plotly_html(fig: go.Figure) -> str:
     fig.update_layout(
         paper_bgcolor="white",
@@ -729,20 +741,63 @@ def _build_county_heatmap(county_geo: gpd.GeoDataFrame, metric: str, title: str,
 
 
 def _build_horizontal_bar(df: pd.DataFrame, value_col: str, title: str, value_type: str = "int") -> go.Figure:
+    return _build_horizontal_bar_advanced(df, value_col, title, value_type=value_type)
+
+
+def _short_region_label(value: str) -> str:
+    if not value:
+        return value
+    return (
+        value.replace("Group 1 - ", "G1: ")
+        .replace("Group 2 - ", "G2: ")
+        .replace("Group 3 - ", "G3: ")
+        .replace("Group 4 - ", "G4: ")
+        .replace("Group 5 - ", "G5: ")
+    )
+
+
+def _build_horizontal_bar_advanced(
+    df: pd.DataFrame,
+    value_col: str,
+    title: str,
+    value_type: str = "int",
+    use_short_labels: bool = False,
+    show_bar_text: bool = True,
+    height: int = 460,
+    compact_text: bool = False,
+) -> go.Figure:
     plot_df = df.sort_values(value_col, ascending=True).copy()
-    text = plot_df[value_col].map(format_int if value_type == "int" else format_pct)
+    plot_df["region_display"] = plot_df["region"].map(_short_region_label if use_short_labels else (lambda x: x))
+    if show_bar_text:
+        if value_type == "int":
+            formatter = _format_compact_int if compact_text else format_int
+        else:
+            formatter = format_pct
+        text = plot_df[value_col].map(formatter)
+    else:
+        text = None
+    hover_value = "%{x:,.0f}" if value_type == "int" else "%{x:.1%}"
     fig = go.Figure(
         go.Bar(
             x=plot_df[value_col],
-            y=plot_df["region"],
+            y=plot_df["region_display"],
             orientation="h",
             marker={"color": plot_df["region"].map(REGION_COLORS)},
             text=text,
-            textposition="outside",
-            hovertemplate="<b>%{y}</b><br>%{x}<extra></extra>",
+            textposition="outside" if show_bar_text else "none",
+            cliponaxis=False,
+            customdata=plot_df[["region"]].to_numpy(),
+            hovertemplate="<b>%{customdata[0]}</b><br>" + hover_value + "<extra></extra>",
         )
     )
-    fig.update_layout(title=title, height=460, xaxis_title="", yaxis_title="", margin={"l": 200, "r": 40, "t": 54, "b": 36})
+    fig.update_layout(
+        title=title,
+        height=height,
+        xaxis_title="",
+        yaxis_title="",
+        margin={"l": 150 if use_short_labels else 200, "r": 24 if not show_bar_text else 40, "t": 54, "b": 36},
+        xaxis={"tickformat": ",.0f" if value_type == "int" else ".0%"},
+    )
     return fig
 
 
@@ -1240,8 +1295,18 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "figures": [
                         {
                             "title": "Youth Population by Region",
-                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "youth_population", "Youth Population by Region")),
-                            "caption": "This regional view summarizes youth reach without layering extra county detail on screen at the same time.",
+                            "html": _plotly_html(
+                                _build_horizontal_bar_advanced(
+                                    region_metrics,
+                                    "youth_population",
+                                    "Youth Population by Region",
+                                    use_short_labels=True,
+                                    show_bar_text=True,
+                                    compact_text=True,
+                                    height=400,
+                                )
+                            ),
+                            "caption": "This regional view uses shorter region labels and compact bar labels so the scale stays readable while still showing population values. Hover for exact youth counts.",
                         }
                     ],
                 },
