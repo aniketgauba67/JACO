@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import base64
+import io
 import json
 from typing import Any
 
@@ -317,47 +318,7 @@ def _plotly_html(fig: go.Figure) -> str:
     return fig.to_html(full_html=False, include_plotlyjs=False, config={"displayModeBar": False, "responsive": True})
 
 
-def _png_html(path: str) -> str:
-    encoded = base64.b64encode((OUTPUTS_DIR / path).read_bytes()).decode("ascii")
-    return (
-        "<div style='display:flex; justify-content:center;'>"
-        f"<img src='data:image/png;base64,{encoded}' alt='Outreach school map' "
-        "style='width:100%; max-width:980px; height:auto; border-radius:14px; border:1px solid #d9e2ec;'>"
-        "</div>"
-    )
-
-
-def _write_standalone_figure(page_title: str, figure_title: str, figure_html: str, output_name: str) -> None:
-    html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{page_title}</title>
-  <style>
-    body {{ margin: 0; background: #f4f7fb; font-family: "Segoe UI", Tahoma, sans-serif; color: #172b3a; }}
-    .page {{ max-width: 1220px; margin: 0 auto; padding: 24px; }}
-    .card {{ background: #ffffff; border-radius: 18px; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08); padding: 24px; }}
-    h1 {{ margin: 0 0 10px; font-size: 28px; color: #12344d; }}
-    p {{ margin: 0 0 18px; line-height: 1.6; color: #5b7083; }}
-  </style>
-</head>
-<body>
-  <script>{get_plotlyjs()}</script>
-  <div class="page">
-    <div class="card">
-      <h1>{figure_title}</h1>
-      <p>Standalone interactive view exported from the JACO analysis pipeline.</p>
-      {figure_html}
-    </div>
-  </div>
-</body>
-</html>
-"""
-    (OUTPUTS_DIR / output_name).write_text(html, encoding="utf-8")
-
-
-def _write_outreach_map_png(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame, output_name: str = "outreach_school_map.png") -> None:
+def _outreach_map_png_html(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame) -> str:
     import matplotlib.pyplot as plt
 
     region_fill = {
@@ -436,8 +397,16 @@ def _write_outreach_map_png(outreach_schools: pd.DataFrame, county_geo: gpd.GeoD
     )
     ax.set_axis_off()
     plt.tight_layout()
-    fig.savefig(OUTPUTS_DIR / output_name, bbox_inches="tight", facecolor="white")
+    buffer = io.BytesIO()
+    fig.savefig(buffer, format="png", bbox_inches="tight", facecolor="white")
     plt.close(fig)
+    encoded = base64.b64encode(buffer.getvalue()).decode("ascii")
+    return (
+        "<div style='display:flex; justify-content:center;'>"
+        f"<img src='data:image/png;base64,{encoded}' alt='Outreach school map' "
+        "style='width:100%; max-width:980px; height:auto; border-radius:14px; border:1px solid #d9e2ec;'>"
+        "</div>"
+    )
 
 
 def _table_html(df: pd.DataFrame, table_id: str) -> str:
@@ -1098,17 +1067,11 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
     region_metrics = _region_metrics(artifacts)
     school_points, has_exact_coords = _school_points(artifacts)
     outreach_points, outreach_has_exact = _outreach_school_points(artifacts)
-    school_map_html = _plotly_html(_build_outreach_map(outreach_points, county_geo, outreach_has_exact))
-    _write_standalone_figure(
-        page_title="JACO Outreach School Map",
-        figure_title="Outreach-Matched Schools",
-        figure_html=school_map_html,
-        output_name="outreach_school_map.html",
+    school_map_report_html = (
+        _outreach_map_png_html(outreach_points, county_geo)
+        if not outreach_points.empty
+        else _plotly_html(_build_outreach_map(outreach_points, county_geo, outreach_has_exact))
     )
-    school_map_report_html = school_map_html
-    if not outreach_points.empty:
-        _write_outreach_map_png(outreach_points, county_geo, output_name="outreach_school_map.png")
-        school_map_report_html = _png_html("outreach_school_map.png")
 
     grouped_counties = county_metrics[county_metrics["is_jaco_county"]].copy()
     interested_matched = int(metadata["tracker"]["positive_matched_schools"])
@@ -1333,8 +1296,7 @@ def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, me
                     "caption": (
                         f"This map shows only the {format_int(outreach_mapped_schools)} tracker-matched outreach schools. Exact coordinates are used for "
                         f"{format_int(exact_school_points)} of those rows, including {format_int(interested_exact_points)} of the "
-                        f"{format_int(metadata['tracker']['positive_matched_schools'])} Interested schools; the rest use clearly labeled county-based fallback placement. "
-                        f"A standalone interactive version is also saved as <code>outputs/outreach_school_map.html</code>."
+                        f"{format_int(metadata['tracker']['positive_matched_schools'])} Interested schools; the rest use clearly labeled county-based fallback placement."
                     ),
                 }
             ],

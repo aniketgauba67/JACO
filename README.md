@@ -1,58 +1,23 @@
 # JACO Regional Strategy Analytics
 
-This repository contains a portfolio-quality analytics project built for Junior Achievement of Central Ohio (JACO). It replaces a messy notebook workflow with a clean Python pipeline that validates source files, builds the five required JACO regions, analyzes youth reach and school inventory, measures high-need concentration, summarizes outreach activity, creates presentation-ready visuals, and publishes a full HTML report.
+This repository contains a reproducible Python analytics project built for Junior Achievement of Central Ohio (JACO). It assembles county population, school inventory, high-need school indicators, ZIP-to-county mapping, outreach tracker activity, and supplemental school coordinates into a single report workflow.
 
-The project is designed so one command reproduces the analysis:
+The main deliverable is a polished HTML report generated with one command:
 
 ```bash
 python run_pipeline.py
 ```
 
-## Project Goal
+## What This Project Does
 
-The analysis supports mobile-unit strategy and school outreach planning across five fixed JACO service regions. It is built to answer:
+The project is designed to support regional planning and outreach analysis across five fixed JACO service groupings in Ohio. It helps a reviewer explore:
 
-1. Which county groupings make sense around the five anchor counties?
-2. Which regions maximize youth reach?
-3. Which regions contain the largest school inventory for outreach?
-4. Which regions have the strongest concentration of high-need schools?
-5. What are the tradeoffs between scale, need, outreach traction, and anchor feasibility?
-6. What should JACO prioritize first?
-
-## Required Input Files
-
-Place these exact files in the project root:
-
-- `JACO.csv`
-- `ccd_sch_029_2425_w_1a_073025.csv`
-- `FY25 TI NC SSI Sec 1003i Report FINAL.xlsx`
-- `ZIP_TRACT_122025.xlsx`
-- `JA Cold Call Tracker.xlsx`
-
-The pipeline checks for these files before it runs and raises a clear error if anything is missing.
-
-## Repository Structure
-
-- `run_pipeline.py`
-  Main one-command entry point.
-- `src/config.py`
-  Paths, fixed regions, thresholds, and output settings.
-- `src/io_utils.py`
-  File validation, workbook inspection, and data loading.
-- `src/cleaning.py`
-  Name standardization, ZIP cleaning, formatting helpers, and logging.
-- `src/mapping.py`
-  ZIP-to-county logic, county geography, and regional lookup creation.
-- `src/analysis.py`
-  Population, schools, high-need, tracker, and feasibility analysis.
-- `src/visuals.py`
-  Figure generation.
-- `src/report.py`
-  HTML report generation.
-- `outputs/report.html`
-  Full presentation-style report.
-- `outputs/outreach_school_map.png`
-  Final outreach-only school map for sharing or slides.
+1. How the 25 JACO counties are grouped around the five anchor counties
+2. Which regions have the largest youth population
+3. Which regions contain the most schools for outreach
+4. Where high-need schools are most concentrated
+5. How outreach activity and interested responses are distributed across counties and regions
+6. How the different lenses compare without forcing a recommendation
 
 ## Fixed JACO Regions
 
@@ -72,104 +37,175 @@ The pipeline checks for these files before it runs and raises a clear error if a
   Anchor: Guernsey
   Counties: Guernsey, Noble, Monroe, Belmont, Harrison, Jefferson
 
-## How To Run
+## Repository Contents
 
-1. Create a virtual environment:
+- `run_pipeline.py`
+  Main entry point that runs the full pipeline and writes outputs.
+- `src/config.py`
+  Central project settings, fixed regions, filenames, and thresholds.
+- `src/io_utils.py`
+  Input validation, workbook inspection, and file loading helpers.
+- `src/cleaning.py`
+  Standardization functions for names, ZIP codes, and text fields.
+- `src/mapping.py`
+  ZIP-to-county logic, county geography, and region assignment helpers.
+- `src/analysis.py`
+  Population, school, high-need, outreach, and validation logic.
+- `src/report.py`
+  Final HTML report generation.
+- `jaco_data_bundle.zip`
+  Bundled raw data archive for reproducible setup on another machine.
+- `outputs/report.html`
+  Final generated report after the pipeline runs.
+
+## Data Files
+
+The pipeline expects these files in the project root:
+
+- `JACO.csv`
+- `ccd_sch_029_2425_w_1a_073025.csv`
+- `FY25 TI NC SSI Sec 1003i Report FINAL.xlsx`
+- `ZIP_TRACT_122025.xlsx`
+- `JA Cold Call Tracker.xlsx`
+- `BUILDING_HIGH_LEVEL_2425.xlsx`
+- `ohio_schools_coordinates_v2.xlsx`
+
+On GitHub, the raw files are bundled inside `jaco_data_bundle.zip` rather than tracked individually. A new user should extract that zip into the repository root before running the project.
+
+## How To Run This On Another Machine
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/aniketgauba67/JACO.git
+cd JACO
+```
+
+### 2. Create and activate a virtual environment
+
+macOS / Linux:
 
 ```bash
 python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-2. Activate it and install dependencies:
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+### 3. Install dependencies
 
 ```bash
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-3. Run the pipeline:
+### 4. Extract the bundled data archive
+
+You must unpack `jaco_data_bundle.zip` into the project root so the raw files sit next to `run_pipeline.py`.
+
+Command line option:
+
+```bash
+unzip jaco_data_bundle.zip
+```
+
+Or extract it manually with Finder, Explorer, or your preferred archive tool.
+
+After extraction, the root folder should contain the seven required data files listed above.
+
+### 5. Run the pipeline
 
 ```bash
 python run_pipeline.py
 ```
 
-That command regenerates the report, outreach map deliverables, and summary tables in `outputs/`.
+### 6. Open the final report
 
-## Methodology Summary
+After the run finishes, open:
 
-- Population analysis filters `JACO.csv` to Ohio county-level rows and the latest available `YEAR` code.
-- Youth reach is calculated only after inspecting the file’s `AGEGRP` structure; the current build uses `AGEGRP` 2, 3, and 4.
-- School analysis filters the NCES extract to open Ohio schools and standardizes school names, ZIP codes, and identifiers.
-- ZIP codes are mapped to counties using the strongest available ZIP-to-county ratio field from `ZIP_TRACT_122025.xlsx`.
-- High-need schools are matched using the FY25 SSI workbook, prioritizing exact building IRN matching and then cleaned school-name matching.
-- Cold-call tracker rows are standardized and matched to schools using normalized school names, with county used as a secondary check where available.
-- Positive outreach is defined transparently as tracker rows where `Outcome = Interested`.
-- The 1-hour feasibility screen uses county-centroid distance from each anchor county as a transparent proxy because no routing API is used.
+- `outputs/report.html`
 
-## Outputs
+That HTML file is the main deliverable. It contains the full narrative, interactive charts, outreach map, validation summaries, and supporting tables.
 
-### Main Deliverables
+## What Gets Generated
 
-- [Full HTML report](/Users/aniketgauba/Documents/GitHub/JACO/outputs/report.html)
-- [Outreach school map PNG](/Users/aniketgauba/Documents/GitHub/JACO/outputs/outreach_school_map.png)
-- [Outreach school map HTML](/Users/aniketgauba/Documents/GitHub/JACO/outputs/outreach_school_map.html)
+### Main output
 
-The main visuals are embedded directly in the HTML report, and the outreach-only map is also exported as standalone PNG and HTML files in `outputs/`.
+- `outputs/report.html`
 
-### Core Tables
+### Supporting tables
 
-- `outputs/tables/region_summary.csv`
-- `outputs/tables/final_strategy_summary.csv`
-- `outputs/tables/youth_by_region.csv`
-- `outputs/tables/schools_by_region.csv`
-- `outputs/tables/high_need_by_region.csv`
-- `outputs/tables/tracker_summary.csv`
-- `outputs/tables/feasibility_by_region.csv`
-- `outputs/tables/grouped_counties.csv`
-- `outputs/tables/tracker_outcome_audit.csv`
+The pipeline also writes CSV outputs to `outputs/tables/`, including:
 
-Additional audit and intermediate tables are also saved in `outputs/tables/`.
+- `region_summary.csv`
+- `youth_by_region.csv`
+- `schools_by_region.csv`
+- `high_need_by_region.csv`
+- `tracker_summary.csv`
+- `grouped_counties.csv`
+- `tracker_outcome_audit.csv`
+- `join_audit_summary.csv`
+- `school_coordinate_match_summary.csv`
 
-## Key Findings
+These tables support the report and make the analysis easy to inspect outside the HTML.
 
-- `Group 1 - Columbus Core` is the scale leader, with the largest youth population and school inventory.
-- `Group 4 - Southern Corridor` has the highest concentration of identified high-need schools.
-- Tracker matching is strong enough to support region-level outreach interpretation.
-- Positive outreach schools are currently defined only as tracker rows where `Outcome = Interested`.
-- Under the centroid-distance proxy, the five fixed regions should be treated as strategic operating clusters rather than confirmed one-hour drive territories.
+## Analysis Workflow
 
-## School Outreach Map Notes
+At a high level, the pipeline does the following:
 
-The final outreach map is intentionally styled for readability:
+1. Validates that all required data files exist
+2. Loads each dataset and inspects workbook sheets / columns defensively
+3. Standardizes county names, school names, ZIP codes, and text fields
+4. Builds the fixed five-region JACO geography
+5. Filters and summarizes county population and youth population
+6. Maps schools to counties and then to JACO regions
+7. Matches high-need schools using IRN-first logic plus fallback school-name matching
+8. Cleans and audits the cold-call tracker
+9. Defines positive outreach strictly as `Outcome == Interested`
+10. Generates the final HTML report and supporting audit tables
 
-- all schools are shown as light-gray dots
-- positive outreach schools are shown as green dots
-- school locations are approximate rather than true coordinates
+## Report Contents
 
-Because the NCES extract does not provide usable latitude/longitude for this workflow, school points are placed deterministically within their counties for visualization purposes.
+The final report includes:
 
-## How To Access The Full Report
+- project overview and business framing
+- regional footprint views
+- county and region population analysis
+- school distribution and outreach visuals
+- interested-outcome analysis
+- high-need school analysis
+- join validation and match-rate diagnostics
+- county and region comparison tables
+- method notes and caveats
 
-If you are sharing this project through GitHub:
+## Important Notes For Reviewers
 
-1. open the repository
-2. open the `outputs` folder
-3. select `report.html`
+- The report is meant to be analytical and decision-support oriented.
+- It presents patterns, comparisons, and tradeoffs rather than prescribing a final action plan.
+- Outreach positives are defined only as tracker rows where `Outcome = Interested`.
+- School mapping uses the supplemental coordinate workbook where exact matches are available.
+- Any remaining unmatched school locations use a transparent fallback and are labeled accordingly in the report.
 
-The HTML report contains the full narrative, charts, summary tables, methodology, validation notes, and final recommendations.
+## Troubleshooting
 
-## Limitations
+If the pipeline does not run as expected:
 
-- The school map uses approximate within-county placement because usable school coordinates were not available in the NCES extract used here.
-- High-need analysis depends on the FY25 SSI workbook and should be interpreted as a specific need lens rather than a complete statewide need census.
-- The 1-hour feasibility check uses centroid distance, not real road-network travel time.
-- Outreach interpretation depends on tracker-school matching quality and the current `Outcome = Interested` rule.
+- Make sure the zip file has been extracted into the repository root.
+- Confirm the virtual environment is activated.
+- Reinstall dependencies with `python -m pip install -r requirements.txt`.
+- Check that `outputs/report.html` was regenerated after the run.
+- If a workbook structure changes, the pipeline will usually log the chosen sheet or column logic to help diagnose the issue.
 
 ## Why This Repo Is Useful
 
-This project is built to be both presentation-ready and inspectable. It gives reviewers:
+This project is built to be both presentation-ready and reproducible. A reviewer can:
 
-- a one-command reproducible workflow
-- modular, readable Python code
-- a polished final report
-- cleaned summary tables
-- shareable visuals for slides or discussion
+- inspect the code and methodology
+- rerun the full workflow with one command
+- open a polished report without using notebooks
+- review output tables for validation and deeper analysis
