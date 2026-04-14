@@ -4,3 +4,12 @@ __pycache__/
 .venv/
 data_processing/cache/
 .cache/
+
+# Keep the bundled archive in git, but not the unpacked raw source files.
+JACO.csv
+ccd_sch_029_2425_w_1a_073025.csv
+FY25 TI NC SSI Sec 1003i Report FINAL.xlsx
+ZIP_TRACT_122025.xlsx
+JA Cold Call Tracker.xlsx
+BUILDING_HIGH_LEVEL_2425.xlsx
+ohio_schools_coordinates_v2.xlsx
