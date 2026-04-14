@@ -6,7 +6,7 @@ import geopandas as gpd
 import pandas as pd
 from rapidfuzz import fuzz, process
 
-from src.cleaning import LOGGER, normalize_county_name, normalize_school_name, normalize_zip
+from src.cleaning import LOGGER, normalize_address, normalize_county_name, normalize_phone, normalize_school_name, normalize_school_name_strict, normalize_zip
 from src.config import (
     FEASIBILITY_RADIUS_MILES,
     FUZZY_NAME_THRESHOLD,
@@ -29,6 +29,7 @@ class PipelineArtifacts:
     region_summary: pd.DataFrame
     schools_clean: pd.DataFrame
     school_list_by_region: pd.DataFrame
+    school_coordinate_match_summary: pd.DataFrame
     high_need_match_detail: pd.DataFrame
     high_need_match_summary: pd.DataFrame
     tracker_match_detail: pd.DataFrame
@@ -124,15 +125,20 @@ def prepare_schools(
     zip_lookup: pd.DataFrame,
     region_lookup: pd.DataFrame,
     counties_geo: gpd.GeoDataFrame,
-) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, object]]:
+    school_coordinates_raw: pd.DataFrame | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, dict[str, object]]:
     coords = detect_coordinate_columns(schools_raw)
     schools = schools_raw.copy()
     schools = schools[(schools["ST"] == OHIO_STATE_ABBR) & (schools["SY_STATUS_TEXT"].fillna("").str.contains("Open", case=False))].copy()
+    schools = schools.reset_index(drop=True)
 
     schools["NCESSCH"] = schools["NCESSCH"].astype(str).str.extract(r"(\d+)", expand=False)
     schools["school_name_clean"] = schools["SCH_NAME"].map(normalize_school_name)
+    schools["school_name_strict_clean"] = schools["SCH_NAME"].map(normalize_school_name_strict)
     schools["district_name_clean"] = schools["LEA_NAME"].map(normalize_school_name)
     schools["zip5"] = schools["LZIP"].fillna(schools["MZIP"]).map(normalize_zip)
+    schools["phone_clean"] = schools["PHONE"].map(normalize_phone)
+    schools["street_address_clean"] = schools["LSTREET1"].fillna(schools["MSTREET1"]).map(normalize_address)
     schools["school_irn"] = schools["ST_SCHID"].astype(str).str.extract(r"(\d{6})$", expand=False)
     schools["county_name"] = schools["zip5"].map(dict(zip(zip_lookup["ZIP"], zip_lookup["county_name"])))
     schools["region"] = schools["county_name"].map(dict(zip(region_lookup["county_name"], region_lookup["region"])))
@@ -149,6 +155,74 @@ def prepare_schools(
         schools["latitude"] = pd.NA
         schools["longitude"] = pd.NA
 
+    schools["coordinate_match_method"] = schools["latitude"].notna().map({True: "source_file_exact", False: "unmatched"})
+
+    if school_coordinates_raw is not None:
+        coord_df = school_coordinates_raw.copy()
+        coord_df["school_name_clean"] = coord_df["School Name"].map(normalize_school_name)
+        coord_df["school_name_strict_clean"] = coord_df["School Name"].map(normalize_school_name_strict)
+        coord_df["county_name"] = coord_df["County"].map(normalize_county_name)
+        coord_df["phone_clean"] = coord_df["Phone"].map(normalize_phone)
+        coord_df["street_address_clean"] = coord_df["Street Address"].map(normalize_address)
+        coord_df["Latitude"] = pd.to_numeric(coord_df["Latitude"], errors="coerce")
+        coord_df["Longitude"] = pd.to_numeric(coord_df["Longitude"], errors="coerce")
+        coord_df = coord_df.dropna(subset=["Latitude", "Longitude"]).copy()
+
+        exact_name_lookup = (
+            coord_df.groupby(["school_name_strict_clean", "county_name"], as_index=False)
+            .agg(
+                Latitude=("Latitude", "first"),
+                Longitude=("Longitude", "first"),
+                coord_rows=("School Name", "count"),
+            )
+        )
+        exact_name_lookup = exact_name_lookup[exact_name_lookup["coord_rows"] == 1].drop(columns=["coord_rows"])
+        exact_name_county = schools.merge(
+            exact_name_lookup,
+            on=["school_name_strict_clean", "county_name"],
+            how="left",
+        )
+        supplement_mask = schools["latitude"].isna().to_numpy() & exact_name_county["Latitude"].notna().to_numpy()
+        schools.loc[supplement_mask, "latitude"] = exact_name_county.loc[supplement_mask, "Latitude"].values
+        schools.loc[supplement_mask, "longitude"] = exact_name_county.loc[supplement_mask, "Longitude"].values
+        schools.loc[supplement_mask, "coordinate_match_method"] = "supplement_name_county"
+
+        unique_name_lookup = coord_df.groupby("school_name_strict_clean", as_index=False).agg(
+            Latitude=("Latitude", "first"),
+            Longitude=("Longitude", "first"),
+            coord_rows=("School Name", "count"),
+        )
+        unique_name_lookup = unique_name_lookup[unique_name_lookup["coord_rows"] == 1].drop(columns=["coord_rows"])
+        name_only = schools.merge(unique_name_lookup, on="school_name_strict_clean", how="left")
+        unique_name_mask = schools["latitude"].isna().to_numpy() & name_only["Latitude"].notna().to_numpy()
+        schools.loc[unique_name_mask, "latitude"] = name_only.loc[unique_name_mask, "Latitude"].values
+        schools.loc[unique_name_mask, "longitude"] = name_only.loc[unique_name_mask, "Longitude"].values
+        schools.loc[unique_name_mask, "coordinate_match_method"] = "supplement_unique_name"
+
+        phone_lookup = coord_df.groupby(["phone_clean", "county_name"], as_index=False).agg(
+            Latitude=("Latitude", "first"),
+            Longitude=("Longitude", "first"),
+            coord_rows=("School Name", "count"),
+        )
+        phone_lookup = phone_lookup[(phone_lookup["coord_rows"] == 1) & phone_lookup["phone_clean"].notna()].drop(columns=["coord_rows"])
+        phone_match = schools.merge(phone_lookup, on=["phone_clean", "county_name"], how="left")
+        phone_mask = schools["latitude"].isna().to_numpy() & phone_match["Latitude"].notna().to_numpy()
+        schools.loc[phone_mask, "latitude"] = phone_match.loc[phone_mask, "Latitude"].values
+        schools.loc[phone_mask, "longitude"] = phone_match.loc[phone_mask, "Longitude"].values
+        schools.loc[phone_mask, "coordinate_match_method"] = "supplement_phone_county"
+
+        address_lookup = coord_df.groupby(["street_address_clean", "county_name"], as_index=False).agg(
+            Latitude=("Latitude", "first"),
+            Longitude=("Longitude", "first"),
+            coord_rows=("School Name", "count"),
+        )
+        address_lookup = address_lookup[(address_lookup["coord_rows"] == 1) & address_lookup["street_address_clean"].notna()].drop(columns=["coord_rows"])
+        address_match = schools.merge(address_lookup, on=["street_address_clean", "county_name"], how="left")
+        address_mask = schools["latitude"].isna().to_numpy() & address_match["Latitude"].notna().to_numpy()
+        schools.loc[address_mask, "latitude"] = address_match.loc[address_mask, "Latitude"].values
+        schools.loc[address_mask, "longitude"] = address_match.loc[address_mask, "Longitude"].values
+        schools.loc[address_mask, "coordinate_match_method"] = "supplement_address_county"
+
     county_points = counties_geo.to_crs(3734)[["county_name", "geometry"]].copy()
     county_points["geometry"] = county_points.geometry.centroid
     county_points = county_points.to_crs(4326)
@@ -162,7 +236,10 @@ def prepare_schools(
     offset_y = school_key.map(lambda value: ((abs(hash(f"{value}-y")) % 1000) / 999) - 0.5)
     schools["approx_longitude"] = schools["county_longitude"] + offset_x * 0.12
     schools["approx_latitude"] = schools["county_latitude"] + offset_y * 0.08
-    schools["location_method"] = schools["county_name"].notna().map({True: "county_centroid_jitter", False: "unmapped"})
+    schools["location_method"] = schools["latitude"].notna().map({True: "exact_or_supplemented_coordinates", False: None})
+    fallback_mask = schools["location_method"].isna() & schools["county_name"].notna()
+    schools.loc[fallback_mask, "location_method"] = "county_centroid_jitter"
+    schools.loc[schools["location_method"].isna(), "location_method"] = "unmapped"
 
     schools_by_region = (
         schools[schools["region"].notna() & schools["is_regular_or_cte"]]
@@ -178,18 +255,39 @@ def prepare_schools(
             ["region_id", "region", "anchor_county", "county_name", "SCH_NAME", "LEA_NAME", "school_level", "school_type", "zip5"]
         ]
     )
+    coordinate_match_summary = (
+        schools.groupby("coordinate_match_method", dropna=False, as_index=False)
+        .agg(school_records=("NCESSCH", "count"))
+        .sort_values("school_records", ascending=False)
+    )
+    exact_coordinate_methods = {
+        "source_file_exact",
+        "supplement_name_county",
+        "supplement_unique_name",
+        "supplement_phone_county",
+        "supplement_address_county",
+    }
     metadata = {
         "coordinate_columns": coords,
-        "coordinate_rows_available": int(schools["latitude"].notna().sum() if coords["latitude"] else 0),
+        "coordinate_rows_available": int((schools["coordinate_match_method"] == "source_file_exact").sum()),
+        "supplement_coordinate_rows_available": int(
+            schools["coordinate_match_method"].isin(exact_coordinate_methods - {"source_file_exact"}).sum()
+        ),
+        "exact_coordinate_rows_available": int(schools["coordinate_match_method"].isin(exact_coordinate_methods).sum()),
         "approximate_coordinate_rows": int(schools["approx_latitude"].notna().sum()),
+        "plot_coordinate_rows": int(schools["latitude"].notna().sum()),
         "schools_total_ohio": int(len(schools)),
         "schools_mapped_to_county": int(schools["county_name"].notna().sum()),
         "schools_mapped_to_region": int(schools["region"].notna().sum()),
         "zip_match_rate": float(schools["county_name"].notna().mean()),
         "region_match_rate": float(schools["region"].notna().mean()),
+        "exact_coordinate_match_rate_within_region": float(
+            schools.loc[schools["region"].notna(), "latitude"].notna().mean() if schools["region"].notna().any() else 0.0
+        ),
     }
     LOGGER.info("School coordinate columns: %s", coords)
-    return schools, schools_by_region, school_list_by_region, metadata
+    LOGGER.info("School coordinate match summary:\n%s", coordinate_match_summary.to_string(index=False))
+    return schools, schools_by_region, school_list_by_region, coordinate_match_summary, metadata
 
 
 def prepare_high_need(high_need_raw: pd.DataFrame) -> pd.DataFrame:
@@ -733,9 +831,16 @@ def build_pipeline_artifacts(
     region_lookup: pd.DataFrame,
     region_geo: gpd.GeoDataFrame,
     zip_lookup: pd.DataFrame,
+    school_coordinates_raw: pd.DataFrame | None = None,
 ) -> PipelineArtifacts:
     county_summary, youth_by_region, population_metadata = analyze_population(population_raw, region_lookup)
-    schools_clean, schools_by_region, school_list_by_region, schools_metadata = prepare_schools(schools_raw, zip_lookup, region_lookup, region_geo)
+    schools_clean, schools_by_region, school_list_by_region, school_coordinate_match_summary, schools_metadata = prepare_schools(
+        schools_raw,
+        zip_lookup,
+        region_lookup,
+        region_geo,
+        school_coordinates_raw=school_coordinates_raw,
+    )
     high_need_clean = prepare_high_need(high_need_raw)
     schools_with_need, high_need_match_detail, high_need_match_summary = match_high_need(schools_clean, high_need_clean)
     high_need_by_region = summarize_high_need(schools_with_need)
@@ -764,6 +869,7 @@ def build_pipeline_artifacts(
         region_summary=region_summary,
         schools_clean=schools_with_need,
         school_list_by_region=school_list_by_region,
+        school_coordinate_match_summary=school_coordinate_match_summary,
         high_need_match_detail=high_need_match_detail,
         high_need_match_summary=high_need_match_summary,
         tracker_match_detail=tracker_match_detail,

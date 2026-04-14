@@ -47,6 +47,25 @@ def normalize_zip(value: object) -> str | None:
     return match.group(1) if match else None
 
 
+def normalize_phone(value: object) -> str | None:
+    if pd.isna(value):
+        return None
+    digits = re.sub(r"\D", "", str(value))
+    return digits if digits else None
+
+
+def normalize_address(value: object) -> str | None:
+    if pd.isna(value):
+        return None
+    text = unicodedata.normalize("NFKD", str(value))
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.lower().strip()
+    text = re.sub(r",.*$", "", text)
+    text = re.sub(r"[\.,'\"/\\\-\(\)\[\]\{\}:;#]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text or None
+
+
 def normalize_school_name(value: object) -> str | None:
     if pd.isna(value):
         return None
@@ -71,6 +90,28 @@ def normalize_school_name(value: object) -> str | None:
     return text or None
 
 
+def normalize_school_name_strict(value: object) -> str | None:
+    if pd.isna(value):
+        return None
+
+    text = unicodedata.normalize("NFKD", str(value))
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.lower().strip()
+    substitutions = {
+        "&": " and ",
+        "@": " at ",
+        " jr ": " junior ",
+        " sr ": " senior ",
+    }
+    for old, new in substitutions.items():
+        text = text.replace(old, new)
+
+    text = re.sub(r"[\.,'\"/\\\-\(\)\[\]\{\}:;]", " ", text)
+    text = re.sub(r"\b(school district|city school district|local school district)\b", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text or None
+
+
 def format_int(value: float | int | None) -> str:
     if value is None or pd.isna(value):
         return ""
@@ -81,4 +122,3 @@ def format_pct(value: float | None) -> str:
     if value is None or pd.isna(value):
         return ""
     return f"{float(value):.1%}"
-

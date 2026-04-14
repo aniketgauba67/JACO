@@ -21,6 +21,10 @@ INPUT_FILES = {
     "tracker": PROJECT_ROOT / "JA Cold Call Tracker.xlsx",
 }
 
+OPTIONAL_INPUT_FILES = {
+    "school_coordinates": PROJECT_ROOT / "ohio_schools_coordinates_v2.xlsx",
+}
+
 OHIO_FIPS = "39"
 OHIO_STATE_ABBR = "OH"
 OHIO_COUNTY_URL = "https://www2.census.gov/geo/tiger/GENZ2023/shp/cb_2023_us_county_500k.zip"

@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 
 from src.cleaning import LOGGER, require_columns
-from src.config import GEODATA_CACHE, INPUT_FILES, OHIO_COUNTY_URL, OHIO_FIPS
+from src.config import GEODATA_CACHE, INPUT_FILES, OHIO_COUNTY_URL, OHIO_FIPS, OPTIONAL_INPUT_FILES
 
 
 def validate_input_files() -> None:
@@ -30,6 +30,27 @@ def load_population_data() -> tuple[pd.DataFrame, dict[str, object]]:
 def load_school_data() -> tuple[pd.DataFrame, dict[str, object]]:
     df = pd.read_csv(INPUT_FILES["schools"], low_memory=False)
     metadata = {"columns": df.columns.tolist()}
+    return df, metadata
+
+
+def load_school_coordinate_data() -> tuple[pd.DataFrame | None, dict[str, object]]:
+    path = OPTIONAL_INPUT_FILES["school_coordinates"]
+    if not path.exists():
+        return None, {"available": False, "path": str(path)}
+
+    workbook = pd.ExcelFile(path)
+    preferred = [name for name in workbook.sheet_names if name.strip().lower() == "school coordinates"]
+    sheet_name = preferred[0] if preferred else workbook.sheet_names[0]
+    df = pd.read_excel(path, sheet_name=sheet_name)
+    require_columns(df, ["School Name", "County", "Latitude", "Longitude"], "School coordinates workbook")
+    metadata = {
+        "available": True,
+        "path": str(path),
+        "sheet_name": sheet_name,
+        "columns": df.columns.tolist(),
+        "workbook_sheets": workbook.sheet_names,
+        "row_count": int(len(df)),
+    }
     return df, metadata
 
 
@@ -117,4 +138,3 @@ def get_ohio_counties() -> gpd.GeoDataFrame:
     counties["county_name"] = counties["county_name"].str.title()
     counties["county_fips"] = counties["GEOID"].str[-3:]
     return counties
-

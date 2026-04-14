@@ -1,11 +1,18 @@
 from __future__ import annotations
 
-import pandas as pd
-from jinja2 import Template
+import base64
+import json
+from typing import Any
 
+import geopandas as gpd
+import pandas as pd
+import plotly.graph_objects as go
+from jinja2 import Template
+from plotly.offline import get_plotlyjs
+
+from src.analysis import PipelineArtifacts
 from src.cleaning import format_int, format_pct
-from src.config import REPORT_PATH
-from src.visuals import render_html_summary_table
+from src.config import OUTPUTS_DIR, REGION_COLORS, REPORT_PATH
 
 
 HTML_TEMPLATE = Template(
@@ -14,373 +21,1569 @@ HTML_TEMPLATE = Template(
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>JACO Regional Strategy Report</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JACO Ohio Regional Analysis</title>
   <style>
-    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #f6f8fb; color: #1f2933; }
-    .page { max-width: 1120px; margin: 0 auto; padding: 36px 28px 72px; }
-    h1, h2, h3 { color: #12344d; margin: 0 0 10px; }
-    h1 { font-size: 34px; }
-    h2 { font-size: 24px; }
-    h3 { font-size: 18px; margin-top: 24px; }
-    p, li { font-size: 15px; line-height: 1.6; }
-    .hero, .section { background: white; border-radius: 16px; padding: 28px 32px; box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06); }
-    .section { margin-top: 22px; }
-    .hero-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
-    .metric { background: #f6f9fc; border: 1px solid #e1e7ef; border-radius: 12px; padding: 16px; }
-    .metric .value { font-size: 24px; font-weight: 700; color: #0b5d7a; }
-    .section-header { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; border-bottom: 1px solid #d8e1ea; padding-bottom: 10px; margin-bottom: 14px; }
-    .section-kicker { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #627d98; font-weight: 700; }
-    .callout { background: #eef6fb; border-left: 4px solid #0b5d7a; padding: 14px 16px; border-radius: 8px; }
-    .bullets { margin: 14px 0 0; padding-left: 20px; }
-    .bullets li { margin-bottom: 8px; }
-    .figure-card { margin-top: 24px; }
-    .figure-card img { width: 100%; display: block; border-radius: 12px; border: 1px solid #dde5ee; background: white; }
-    .caption { color: #52606d; margin-top: 10px; }
-    .summary-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
-    .summary-table th { background: #0b5d7a; color: white; padding: 10px; text-align: left; }
-    .summary-table td { padding: 10px; border-bottom: 1px solid #e6edf3; vertical-align: top; }
-    .summary-table tr:nth-child(even) td { background: #f8fbfd; }
-    .audit { display: grid; grid-template-columns: 220px 110px 110px 1fr; gap: 10px; margin-top: 14px; font-size: 14px; }
-    .audit div { padding: 10px 12px; border-radius: 10px; background: #f8fbfd; border: 1px solid #e6edf3; }
-    .small { color: #6b7c93; font-size: 13px; }
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #172b3a;
+      --muted: #5b7083;
+      --line: #d9e2ec;
+      --brand: #0b5d7a;
+      --brand-soft: #e7f2f7;
+      --accent: #1f9d55;
+      --danger: #d94841;
+      --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Segoe UI", Tahoma, sans-serif; }
+    .page { max-width: 1280px; margin: 0 auto; padding: 28px 24px 56px; }
+    .hero, .section { background: var(--card); border-radius: 18px; box-shadow: var(--shadow); }
+    .hero { padding: 30px 32px; }
+    .section { margin-top: 22px; padding: 28px 30px; scroll-margin-top: 24px; }
+    h1, h2, h3 { margin: 0; color: #12344d; }
+    h1 { font-size: 34px; line-height: 1.2; }
+    h2 { font-size: 24px; line-height: 1.3; }
+    h3 { font-size: 17px; margin-bottom: 10px; }
+    p, li { font-size: 15px; line-height: 1.65; color: var(--ink); }
+    .lede { max-width: 980px; color: var(--muted); margin-top: 12px; }
+    .kicker { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #627d98; font-weight: 700; margin-bottom: 10px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-top: 22px; }
+    .metric-card { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: #f9fbfd; }
+    .metric-card .label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: #627d98; font-weight: 700; }
+    .metric-card .value { font-size: 25px; font-weight: 700; margin-top: 8px; color: var(--brand); }
+    .metric-card .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+    .callout { margin-top: 22px; padding: 16px 18px; background: var(--brand-soft); border-left: 4px solid var(--brand); border-radius: 10px; }
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+    .section-intro { color: var(--muted); max-width: 1000px; margin-bottom: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .section-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .section-nav a { text-decoration: none; color: var(--brand); background: #f7fafc; border: 1px solid var(--line); padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+    .figure-grid { display: grid; gap: 16px; }
+    .figure-grid.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .figure-grid.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .figure-card, .table-card, .note-card { border: 1px solid var(--line); border-radius: 16px; background: #ffffff; padding: 16px; margin-top: 16px; }
+    .figure-card:first-child, .table-card:first-child, .note-card:first-child { margin-top: 0; }
+    .figure-caption { margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .figure-wrap { min-height: 420px; }
+    .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .tab-button { border: 1px solid var(--line); background: #f8fbfd; color: var(--ink); padding: 8px 12px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; }
+    .tab-button.active { background: var(--brand); color: white; border-color: var(--brand); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; }
+    .summary-pill { border: 1px solid var(--line); border-radius: 12px; background: #fbfdff; padding: 12px 14px; }
+    .summary-pill .name { font-size: 12px; color: #627d98; text-transform: uppercase; font-weight: 700; }
+    .summary-pill .value { font-size: 20px; font-weight: 700; margin-top: 6px; color: #102a43; }
+    .audit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 14px; }
+    .audit-card { border: 1px solid var(--line); border-radius: 14px; padding: 14px; background: #fbfdff; }
+    .audit-card .value { font-size: 24px; font-weight: 700; margin-top: 8px; color: #102a43; }
+    .audit-card .small { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+    table.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    table.data-table thead th { position: sticky; top: 0; background: #f4f8fb; color: #12344d; font-weight: 700; border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; cursor: pointer; }
+    table.data-table tbody td { padding: 9px 8px; border-bottom: 1px solid #edf2f7; vertical-align: top; }
+    table.data-table tbody tr:nth-child(even) td { background: #fbfdff; }
+    .table-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+    .table-toolbar input { padding: 9px 10px; border: 1px solid var(--line); border-radius: 10px; min-width: 260px; font-size: 14px; }
+    .table-scroll { overflow-x: auto; overflow-y: auto; max-height: 560px; border-radius: 12px; }
+    .notes-wrap details { margin-top: 10px; }
+    details { margin-top: 14px; border: 1px solid var(--line); border-radius: 12px; background: #fbfdff; padding: 10px 14px; }
+    details summary { cursor: pointer; font-weight: 700; color: #12344d; }
+    .small { font-size: 13px; color: var(--muted); }
+    .footnote { margin-top: 24px; font-size: 12px; color: var(--muted); text-align: right; }
+    @media (max-width: 1100px) {
+      .metric-grid, .grid-2, .grid-3, .summary-grid, .audit-grid, .figure-grid.grid-2, .figure-grid.grid-3 { grid-template-columns: 1fr; }
+      .page { padding: 18px 14px 40px; }
+      .hero, .section { padding: 22px 18px; }
+    }
   </style>
 </head>
 <body>
+  <script>{{ plotly_js|safe }}</script>
   <div class="page">
     <section class="hero">
-      <h1>Junior Achievement of Central Ohio Regional Strategy Report</h1>
-      <p>This report translates the five required JACO service regions into a concise strategy view of youth reach, school density, need concentration, outreach performance, and anchor feasibility.</p>
-      <div class="hero-grid">
-        <div class="metric"><div class="value">{{ scale_region }}</div><div>Largest youth reach region</div></div>
-        <div class="metric"><div class="value">{{ need_region }}</div><div>Highest high-need concentration</div></div>
-        <div class="metric"><div class="value">{{ outreach_region }}</div><div>Best outreach opportunity</div></div>
-        <div class="metric"><div class="value">{{ tracker_match_rate }}</div><div>Tracker school-match rate</div></div>
-      </div>
-      <div class="callout" style="margin-top: 20px;">
-        <strong>Executive Summary.</strong> {{ executive_summary }}
-      </div>
-      <ul class="bullets">
-        {% for finding in executive_findings %}
-        <li>{{ finding }}</li>
-        {% endfor %}
-      </ul>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <div class="section-kicker">Overview</div>
-          <h2>Project Overview</h2>
+      <div class="kicker">Interactive Regional Analysis</div>
+      <h1>JACO Ohio Expansion Analysis</h1>
+      <p class="lede">This interactive report organizes the JACO Ohio expansion analysis into an exploratory, decision-support view of regional footprint, population reach, school distribution, outreach activity, high-need concentration, and join quality. The report is intentionally analytical rather than prescriptive.</p>
+      <div class="metric-grid">
+        {% for card in summary_cards %}
+        <div class="metric-card">
+          <div class="label">{{ card.label }}</div>
+          <div class="value">{{ card.value }}</div>
+          <div class="note">{{ card.note }}</div>
         </div>
-      </div>
-      <p>The analysis answers six planning questions for JACO: how to group counties around anchor counties, which clusters maximize youth reach, where the school inventory is deepest, where high-need schools are concentrated, what the cold-call tracker says about outreach traction, whether the anchor model looks feasible on a one-hour proxy, and how to turn all of that into a practical priority order.</p>
-      <p>Data sources used: county population data from <code>JACO.csv</code>, Ohio school inventory from the NCES file, ZIP-to-tract mapping from <code>ZIP_TRACT_122025.xlsx</code>, high-need school data from the FY25 SSI workbook, and school outreach activity from the JA cold-call tracker.</p>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <div class="section-kicker">Quality Checks</div>
-          <h2>Methodology and Join Validation</h2>
-        </div>
-      </div>
-      <ul>
-        <li>Population analysis uses the latest county-level <code>YEAR</code> code in the source and youth AGEGRP values {{ youth_age_groups }}.</li>
-        <li>School assignment uses ZIP-to-county mapping with the strongest available ratio field, then maps counties into the five fixed JACO service regions.</li>
-        <li>High-need matching prioritizes exact Ohio building IRN matches, then exact unique normalized-name matches, before using cautious normalized-name fallback logic.</li>
-        <li>Cold-call matching standardizes organization names and counties, then defines positive outreach schools strictly as tracker rows where <code>Outcome = Interested</code>.</li>
-        <li>The 1-hour screen uses county centroid distance from each anchor county as a transparent proxy because no drive-time API is used.</li>
-      </ul>
-      <div class="audit">
-        <div><strong>Step</strong></div><div><strong>Matched</strong></div><div><strong>Rate</strong></div><div><strong>Notes</strong></div>
-        {% for row in join_audit_rows %}
-        <div>{{ row.step }}</div><div>{{ row.matched }}</div><div>{{ row.rate }}</div><div>{{ row.notes }}</div>
         {% endfor %}
       </div>
-      <p class="small">High-need match summary: {{ high_need_match_summary }}. Tracker match summary: {{ tracker_match_summary }}.</p>
-      <p class="small">{{ limitations_summary }}</p>
+      <div class="callout">
+        <strong>Data context.</strong> {{ summary_note }}
+      </div>
+      <div class="section-nav">
+        {% for nav in section_nav %}
+        <a href="#{{ nav.id }}">{{ nav.label }}</a>
+        {% endfor %}
+      </div>
     </section>
 
-    <section class="section">
-      <div class="section-header">
+    <section class="section" id="overview">
+      <div class="section-head">
         <div>
-          <div class="section-kicker">Tracker Audit</div>
-          <h2>Positive-Response Classification Audit</h2>
+          <div class="kicker">Overview</div>
+          <h2>Report Scope</h2>
         </div>
       </div>
-      <p>Positive outreach schools are defined as tracker rows where <code>Outcome = Interested</code>. The audit below shows all observed normalized outcome values, their counts, and which value is treated as positive.</p>
-      <div class="figure-card">
-        <h3>Observed Outcome Values</h3>
-        {{ tracker_value_audit_html }}
-      </div>
-      <div class="figure-card">
-        <h3>Positive-Response Rule</h3>
-        {{ tracker_response_rules_html }}
+      <p class="section-intro">The analysis uses the fixed five-region JACO footprint and combines county population data, the Ohio NCES school inventory, ZIP-to-county matching, the FY25 SSI high-need file, and cold-call tracker activity. Each section below is interactive and meant to support exploration, comparison, and validation.</p>
+      <div class="summary-grid">
+        {% for item in overview_pills %}
+        <div class="summary-pill">
+          <div class="name">{{ item.name }}</div>
+          <div class="value">{{ item.value }}</div>
+        </div>
+        {% endfor %}
       </div>
     </section>
 
     {% for section in sections %}
-    <section class="section">
-      <div class="section-header">
+    <section class="section" id="{{ section.id }}">
+      <div class="section-head">
         <div>
-          <div class="section-kicker">{{ section.kicker }}</div>
+          <div class="kicker">{{ section.kicker }}</div>
           <h2>{{ section.title }}</h2>
         </div>
       </div>
-      <p>{{ section.intro }}</p>
+      <p class="section-intro">{{ section.intro }}</p>
+
+      {% if section.figures %}
+      <div class="figure-grid {{ section.figure_grid_class }}">
       {% for figure in section.figures %}
       <div class="figure-card">
         <h3>{{ figure.title }}</h3>
-        <img src="{{ figure.path }}" alt="{{ figure.title }}">
-        <p class="caption">{{ figure.caption }}</p>
+        <div class="figure-wrap">{{ figure.html|safe }}</div>
+        <div class="figure-caption">{{ figure.caption }}</div>
       </div>
       {% endfor %}
-      {% if section.table_html %}
-      <div class="figure-card">
-        <h3>{{ section.table_title }}</h3>
-        {{ section.table_html }}
       </div>
       {% endif %}
-      {% if section.limitations %}
-      <p class="small"><strong>Limitations.</strong> {{ section.limitations }}</p>
+
+      {% if section.tabs %}
+      <div class="tab-bar" data-tab-group="{{ section.tab_group }}">
+        {% for tab in section.tabs %}
+        <button class="tab-button{% if loop.first %} active{% endif %}" data-tab-target="{{ section.tab_group }}-{{ loop.index0 }}">{{ tab.title }}</button>
+        {% endfor %}
+      </div>
+      {% for tab in section.tabs %}
+      <div class="tab-panel{% if loop.first %} active{% endif %}" id="{{ section.tab_group }}-{{ loop.index0 }}">
+        {% for figure in tab.figures %}
+        <div class="figure-card">
+          <h3>{{ figure.title }}</h3>
+          <div class="figure-wrap">{{ figure.html|safe }}</div>
+          <div class="figure-caption">{{ figure.caption }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% for table in section.tables %}
+      <div class="table-card">
+        <div class="table-toolbar">
+          <h3>{{ table.title }}</h3>
+          {% if table.search_id %}
+          <input type="text" id="{{ table.search_id }}" placeholder="Search table..." onkeyup="filterTable('{{ table.table_id }}', '{{ table.search_id }}')">
+          {% endif %}
+        </div>
+        <div class="table-scroll">
+          {{ table.html|safe }}
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if section.notes %}
+      <div class="notes-wrap">
+        {% for note in section.notes %}
+        <details>
+          <summary>{{ note.title }}</summary>
+          <div class="small">{{ note.body|safe }}</div>
+        </details>
+        {% endfor %}
+      </div>
       {% endif %}
     </section>
     {% endfor %}
 
     <section class="section">
-      <div class="section-header">
+      <div class="section-head">
         <div>
-          <div class="section-kicker">Recommendation</div>
-          <h2>Final Recommendations</h2>
+          <div class="kicker">Method Notes</div>
+          <h2>Caveats and Data Constraints</h2>
         </div>
       </div>
-      <p>{{ recommendation }}</p>
-      <ul>
-        <li><strong>Best region for scale:</strong> {{ scale_region }} with {{ scale_youth }} youth and {{ scale_schools }} schools.</li>
-        <li><strong>Best region for concentrated need:</strong> {{ need_region }} with a {{ need_share }} high-need school share.</li>
-        <li><strong>Best region for outreach opportunity:</strong> {{ outreach_region }} with a {{ outreach_rate }} Interested-response rate.</li>
-        <li><strong>1-hour proxy feasibility:</strong> {{ feasibility_status }}</li>
-      </ul>
-      <p class="small">Report generated automatically by <code>python run_pipeline.py</code>.</p>
+      {% for item in caveats %}
+      <details>
+        <summary>{{ item.title }}</summary>
+        <p class="small">{{ item.body }}</p>
+      </details>
+      {% endfor %}
+      <div class="footnote">Generated automatically by <code>python run_pipeline.py</code>.</div>
     </section>
   </div>
+
+  <script>
+    document.querySelectorAll('.tab-bar').forEach(function(tabBar) {
+      tabBar.querySelectorAll('.tab-button').forEach(function(button) {
+        button.addEventListener('click', function() {
+          const group = button.getAttribute('data-tab-target').split('-').slice(0, -1).join('-');
+          document.querySelectorAll('[id^="' + group + '-"]').forEach(function(panel) {
+            panel.classList.remove('active');
+          });
+          tabBar.querySelectorAll('.tab-button').forEach(function(btn) { btn.classList.remove('active'); });
+          document.getElementById(button.getAttribute('data-tab-target')).classList.add('active');
+          button.classList.add('active');
+          window.dispatchEvent(new Event('resize'));
+        });
+      });
+    });
+
+    function filterTable(tableId, inputId) {
+      const filter = document.getElementById(inputId).value.toLowerCase();
+      const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+      rows.forEach(function(row) {
+        row.style.display = row.textContent.toLowerCase().indexOf(filter) > -1 ? '' : 'none';
+      });
+    }
+
+    function sortTable(tableId, columnIndex) {
+      const table = document.getElementById(tableId);
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const current = table.getAttribute('data-sort-dir') || 'asc';
+      const next = current === 'asc' ? 'desc' : 'asc';
+      rows.sort(function(a, b) {
+        const aText = a.children[columnIndex].innerText.trim();
+        const bText = b.children[columnIndex].innerText.trim();
+        const aNum = parseFloat(aText.replace(/[^0-9.-]/g, ''));
+        const bNum = parseFloat(bText.replace(/[^0-9.-]/g, ''));
+        const bothNumeric = !Number.isNaN(aNum) && !Number.isNaN(bNum);
+        let comparison = 0;
+        if (bothNumeric) {
+          comparison = aNum - bNum;
+        } else {
+          comparison = aText.localeCompare(bText);
+        }
+        return next === 'asc' ? comparison : -comparison;
+      });
+      rows.forEach(function(row) { tbody.appendChild(row); });
+      table.setAttribute('data-sort-dir', next);
+    }
+  </script>
 </body>
 </html>
 """
 )
 
 
-def render_report(region_summary: pd.DataFrame, figure_paths: dict[str, str], metadata: dict[str, object]) -> None:
-    scale_leader = region_summary.sort_values("youth_population", ascending=False).iloc[0]
-    need_leader = region_summary.sort_values("high_need_share", ascending=False).iloc[0]
-    outreach_leader = region_summary[region_summary["outreach_records"].fillna(0) > 0].sort_values(
-        ["positive_response_rate", "outreach_records"], ascending=[False, False]
-    ).iloc[0]
-    tracker_match_rate = format_pct(metadata["tracker"]["school_match_rate"])
-    tracker_region_rate = format_pct(metadata["tracker"]["region_assignment_rate"])
+def _format_nullable_pct(value: Any) -> str:
+    if pd.isna(value):
+        return "N/A"
+    return format_pct(value)
 
-    matched_high_need = (
-        metadata["high_need_match_summary"]["school_records"].sum()
-        - metadata["high_need_match_summary"].loc[
-            metadata["high_need_match_summary"]["match_method"] == "unmatched", "school_records"
-        ].sum()
+
+def _format_nullable_int(value: Any) -> str:
+    if pd.isna(value):
+        return "N/A"
+    return format_int(value)
+
+
+def _plotly_html(fig: go.Figure) -> str:
+    fig.update_layout(
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        font={"family": "Segoe UI, Tahoma, sans-serif", "size": 13, "color": "#172b3a"},
+        margin={"l": 32, "r": 24, "t": 54, "b": 36},
     )
-    total_high_need_base = metadata["high_need_match_summary"]["school_records"].sum()
-    high_need_total_match_rate = format_pct(matched_high_need / total_high_need_base)
+    return fig.to_html(full_html=False, include_plotlyjs=False, config={"displayModeBar": False, "responsive": True})
 
-    feasibility_pairs = [
-        f"{row.region}: {'feasible' if bool(row.feasible_1hr_proxy) else 'stretch'}"
-        for row in region_summary[["region", "feasible_1hr_proxy"]].itertuples(index=False)
+
+def _png_html(path: str) -> str:
+    encoded = base64.b64encode((OUTPUTS_DIR / path).read_bytes()).decode("ascii")
+    return (
+        "<div style='display:flex; justify-content:center;'>"
+        f"<img src='data:image/png;base64,{encoded}' alt='Outreach school map' "
+        "style='width:100%; max-width:980px; height:auto; border-radius:14px; border:1px solid #d9e2ec;'>"
+        "</div>"
+    )
+
+
+def _write_standalone_figure(page_title: str, figure_title: str, figure_html: str, output_name: str) -> None:
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{page_title}</title>
+  <style>
+    body {{ margin: 0; background: #f4f7fb; font-family: "Segoe UI", Tahoma, sans-serif; color: #172b3a; }}
+    .page {{ max-width: 1220px; margin: 0 auto; padding: 24px; }}
+    .card {{ background: #ffffff; border-radius: 18px; box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08); padding: 24px; }}
+    h1 {{ margin: 0 0 10px; font-size: 28px; color: #12344d; }}
+    p {{ margin: 0 0 18px; line-height: 1.6; color: #5b7083; }}
+  </style>
+</head>
+<body>
+  <script>{get_plotlyjs()}</script>
+  <div class="page">
+    <div class="card">
+      <h1>{figure_title}</h1>
+      <p>Standalone interactive view exported from the JACO analysis pipeline.</p>
+      {figure_html}
+    </div>
+  </div>
+</body>
+</html>
+"""
+    (OUTPUTS_DIR / output_name).write_text(html, encoding="utf-8")
+
+
+def _write_outreach_map_png(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame, output_name: str = "outreach_school_map.png") -> None:
+    import matplotlib.pyplot as plt
+
+    region_fill = {
+        "Group 1 - Columbus Core": "#CFE7EF",
+        "Group 2 - Newark / East-Central": "#FDE0C5",
+        "Group 3 - Southeast Cluster": "#D8EACF",
+        "Group 4 - Southern Corridor": "#F6D2D3",
+        "Group 5 - Eastern Edge": "#D8E3F3",
+    }
+
+    map_geo = county_geo[county_geo["region"].notna()].to_crs(4326).copy()
+    fig, ax = plt.subplots(figsize=(10.5, 8.5), dpi=220)
+    fig.patch.set_facecolor("white")
+    ax.set_facecolor("white")
+
+    map_geo.plot(
+        ax=ax,
+        color=map_geo["region"].map(region_fill),
+        edgecolor="#AAB9C6",
+        linewidth=0.9,
+    )
+
+    neutral_outreach = outreach_schools[~outreach_schools["is_interested_school"]].copy()
+    interested_outreach = outreach_schools[outreach_schools["is_interested_school"]].copy()
+
+    if not neutral_outreach.empty:
+        ax.scatter(
+            neutral_outreach["plot_longitude"],
+            neutral_outreach["plot_latitude"],
+            s=28,
+            c="#94A3B8",
+            alpha=0.78,
+            edgecolors="white",
+            linewidths=0.45,
+            label="Other outreach schools",
+            zorder=3,
+        )
+
+    if not interested_outreach.empty:
+        ax.scatter(
+            interested_outreach["plot_longitude"],
+            interested_outreach["plot_latitude"],
+            s=54,
+            c="#1F9D55",
+            alpha=0.98,
+            edgecolors="#0F5132",
+            linewidths=0.8,
+            label="Interested outreach schools",
+            zorder=4,
+        )
+
+    ax.set_title("Outreach-Matched Schools", fontsize=18, pad=16, color="#12344d")
+    ax.text(
+        0.0,
+        1.01,
+        "Tracker-matched outreach schools only. Green points indicate Outcome = Interested.",
+        transform=ax.transAxes,
+        fontsize=10.5,
+        color="#5b7083",
+        va="bottom",
+    )
+    ax.text(
+        0.0,
+        -0.04,
+        "Exact coordinates are used where available; remaining schools use transparent county-based fallback placement.",
+        transform=ax.transAxes,
+        fontsize=9.5,
+        color="#5b7083",
+        va="top",
+    )
+    ax.legend(
+        loc="lower left",
+        frameon=True,
+        facecolor="white",
+        edgecolor="#D9E2EC",
+    )
+    ax.set_axis_off()
+    plt.tight_layout()
+    fig.savefig(OUTPUTS_DIR / output_name, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+
+
+def _table_html(df: pd.DataFrame, table_id: str) -> str:
+    display = df.copy()
+    for column in display.columns:
+        if display[column].dtype == bool:
+            display[column] = display[column].map({True: "Yes", False: "No"})
+    html = display.to_html(index=False, classes=["data-table"], border=0, table_id=table_id)
+    return html.replace("<th>", lambda *_: "")
+
+
+def _build_sortable_table(df: pd.DataFrame, table_id: str) -> str:
+    html = df.to_html(index=False, classes=["data-table"], border=0, table_id=table_id)
+    for idx, column in enumerate(df.columns):
+        html = html.replace(f"<th>{column}</th>", f'<th onclick="sortTable(\'{table_id}\', {idx})">{column}</th>', 1)
+    return html
+
+
+def _geojson_from_gdf(gdf: gpd.GeoDataFrame) -> dict[str, Any]:
+    columns = [column for column in gdf.columns if column != "geometry"]
+    return json.loads(gdf[columns + ["geometry"]].to_json())
+
+
+def _county_metrics(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame) -> pd.DataFrame:
+    schools = artifacts.schools_clean.copy()
+    schools = schools[schools["is_regular_or_cte"]].copy()
+    tracker = artifacts.tracker_match_detail.copy()
+
+    school_counts = (
+        schools.groupby("county_name", as_index=False)
+        .agg(
+            total_schools=("NCESSCH", "nunique"),
+            elementary_schools=("school_level", lambda values: values.fillna("").str.contains("Elementary", case=False).sum()),
+            secondary_schools=("school_level", lambda values: values.fillna("").str.contains("High|Secondary", case=False).sum()),
+            school_types=("school_type", lambda values: ", ".join(sorted(pd.Series(values).dropna().astype(str).unique()[:3]))),
+        )
+    )
+    high_need_counts = (
+        schools.groupby("county_name", as_index=False)
+        .agg(
+            high_need_schools=("high_need", lambda values: int(values.fillna(False).astype(int).sum())),
+            title_students_served=("students_served", "sum"),
+        )
+    )
+    tracker_counts = (
+        tracker.groupby("county_name", dropna=False, as_index=False)
+        .agg(
+            outreach_records=("organization_name", "count"),
+            interested_outcomes=("positive_response", "sum"),
+            matched_tracker_rows=("NCESSCH", lambda values: values.notna().sum()),
+            unmatched_tracker_rows=("NCESSCH", lambda values: values.isna().sum()),
+        )
+    )
+    county_metrics = county_geo.merge(school_counts, on="county_name", how="left")
+    county_metrics = county_metrics.merge(high_need_counts, on="county_name", how="left")
+    county_metrics = county_metrics.merge(tracker_counts, on="county_name", how="left")
+
+    fill_zero = [
+        "total_schools",
+        "elementary_schools",
+        "secondary_schools",
+        "high_need_schools",
+        "title_students_served",
+        "outreach_records",
+        "interested_outcomes",
+        "matched_tracker_rows",
+        "unmatched_tracker_rows",
     ]
-    feasibility_status = "; ".join(feasibility_pairs)
+    for column in fill_zero:
+        if column in county_metrics.columns:
+            county_metrics[column] = county_metrics[column].fillna(0)
 
-    executive_summary = (
-        f"{scale_leader['region']} is the clear scale leader with {format_int(scale_leader['youth_population'])} youth and "
-        f"{format_int(scale_leader['total_schools'])} mapped schools, while {need_leader['region']} has the highest "
-        f"high-need share at {format_pct(need_leader['high_need_share'])}. {outreach_leader['region']} currently shows the strongest "
-        f"outreach opportunity at {format_pct(outreach_leader['positive_response_rate'])}. Positive outreach is defined only as tracker rows where Outcome equals Interested."
+    county_metrics["high_need_share"] = county_metrics["high_need_schools"] / county_metrics["total_schools"].replace(0, pd.NA)
+    county_metrics["school_density_per_10k_youth"] = county_metrics["total_schools"] / county_metrics["youth_population"].replace(0, pd.NA) * 10000
+    county_metrics["outreach_per_100_schools"] = county_metrics["outreach_records"] / county_metrics["total_schools"].replace(0, pd.NA) * 100
+    county_metrics["interested_per_100_schools"] = county_metrics["interested_outcomes"] / county_metrics["total_schools"].replace(0, pd.NA) * 100
+    county_metrics["county_area_sq_miles"] = county_metrics.to_crs(3734).geometry.area / 2_589_988.11
+    county_metrics["schools_per_100_sq_miles"] = county_metrics["total_schools"] / county_metrics["county_area_sq_miles"].replace(0, pd.NA) * 100
+    county_metrics["is_jaco_county"] = county_metrics["region"].notna()
+    return county_metrics
+
+
+def _region_metrics(artifacts: PipelineArtifacts) -> pd.DataFrame:
+    region_df = artifacts.region_summary.copy()
+    region_df["outreach_per_100_schools"] = region_df["outreach_records"] / region_df["total_schools"].replace(0, pd.NA) * 100
+    region_df["interested_per_100_schools"] = region_df["positive_responses"] / region_df["total_schools"].replace(0, pd.NA) * 100
+    region_df["schools_per_10k_youth"] = region_df["total_schools"] / region_df["youth_population"].replace(0, pd.NA) * 10000
+    return region_df
+
+
+def _school_points(artifacts: PipelineArtifacts) -> tuple[pd.DataFrame, bool]:
+    schools = artifacts.schools_clean.copy()
+    schools = schools[schools["region"].notna() & schools["is_regular_or_cte"]].copy()
+    if schools.empty:
+        return schools, False
+
+    has_exact = schools["latitude"].notna().any() and schools["longitude"].notna().any()
+    schools["plot_latitude"] = schools["latitude"].where(schools["latitude"].notna(), schools["approx_latitude"])
+    schools["plot_longitude"] = schools["longitude"].where(schools["longitude"].notna(), schools["approx_longitude"])
+    schools["location_precision"] = "Approximate county-based placement"
+    schools.loc[schools["coordinate_match_method"] == "source_file_exact", "location_precision"] = "Exact source coordinates"
+    schools.loc[schools["coordinate_match_method"] == "supplement_name_county", "location_precision"] = "Exact coordinates from supplemental workbook (name + county match)"
+    schools.loc[schools["coordinate_match_method"] == "supplement_unique_name", "location_precision"] = "Exact coordinates from supplemental workbook (unique name match)"
+    schools.loc[schools["coordinate_match_method"] == "supplement_phone_county", "location_precision"] = "Exact coordinates from supplemental workbook (phone + county match)"
+    schools.loc[schools["coordinate_match_method"] == "supplement_address_county", "location_precision"] = "Exact coordinates from supplemental workbook (address + county match)"
+
+    positive_ids = set(
+        artifacts.tracker_match_detail.loc[
+            artifacts.tracker_match_detail["positive_response"].fillna(False) & artifacts.tracker_match_detail["NCESSCH"].notna(),
+            "NCESSCH",
+        ].astype(str)
     )
-    executive_findings = [
-        f"{scale_leader['region']} leads on youth reach with {format_int(scale_leader['youth_population'])} youth.",
-        f"{scale_leader['region']} also has the largest school inventory at {format_int(scale_leader['total_schools'])} schools.",
-        f"{need_leader['region']} has the highest identified high-need concentration at {format_pct(need_leader['high_need_share'])}.",
-        f"{outreach_leader['region']} has the strongest outreach opportunity based on Interested outcomes at {format_pct(outreach_leader['positive_response_rate'])}.",
-        f"Tracker-to-school matching is {tracker_match_rate}, strong enough for region-level outreach interpretation.",
-        f"High-need matching is more limited at {high_need_total_match_rate}, so those results should be read as directional rather than exhaustive.",
+    schools["is_interested_school"] = schools["NCESSCH"].astype(str).isin(positive_ids)
+    return schools, has_exact
+
+
+def _outreach_school_points(artifacts: PipelineArtifacts) -> tuple[pd.DataFrame, bool]:
+    schools, _ = _school_points(artifacts)
+    if schools.empty:
+        return schools, False
+
+    tracker_matches = artifacts.tracker_match_detail.copy()
+    tracker_matches = tracker_matches[tracker_matches["NCESSCH"].notna()].copy()
+    if tracker_matches.empty:
+        return tracker_matches, False
+
+    tracker_matches["NCESSCH"] = tracker_matches["NCESSCH"].astype(str)
+    outreach_summary = (
+        tracker_matches.groupby("NCESSCH", as_index=False)
+        .agg(
+            outreach_records=("organization_name", "count"),
+            interested_records=("positive_response", "sum"),
+        )
+    )
+    outreach_summary["is_interested_outreach"] = outreach_summary["interested_records"] > 0
+
+    outreach_schools = schools.drop(columns=["is_interested_school"], errors="ignore").copy()
+    outreach_schools["NCESSCH"] = outreach_schools["NCESSCH"].astype(str)
+    outreach_schools = outreach_schools.merge(outreach_summary, on="NCESSCH", how="inner")
+    outreach_schools["is_interested_school"] = outreach_schools["is_interested_outreach"].fillna(False)
+    has_exact = outreach_schools["latitude"].notna().any() and outreach_schools["longitude"].notna().any()
+    return outreach_schools, has_exact
+
+
+def _build_region_map(county_geo: gpd.GeoDataFrame) -> go.Figure:
+    map_geo = county_geo.to_crs(4326).copy()
+    map_geo["region_id_fill"] = map_geo["region_id"].fillna(0).astype(int)
+    geojson = _geojson_from_gdf(map_geo)
+    colorscale = [
+        [0.0, "#E6EBF1"],
+        [0.001, "#0B5D7A"],
+        [0.20, "#0B5D7A"],
+        [0.201, "#F28E2B"],
+        [0.40, "#F28E2B"],
+        [0.401, "#59A14F"],
+        [0.60, "#59A14F"],
+        [0.601, "#E15759"],
+        [0.80, "#E15759"],
+        [0.801, "#4E79A7"],
+        [1.0, "#4E79A7"],
     ]
-    recommendation = (
-        f"Start with {scale_leader['region']} as the flagship region because it leads both on reachable youth and school inventory. "
-        f"Pair that with a focused second-wave strategy in {need_leader['region']} to concentrate on high-need school partnerships. "
-        f"For near-term outreach opportunity, {outreach_leader['region']} stands out on Interested-response rate. "
-        f"Feasibility proxy status: {feasibility_status}."
+    fig = go.Figure()
+    fig.add_trace(
+        go.Choropleth(
+            geojson=geojson,
+            locations=map_geo["county_fips"],
+            z=map_geo["region_id_fill"],
+            featureidkey="properties.county_fips",
+            colorscale=colorscale,
+            marker_line_color="white",
+            marker_line_width=0.7,
+            showscale=False,
+            customdata=map_geo[["county_name", "region", "anchor_county"]].fillna("Outside fixed JACO regions").to_numpy(),
+            hovertemplate="<b>%{customdata[0]} County</b><br>Region: %{customdata[1]}<br>Anchor: %{customdata[2]}<extra></extra>",
+        )
     )
-    limitations_summary = (
-        f"Limitations: the NCES extract does not provide usable school coordinates, so the school-point map uses approximate county-centroid placement rather than true school locations. "
-        f"Tracker rows were assigned to JACO regions at a {tracker_region_rate} rate, and rows outside the grouped counties remain visible as unmatched limitations rather than being forced into a school-level view."
+    anchors = map_geo[map_geo["is_anchor"]].copy()
+    anchors_projected = anchors.to_crs(3734).copy()
+    anchors_projected["centroid"] = anchors_projected.geometry.centroid
+    anchors_centroids = anchors_projected.set_geometry("centroid").to_crs(4326)
+    fig.add_trace(
+        go.Scattergeo(
+            lon=anchors_centroids.geometry.x,
+            lat=anchors_centroids.geometry.y,
+            mode="markers+text",
+            text=anchors_centroids["county_name"],
+            textposition="top center",
+            marker={"symbol": "star", "size": 12, "color": "#111827", "line": {"color": "white", "width": 1}},
+            name="Anchor county",
+            hovertemplate="<b>%{text} County</b><br>Anchor county<extra></extra>",
+        )
+    )
+    fig.update_geos(fitbounds="locations", visible=False, projection_type="mercator")
+    fig.update_layout(title="Fixed JACO Regions and Anchor Counties", height=620)
+    return fig
+
+
+def _build_county_heatmap(county_geo: gpd.GeoDataFrame, metric: str, title: str, colorscale: str, value_label: str) -> go.Figure:
+    map_geo = county_geo.to_crs(4326).copy()
+    geojson = _geojson_from_gdf(map_geo)
+    customdata = map_geo[
+        [
+            "county_name",
+            "region",
+            "total_population",
+            "youth_population",
+            "total_schools",
+            "high_need_schools",
+            "high_need_share",
+            "outreach_records",
+            "interested_outcomes",
+        ]
+    ].copy()
+    customdata["region"] = customdata["region"].fillna("Outside fixed JACO regions")
+
+    hover_templates = {
+        "total_population": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "Total population: %{z:,.0f}<br>"
+            "Youth population: %{customdata[3]:,.0f}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+        "youth_population": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "Youth population: %{z:,.0f}<br>"
+            "Total population: %{customdata[2]:,.0f}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+        "school_density_per_10k_youth": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "Schools per 10k youth: %{z:,.1f}<br>"
+            "Schools: %{customdata[4]:,.0f}<br>"
+            "Youth population: %{customdata[3]:,.0f}<extra></extra>"
+        ),
+        "high_need_schools": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "High-need schools: %{z:,.0f}<br>"
+            "High-need share: %{customdata[6]:.1%}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+        "high_need_share": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "High-need share: %{z:.1%}<br>"
+            "High-need schools: %{customdata[5]:,.0f}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+        "outreach_records": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "Outreach records: %{z:,.0f}<br>"
+            "Interested outcomes: %{customdata[8]:,.0f}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+        "interested_outcomes": (
+            "<b>%{customdata[0]} County</b><br>"
+            "Region: %{customdata[1]}<br>"
+            "Interested outcomes: %{z:,.0f}<br>"
+            "Outreach records: %{customdata[7]:,.0f}<br>"
+            "Schools: %{customdata[4]:,.0f}<extra></extra>"
+        ),
+    }
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Choropleth(
+            geojson=geojson,
+            locations=map_geo["county_fips"],
+            z=map_geo[metric].fillna(0),
+            featureidkey="properties.county_fips",
+            colorscale=colorscale,
+            marker_line_color="white",
+            marker_line_width=0.5,
+            colorbar={"title": value_label},
+            customdata=customdata.to_numpy(),
+            hovertemplate=hover_templates.get(metric, "<b>%{customdata[0]} County</b><br>Region: %{customdata[1]}<br>" + f"{value_label}: %{{z:,.2f}}<extra></extra>"),
+        )
+    )
+    jaco = map_geo[map_geo["is_jaco_county"]].copy()
+    if not jaco.empty:
+        fig.add_trace(
+            go.Choropleth(
+                geojson=geojson,
+                locations=jaco["county_fips"],
+                z=[1] * len(jaco),
+                featureidkey="properties.county_fips",
+                colorscale=[[0, "rgba(0,0,0,0)"], [1, "rgba(0,0,0,0)"]],
+                marker_line_color="#102A43",
+                marker_line_width=1.5,
+                showscale=False,
+                hoverinfo="skip",
+            )
+        )
+    fig.update_geos(fitbounds="locations", visible=False, projection_type="mercator")
+    fig.update_layout(title=title, height=600, margin={"l": 20, "r": 20, "t": 52, "b": 16})
+    return fig
+
+
+def _build_horizontal_bar(df: pd.DataFrame, value_col: str, title: str, value_type: str = "int") -> go.Figure:
+    plot_df = df.sort_values(value_col, ascending=True).copy()
+    text = plot_df[value_col].map(format_int if value_type == "int" else format_pct)
+    fig = go.Figure(
+        go.Bar(
+            x=plot_df[value_col],
+            y=plot_df["region"],
+            orientation="h",
+            marker={"color": plot_df["region"].map(REGION_COLORS)},
+            text=text,
+            textposition="outside",
+            hovertemplate="<b>%{y}</b><br>%{x}<extra></extra>",
+        )
+    )
+    fig.update_layout(title=title, height=460, xaxis_title="", yaxis_title="", margin={"l": 200, "r": 40, "t": 54, "b": 36})
+    return fig
+
+
+def _build_bubble(df: pd.DataFrame, x: str, y: str, size: str, title: str, x_label: str, y_label: str) -> go.Figure:
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=df[x],
+            y=df[y],
+            mode="markers+text",
+            text=df["region"],
+            textposition="top center",
+            marker={
+                "size": (df[size] / max(df[size].max(), 1) * 48).clip(lower=18),
+                "color": df["region"].map(REGION_COLORS),
+                "opacity": 0.86,
+                "line": {"color": "#ffffff", "width": 1.2},
+            },
+            customdata=df[["anchor_county", "total_schools", "positive_responses", "high_need_share"]].to_numpy(),
+            hovertemplate="<b>%{text}</b><br>Anchor: %{customdata[0]}<br>Schools: %{customdata[1]:,.0f}<br>Interested outcomes: %{customdata[2]:,.0f}<br>High-need share: %{customdata[3]:.1%}<extra></extra>",
+        )
+    )
+    fig.update_layout(title=title, height=520, xaxis_title=x_label, yaxis_title=y_label)
+    return fig
+
+
+def _build_outcome_distribution(df: pd.DataFrame) -> go.Figure:
+    fig = go.Figure(
+        go.Bar(
+            x=df["outcome_clean"],
+            y=df["count"],
+            marker={"color": ["#1F9D55" if value else "#7B8794" for value in df["is_positive"]]},
+            customdata=df["is_positive"],
+            hovertemplate="<b>%{x}</b><br>Rows: %{y:,.0f}<br>Interested classification: %{customdata}<extra></extra>",
+        )
+    )
+    fig.update_layout(title="Cold-Call Outcome Distribution", height=430, xaxis_title="Outcome", yaxis_title="Rows")
+    return fig
+
+
+def _build_match_summary(df: pd.DataFrame, value_col: str, title: str) -> go.Figure:
+    fig = go.Figure(
+        go.Bar(
+            x=df.iloc[:, 0],
+            y=df[value_col],
+            marker={"color": "#0B5D7A"},
+            hovertemplate="<b>%{x}</b><br>Count: %{y:,.0f}<extra></extra>",
+        )
+    )
+    fig.update_layout(title=title, height=420, xaxis_title="", yaxis_title="Count")
+    return fig
+
+
+def _build_school_map(schools: pd.DataFrame, county_geo: gpd.GeoDataFrame, has_exact_coords: bool) -> go.Figure:
+    fig = go.Figure()
+    map_geo = county_geo[county_geo["region"].notna()].to_crs(4326).copy()
+    map_geo["region_id_fill"] = map_geo["region_id"].astype(int)
+    geojson = _geojson_from_gdf(map_geo)
+    fig.add_trace(
+        go.Choropleth(
+            geojson=geojson,
+            locations=map_geo["county_fips"],
+            z=map_geo["region_id_fill"],
+            featureidkey="properties.county_fips",
+            colorscale=[
+                [0.0, "#F8FAFC"],
+                [0.001, "rgba(207,231,239,0.55)"],
+                [0.20, "rgba(207,231,239,0.55)"],
+                [0.201, "rgba(253,224,197,0.55)"],
+                [0.40, "rgba(253,224,197,0.55)"],
+                [0.401, "rgba(216,234,207,0.55)"],
+                [0.60, "rgba(216,234,207,0.55)"],
+                [0.601, "rgba(246,210,211,0.55)"],
+                [0.80, "rgba(246,210,211,0.55)"],
+                [0.801, "rgba(216,227,243,0.55)"],
+                [1.0, "rgba(216,227,243,0.55)"],
+            ],
+            marker_line_color="#AAB9C6",
+            marker_line_width=0.9,
+            showscale=False,
+            customdata=map_geo[["county_name", "region"]].fillna("Outside fixed JACO regions").to_numpy(),
+            hovertemplate="<b>%{customdata[0]} County</b><br>Region: %{customdata[1]}<extra></extra>",
+            name="JACO regions",
+        )
+    )
+    exact_neutral = schools[(~schools["is_interested_school"]) & schools["latitude"].notna() & schools["longitude"].notna()].copy()
+    approx_neutral = schools[(~schools["is_interested_school"]) & ~(schools["latitude"].notna() & schools["longitude"].notna())].copy()
+    interested = schools[schools["is_interested_school"]].copy()
+
+    fig.add_trace(
+        go.Scattergeo(
+            lon=approx_neutral["plot_longitude"],
+            lat=approx_neutral["plot_latitude"],
+            mode="markers",
+            marker={"size": 4.5, "color": "#CBD5E1", "opacity": 0.36},
+            name="Approximate schools",
+            customdata=approx_neutral[["SCH_NAME", "county_name", "region", "school_level", "school_type", "location_precision"]].to_numpy(),
+            hovertemplate="<b>%{customdata[0]}</b><br>County: %{customdata[1]}<br>Region: %{customdata[2]}<br>Level: %{customdata[3]}<br>Type: %{customdata[4]}<br>Location: %{customdata[5]}<extra></extra>",
+        )
+    )
+    fig.add_trace(
+        go.Scattergeo(
+            lon=exact_neutral["plot_longitude"],
+            lat=exact_neutral["plot_latitude"],
+            mode="markers",
+            marker={"size": 6.5, "color": "#475569", "opacity": 0.8, "line": {"color": "#E2E8F0", "width": 0.5}},
+            name="Exact-coordinate schools",
+            customdata=exact_neutral[["SCH_NAME", "county_name", "region", "school_level", "school_type", "location_precision"]].to_numpy(),
+            hovertemplate="<b>%{customdata[0]}</b><br>County: %{customdata[1]}<br>Region: %{customdata[2]}<br>Level: %{customdata[3]}<br>Type: %{customdata[4]}<br>Location: %{customdata[5]}<extra></extra>",
+        )
+    )
+    fig.add_trace(
+        go.Scattergeo(
+            lon=interested["plot_longitude"],
+            lat=interested["plot_latitude"],
+            mode="markers",
+            marker={"size": 9, "color": "#1F9D55", "opacity": 0.95, "line": {"color": "#0F5132", "width": 0.8}},
+            name="Interested schools",
+            customdata=interested[["SCH_NAME", "county_name", "region", "school_level", "school_type", "location_precision"]].to_numpy(),
+            hovertemplate="<b>%{customdata[0]}</b><br>County: %{customdata[1]}<br>Region: %{customdata[2]}<br>Level: %{customdata[3]}<br>Type: %{customdata[4]}<br>Location: %{customdata[5]}<extra></extra>",
+        )
     )
 
-    join_audit_rows = [
+    exact_count = int((schools["latitude"].notna() & schools["longitude"].notna()).sum())
+    approx_count = int(len(schools) - exact_count)
+    fig.update_layout(
+        title="School Locations and Interested Schools",
+        height=720,
+        geo={"scope": "usa", "projection": {"type": "mercator"}, "fitbounds": "locations", "visible": False},
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.01,
+            "xanchor": "left",
+            "x": 0.0,
+            "bgcolor": "rgba(255,255,255,0.85)",
+        },
+    )
+    title_note = (
+        f"Exact coordinates are used for {format_int(exact_count)} mapped school rows; the remaining {format_int(approx_count)} rows use transparent county-based fallback placement."
+        if has_exact_coords
+        else "Exact school coordinates were not available in the source files; school points use transparent approximate placement within matched counties."
+    )
+    fig.add_annotation(
+        x=0.0,
+        y=1.12,
+        xref="paper",
+        yref="paper",
+        text=title_note,
+        showarrow=False,
+        font={"size": 12, "color": "#5b7083"},
+        align="left",
+        xanchor="left",
+    )
+    return fig
+
+
+def _build_outreach_map(outreach_schools: pd.DataFrame, county_geo: gpd.GeoDataFrame, has_exact_coords: bool) -> go.Figure:
+    fig = go.Figure()
+    map_geo = county_geo[county_geo["region"].notna()].to_crs(4326).copy()
+    map_geo["region_id_fill"] = map_geo["region_id"].astype(int)
+    geojson = _geojson_from_gdf(map_geo)
+
+    fig.add_trace(
+        go.Choropleth(
+            geojson=geojson,
+            locations=map_geo["county_fips"],
+            z=map_geo["region_id_fill"],
+            featureidkey="properties.county_fips",
+            colorscale=[
+                [0.0, "#F8FAFC"],
+                [0.001, "rgba(207,231,239,0.55)"],
+                [0.20, "rgba(207,231,239,0.55)"],
+                [0.201, "rgba(253,224,197,0.55)"],
+                [0.40, "rgba(253,224,197,0.55)"],
+                [0.401, "rgba(216,234,207,0.55)"],
+                [0.60, "rgba(216,234,207,0.55)"],
+                [0.601, "rgba(246,210,211,0.55)"],
+                [0.80, "rgba(246,210,211,0.55)"],
+                [0.801, "rgba(216,227,243,0.55)"],
+                [1.0, "rgba(216,227,243,0.55)"],
+            ],
+            marker_line_color="#AAB9C6",
+            marker_line_width=0.9,
+            showscale=False,
+            customdata=map_geo[["county_name", "region"]].to_numpy(),
+            hovertemplate="<b>%{customdata[0]} County</b><br>Region: %{customdata[1]}<extra></extra>",
+            name="JACO regions",
+        )
+    )
+
+    neutral_outreach = outreach_schools[~outreach_schools["is_interested_school"]].copy()
+    interested_outreach = outreach_schools[outreach_schools["is_interested_school"]].copy()
+
+    fig.add_trace(
+        go.Scattergeo(
+            lon=neutral_outreach["plot_longitude"],
+            lat=neutral_outreach["plot_latitude"],
+            mode="markers",
+            marker={"size": 7, "color": "#94A3B8", "opacity": 0.72, "line": {"color": "#E2E8F0", "width": 0.5}},
+            name="Other outreach schools",
+            customdata=neutral_outreach[
+                ["SCH_NAME", "county_name", "region", "outreach_records", "interested_records", "location_precision"]
+            ].to_numpy(),
+            hovertemplate=(
+                "<b>%{customdata[0]}</b><br>"
+                "County: %{customdata[1]}<br>"
+                "Region: %{customdata[2]}<br>"
+                "Outreach rows: %{customdata[3]:,.0f}<br>"
+                "Interested rows: %{customdata[4]:,.0f}<br>"
+                "Location: %{customdata[5]}<extra></extra>"
+            ),
+        )
+    )
+    fig.add_trace(
+        go.Scattergeo(
+            lon=interested_outreach["plot_longitude"],
+            lat=interested_outreach["plot_latitude"],
+            mode="markers",
+            marker={"size": 10, "color": "#1F9D55", "opacity": 0.98, "line": {"color": "#0F5132", "width": 0.9}},
+            name="Interested outreach schools",
+            customdata=interested_outreach[
+                ["SCH_NAME", "county_name", "region", "outreach_records", "interested_records", "location_precision"]
+            ].to_numpy(),
+            hovertemplate=(
+                "<b>%{customdata[0]}</b><br>"
+                "County: %{customdata[1]}<br>"
+                "Region: %{customdata[2]}<br>"
+                "Outreach rows: %{customdata[3]:,.0f}<br>"
+                "Interested rows: %{customdata[4]:,.0f}<br>"
+                "Location: %{customdata[5]}<extra></extra>"
+            ),
+        )
+    )
+
+    exact_count = int((outreach_schools["latitude"].notna() & outreach_schools["longitude"].notna()).sum())
+    approx_count = int(len(outreach_schools) - exact_count)
+    fig.update_layout(
+        title="Outreach-Matched Schools",
+        height=700,
+        geo={"scope": "usa", "projection": {"type": "mercator"}, "fitbounds": "locations", "visible": False},
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.01,
+            "xanchor": "left",
+            "x": 0.0,
+            "bgcolor": "rgba(255,255,255,0.88)",
+        },
+    )
+    title_note = (
+        f"This map shows only tracker-matched outreach schools. Exact coordinates are used for {format_int(exact_count)} rows and transparent county-based fallback placement is used for the remaining {format_int(approx_count)}."
+        if has_exact_coords
+        else "This map shows only tracker-matched outreach schools, using transparent county-based placement because exact coordinates were unavailable."
+    )
+    fig.add_annotation(
+        x=0.0,
+        y=1.11,
+        xref="paper",
+        yref="paper",
+        text=title_note,
+        showarrow=False,
+        font={"size": 12, "color": "#5b7083"},
+        align="left",
+        xanchor="left",
+    )
+    return fig
+
+
+def _build_school_type_chart(schools: pd.DataFrame) -> go.Figure:
+    plot_df = (
+        schools.groupby(["region", "school_type"], as_index=False)
+        .agg(school_count=("NCESSCH", "nunique"))
+        .sort_values(["region", "school_count"], ascending=[True, False])
+    )
+    top_types = plot_df.groupby("school_type")["school_count"].sum().sort_values(ascending=False).head(6).index
+    plot_df["school_type_grouped"] = plot_df["school_type"].where(plot_df["school_type"].isin(top_types), "Other")
+    plot_df = plot_df.groupby(["region", "school_type_grouped"], as_index=False)["school_count"].sum()
+
+    fig = go.Figure()
+    for school_type in sorted(plot_df["school_type_grouped"].unique()):
+        subset = plot_df[plot_df["school_type_grouped"] == school_type]
+        fig.add_trace(
+            go.Bar(
+                x=subset["region"],
+                y=subset["school_count"],
+                name=school_type,
+                hovertemplate="<b>%{x}</b><br>School type: " + school_type + "<br>Count: %{y:,.0f}<extra></extra>",
+            )
+        )
+    fig.update_layout(title="School Type Breakdown by Region", barmode="stack", height=470, xaxis_title="", yaxis_title="Schools")
+    return fig
+
+
+def render_report(artifacts: PipelineArtifacts, county_geo: gpd.GeoDataFrame, metadata: dict[str, object]) -> None:
+    county_geo = county_geo.to_crs(4326).copy()
+    county_metrics = _county_metrics(artifacts, county_geo)
+    region_metrics = _region_metrics(artifacts)
+    school_points, has_exact_coords = _school_points(artifacts)
+    outreach_points, outreach_has_exact = _outreach_school_points(artifacts)
+    school_map_html = _plotly_html(_build_outreach_map(outreach_points, county_geo, outreach_has_exact))
+    _write_standalone_figure(
+        page_title="JACO Outreach School Map",
+        figure_title="Outreach-Matched Schools",
+        figure_html=school_map_html,
+        output_name="outreach_school_map.html",
+    )
+    school_map_report_html = school_map_html
+    if not outreach_points.empty:
+        _write_outreach_map_png(outreach_points, county_geo, output_name="outreach_school_map.png")
+        school_map_report_html = _png_html("outreach_school_map.png")
+
+    grouped_counties = county_metrics[county_metrics["is_jaco_county"]].copy()
+    interested_matched = int(metadata["tracker"]["positive_matched_schools"])
+    exact_school_points = int((outreach_points["latitude"].notna() & outreach_points["longitude"].notna()).sum()) if not outreach_points.empty else 0
+    interested_exact_points = int(
+        (outreach_points["is_interested_school"] & outreach_points["latitude"].notna() & outreach_points["longitude"].notna()).sum()
+    ) if not outreach_points.empty else 0
+    outreach_mapped_schools = int(len(outreach_points))
+    summary_cards = [
+        {"label": "Fixed regions", "value": "5", "note": "JACO county groupings used throughout the analysis."},
+        {"label": "Grouped counties", "value": format_int(grouped_counties["county_name"].nunique()), "note": "Counties assigned to the five fixed regions."},
+        {"label": "Youth in grouped counties", "value": format_int(grouped_counties["youth_population"].sum()), "note": "Youth population using AGEGRP 2–4 in the latest county-level source year."},
+        {"label": "Mapped schools in grouped counties", "value": format_int(region_metrics["total_schools"].sum()), "note": "Open Ohio schools mapped into the JACO footprint."},
+        {"label": "Outreach-matched schools", "value": format_int(outreach_mapped_schools), "note": "Unique matched tracker schools shown on the outreach map."},
+        {"label": "Exact outreach coordinates", "value": format_int(exact_school_points), "note": "Outreach-matched school rows using exact coordinates from the coordinate supplement."},
+        {"label": "Interested matched schools", "value": format_int(interested_matched), "note": "Tracker rows where Outcome = Interested and a school match was found."},
+    ]
+    summary_note = (
+        (
+            f"The current source files support extensive regional, county, outreach, and high-need analysis. "
+            f"The report uses the primary analytical tables directly and keeps the heavier audit tables available in <code>outputs/tables</code> rather than crowding the main narrative. "
+            f"The map section now shows only the {format_int(outreach_mapped_schools)} outreach-matched schools rather than the full school inventory. "
+            f"Within that subset, {format_int(exact_school_points)} rows use exact coordinates, including {format_int(interested_exact_points)} of the "
+            f"{format_int(metadata['tracker']['positive_matched_schools'])} Interested schools."
+        )
+        if outreach_has_exact
+        else "The current source files support extensive regional, county, outreach, and high-need analysis. The report uses the primary analytical tables directly and keeps the heavier audit tables available in outputs/tables rather than crowding the main narrative."
+    )
+
+    overview_pills = [
+        {"name": "Latest population YEAR code", "value": str(metadata["population"]["latest_year_code"])},
+        {"name": "Youth AGEGRP logic", "value": ", ".join(map(str, metadata["population"]["selected_youth_age_groups"]))},
+        {"name": "Tracker positive rule", "value": "Outcome = Interested"},
+        {"name": "Coordinate method", "value": "Hybrid exact + approximate" if outreach_has_exact else "Approximate"},
+    ]
+
+    heatmap_figures = [
         {
-            "step": row.step,
-            "matched": f"{int(row.matched_records):,} / {int(row.total_records):,}",
-            "rate": format_pct(row.match_rate),
-            "notes": row.notes,
-        }
-        for row in metadata["join_audit_summary"].itertuples()
+            "title": "Total Population",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "total_population", "Ohio County Total Population", "Blues", "Population")),
+            "caption": "Hover for county, region membership, and supporting context. Dark outlines identify counties inside the fixed JACO footprint.",
+        },
+        {
+            "title": "Youth Population",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "youth_population", "Ohio County Youth Population", "YlGnBu", "Youth population")),
+            "caption": "Youth population is derived from the inspected AGEGRP structure in the source file rather than assumed blindly.",
+        },
+        {
+            "title": "School Density",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "school_density_per_10k_youth", "Schools per 10,000 Youth", "Oranges", "Schools per 10k youth")),
+            "caption": "This view helps distinguish high-volume counties from counties with smaller school inventories relative to youth population.",
+        },
+        {
+            "title": "High-Need Count",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "high_need_schools", "High-Need School Count", "Reds", "High-need schools")),
+            "caption": "Counts reflect schools linked to the FY25 SSI file through the current exact and fallback match logic.",
+        },
+        {
+            "title": "High-Need Share",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "high_need_share", "High-Need School Share", "RdPu", "High-need share")),
+            "caption": "The share view controls for county size and highlights concentration rather than raw volume.",
+        },
+        {
+            "title": "Outreach Activity",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "outreach_records", "Outreach Records by County", "PuBuGn", "Outreach records")),
+            "caption": "This map uses tracker rows after county cleaning and reflects activity volume, not only positive outcomes.",
+        },
+        {
+            "title": "Interested Outcomes",
+            "html": _plotly_html(_build_county_heatmap(county_metrics, "interested_outcomes", "Interested Outcomes by County", "Greens", "Interested outcomes")),
+            "caption": "Interested outcomes use only the exact rule Outcome = Interested.",
+        },
     ]
-    tracker_value_audit_html = metadata["tracker_value_audit"].to_html(index=False, classes=["summary-table"], border=0)
-    tracker_response_rules_html = metadata["tracker_response_rules"].to_html(index=False, classes=["summary-table"], border=0)
+
+    region_table = region_metrics[
+        [
+            "region",
+            "anchor_county",
+            "county_count",
+            "youth_population",
+            "total_schools",
+            "high_need_schools",
+            "high_need_share",
+            "outreach_records",
+            "positive_responses",
+            "positive_response_rate",
+            "max_anchor_distance_miles",
+        ]
+    ].copy()
+    region_table["youth_population"] = region_table["youth_population"].map(format_int)
+    region_table["total_schools"] = region_table["total_schools"].map(format_int)
+    region_table["high_need_schools"] = region_table["high_need_schools"].map(format_int)
+    region_table["high_need_share"] = region_table["high_need_share"].map(_format_nullable_pct)
+    region_table["outreach_records"] = region_table["outreach_records"].fillna(0).map(format_int)
+    region_table["positive_responses"] = region_table["positive_responses"].fillna(0).map(format_int)
+    region_table["positive_response_rate"] = region_table["positive_response_rate"].map(_format_nullable_pct)
+    region_table["max_anchor_distance_miles"] = region_table["max_anchor_distance_miles"].map(lambda value: "N/A" if pd.isna(value) else f"{value:.1f}")
+
+    county_table = county_metrics[
+        [
+            "county_name",
+            "region",
+            "total_population",
+            "youth_population",
+            "total_schools",
+            "high_need_schools",
+            "high_need_share",
+            "outreach_records",
+            "interested_outcomes",
+            "school_density_per_10k_youth",
+        ]
+    ].copy()
+    county_table["region"] = county_table["region"].fillna("Outside fixed JACO regions")
+    for column in ["total_population", "youth_population", "total_schools", "high_need_schools", "outreach_records", "interested_outcomes"]:
+        county_table[column] = county_table[column].map(_format_nullable_int)
+    county_table["high_need_share"] = county_table["high_need_share"].map(_format_nullable_pct)
+    county_table["school_density_per_10k_youth"] = county_table["school_density_per_10k_youth"].map(lambda value: "N/A" if pd.isna(value) else f"{value:.1f}")
+
+    interested_table = (
+        artifacts.tracker_match_detail.loc[
+            artifacts.tracker_match_detail["positive_response"].fillna(False),
+            ["organization_name", "county_name", "final_region", "NCESSCH", "match_method", "match_score"],
+        ]
+        .copy()
+        .rename(
+            columns={
+                "organization_name": "Organization",
+                "county_name": "County",
+                "final_region": "Region",
+                "NCESSCH": "Matched School ID",
+                "match_method": "Match Method",
+                "match_score": "Match Score",
+            }
+        )
+    )
+    if not interested_table.empty:
+        interested_table["Match Score"] = interested_table["Match Score"].map(lambda value: "" if pd.isna(value) else f"{float(value):.1f}")
+
+    join_audit_cards = []
+    for row in artifacts.join_audit_summary.itertuples():
+        join_audit_cards.append(
+            {
+                "label": row.step,
+                "value": f"{int(row.matched_records):,} / {int(row.total_records):,}",
+                "rate": format_pct(row.match_rate),
+                "notes": row.notes,
+            }
+        )
 
     sections = [
         {
-            "kicker": "Footprint",
-            "title": "JACO Regional Grouping Strategy",
-            "intro": "This map shows the five fixed county clusters and their anchor counties. It defines the service geography used throughout the rest of the analysis.",
+            "id": "regional-footprint",
+            "kicker": "Regional Footprint",
+            "title": "Fixed JACO Groupings",
+            "intro": "The project uses the fixed five-region JACO grouping structure provided for this work. The interactive map highlights anchor counties and allows hover inspection of each county’s assigned region.",
+            "tabs": [],
+            "tab_group": "",
+            "figure_grid_class": "",
             "figures": [
                 {
-                    "title": "Ohio County Map with JACO Regions",
-                    "path": figure_paths["region_map"],
-                    "caption": "Each county is assigned to one of the five required JACO regions, and stars identify the anchor counties. This is the operating footprint for mobile-unit planning.",
-                },
+                    "title": "Interactive Regional Footprint",
+                    "html": _plotly_html(_build_region_map(county_geo)),
+                    "caption": "The fixed regional structure is shown analytically rather than treated as an optimization output.",
+                }
             ],
-            "table_title": "",
-            "table_html": None,
-            "limitations": "The regions are fixed to the five required JACO groupings rather than optimized algorithmically from drive-time data.",
+            "tables": [
+                {
+                    "title": "Region Comparison Table",
+                    "html": _build_sortable_table(region_table, "region-comparison-table"),
+                    "table_id": "region-comparison-table",
+                    "search_id": "region-comparison-search",
+                }
+            ],
+            "notes": [{"title": "Footprint note", "body": "Anchor counties and grouped counties remain fixed to the JACO-defined footprint throughout the report."}],
         },
         {
-            "kicker": "Reach",
-            "title": "Youth Population and Reach",
-            "intro": "These figures show where the largest youth and total population bases sit. Together they identify which regions maximize potential mobile-unit reach.",
-            "figures": [
+            "id": "population-and-reach",
+            "kicker": "Population and Reach",
+            "title": "County and Region Reach Explorer",
+            "intro": "These views combine statewide county context with the fixed JACO footprint to show where youth and total population are concentrated, and how school density relates to reach.",
+            "tabs": [
                 {
-                    "title": "County Population Heatmap",
-                    "path": figure_paths["county_population_heatmap"],
-                    "caption": "This county choropleth shows the statewide population pattern and provides context for where the JACO counties sit inside Ohio.",
+                    "title": "Region Reach",
+                    "figures": [
+                        {
+                            "title": "Youth Population by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "youth_population", "Youth Population by Region")),
+                            "caption": "This regional view summarizes youth reach without layering extra county detail on screen at the same time.",
+                        }
+                    ],
                 },
-                {
-                    "title": "County Youth Population Heatmap",
-                    "path": figure_paths["youth_population_heatmap"],
-                    "caption": "Youth population uses AGEGRP 2-4, corresponding to ages 5-19 in the source layout. This is the clearest county-level view of potential student reach.",
-                },
-                {
-                    "title": "Youth Population by Region",
-                    "path": figure_paths["youth_by_region"],
-                    "caption": "Group 1 is much larger than the rest of the portfolio on youth reach, making it the strongest first market if broad exposure is the priority.",
-                },
+                *[{"title": figure["title"], "figures": [figure]} for figure in heatmap_figures]
             ],
-            "table_title": "",
-            "table_html": None,
-            "limitations": "Population estimates rely on the latest YEAR code present in the source file and the AGEGRP structure available there, rather than a labeled calendar year field.",
+            "tab_group": "heatmaps",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [],
+            "notes": [{"title": "Hover guidance", "body": "County heatmaps now show only the most relevant supporting context for the active metric so the section stays easier to read."}],
         },
         {
-            "kicker": "Schools",
-            "title": "Schools and Outreach Potential",
-            "intro": f"School inventory matters because the mobile-unit strategy also depends on partnership targets. Positive outreach schools are defined as tracker rows where Outcome = Interested, and {format_int(metadata['tracker']['positive_matched_schools'])} matched positive schools are highlighted on the map below.",
+            "id": "school-distribution",
+            "kicker": "School Distribution",
+            "title": "School Inventory and Outreach Location Explorer",
+            "intro": "The school views focus on distribution, volume, and visibility. The map now shows only tracker-matched outreach schools so the geography stays readable and directly tied to outreach activity.",
+            "tabs": [],
+            "tab_group": "",
+            "figure_grid_class": "",
             "figures": [
                 {
-                    "title": "Total Schools by Region",
-                    "path": figure_paths["schools_by_region"],
-                    "caption": "The Columbus Core dominates school count, which matters for both outreach capacity and partnership depth.",
+                    "title": "Outreach School Map",
+                    "html": school_map_report_html,
+                    "caption": (
+                        f"This map shows only the {format_int(outreach_mapped_schools)} tracker-matched outreach schools. Exact coordinates are used for "
+                        f"{format_int(exact_school_points)} of those rows, including {format_int(interested_exact_points)} of the "
+                        f"{format_int(metadata['tracker']['positive_matched_schools'])} Interested schools; the rest use clearly labeled county-based fallback placement. "
+                        f"A standalone interactive version is also saved as <code>outputs/outreach_school_map.html</code>."
+                    ),
+                }
+            ],
+            "tabs": [
+                {
+                    "title": "Schools by Region",
+                    "figures": [
+                        {
+                            "title": "Mapped Schools by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "total_schools", "Mapped Schools by Region")),
+                            "caption": "This view compares school inventory across the five fixed JACO regions.",
+                        }
+                    ],
                 },
                 {
-                    "title": "School Distribution & Outreach Visualization",
-                    "path": figure_paths["schools_map"],
-                    "caption": metadata["school_points_caption"],
-                },
-                {
-                    "title": "Outreach Activity Map",
-                    "path": figure_paths["outreach_map"],
-                    "caption": metadata["outreach_map_caption"],
+                    "title": "School Types",
+                    "figures": [
+                        {
+                            "title": "School Type Breakdown",
+                            "html": _plotly_html(_build_school_type_chart(school_points)),
+                            "caption": "The stacked view helps distinguish whether regional school inventories are concentrated in similar or different school types.",
+                        }
+                    ],
                 },
             ],
-            "table_title": "Schools and Outreach Summary",
-            "table_html": render_html_summary_table(
-                region_summary[
-                    ["region", "anchor_county", "total_schools", "outreach_records", "positive_responses", "school_match_rate_within_region"]
-                ]
+            "tab_group": "school-views",
+            "tables": [],
+            "notes": [
+                {
+                    "title": "Coordinate coverage",
+                    "body": (
+                        f"The original NCES extract still does not expose usable school latitude/longitude fields, but the added "
+                        f"<code>ohio_schools_coordinates_v2.xlsx</code> workbook supplies exact coordinates for a subset of matched schools. "
+                        f"Those exact points are used wherever available on the outreach-only map; only the remaining unmatched outreach schools fall back to transparent county-based placement. "
+                        f"This keeps the map geographically useful without loading the full school inventory."
+                    ),
+                },
+                {
+                    "title": "Map interaction",
+                    "body": "Hover tooltips show school name, county, region, outreach row count, interested row count, and whether the point comes from exact coordinates or approximate fallback placement.",
+                },
+            ],
+        },
+        {
+            "id": "outreach-activity",
+            "kicker": "Outreach Activity",
+            "title": "Cold-Call Tracker Analysis",
+            "intro": "Positive outreach is defined strictly as tracker rows where Outcome = Interested. The charts below show outcome mix, match quality, regional differences, and the matched interested-school subset.",
+            "tabs": [
+                {
+                    "title": "Outcome Mix",
+                    "figures": [
+                        {
+                            "title": "Outcome Distribution",
+                            "html": _plotly_html(_build_outcome_distribution(artifacts.tracker_value_audit)),
+                            "caption": "Only the Interested category is treated as positive in the rest of the analysis.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Match Quality",
+                    "figures": [
+                        {
+                            "title": "Tracker Match Methods",
+                            "html": _plotly_html(_build_match_summary(artifacts.tracker_match_summary, "rows", "Tracker Match Summary")),
+                            "caption": "This chart separates primary normalized-name county matches from unique-name fallback and unmatched rows.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Region Rates",
+                    "figures": [
+                        {
+                            "title": "Interested Response Rate by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics.fillna({"positive_response_rate": 0}), "positive_response_rate", "Interested Response Rate by Region", value_type="pct")),
+                            "caption": "Rates are calculated as Interested outcomes divided by outreach records within each region.",
+                        },
+                        {
+                            "title": "Outreach Records by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics.fillna({"outreach_records": 0}), "outreach_records", "Outreach Records by Region")),
+                            "caption": "This volume view complements the response-rate view by showing where tracker activity is concentrated.",
+                        },
+                    ],
+                },
+            ],
+            "tab_group": "outreach-views",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [
+                {
+                    "title": "Interested Outcome Records",
+                    "html": _build_sortable_table(interested_table if not interested_table.empty else pd.DataFrame({"Note": ["No Interested rows were found."]}), "interested-table"),
+                    "table_id": "interested-table",
+                    "search_id": "interested-search",
+                }
+            ],
+            "notes": [
+                {"title": "Tracker match rate", "body": f"Tracker school-match rate: {format_pct(metadata['tracker']['school_match_rate'])}."},
+                {"title": "Region assignment", "body": f"Tracker rows assigned to JACO regions: {format_pct(metadata['tracker']['region_assignment_rate'])}."},
+                {"title": "Unmatched audit", "body": "Unmatched rows remain visible in the audit rather than being forced into a region or school view."},
+            ],
+        },
+        {
+            "id": "high-need-analysis",
+            "kicker": "High-Need Analysis",
+            "title": "High-Need Concentration and Match Coverage",
+            "intro": "The high-need section separates raw high-need counts from proportional concentration and keeps the match diagnostics visible so coverage is not overstated.",
+            "tabs": [
+                {
+                    "title": "Match Methods",
+                    "figures": [
+                        {
+                            "title": "High-Need Match Summary",
+                            "html": _plotly_html(_build_match_summary(artifacts.high_need_match_summary, "school_records", "High-Need Match Methods")),
+                            "caption": "Exact IRN and exact unique-name matching are shown separately from the district-level fallback pass.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Regional Counts",
+                    "figures": [
+                        {
+                            "title": "High-Need Schools by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "high_need_schools", "High-Need Schools by Region")),
+                            "caption": "Counts are based on schools linked to the FY25 SSI workbook through the current match logic.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Regional Share",
+                    "figures": [
+                        {
+                            "title": "High-Need Share by Region",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "high_need_share", "High-Need School Share by Region", value_type="pct")),
+                            "caption": "The share view controls for school-volume differences across regions.",
+                        }
+                    ],
+                },
+            ],
+            "tab_group": "high-need-views",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [],
+            "notes": [
+                {
+                    "title": "Coverage note",
+                    "body": f"Overall high-need match coverage: {format_pct((artifacts.high_need_match_summary['school_records'].sum() - artifacts.high_need_match_summary.loc[artifacts.high_need_match_summary['match_method'] == 'unmatched', 'school_records'].sum()) / artifacts.high_need_match_summary['school_records'].sum())}.",
+                },
+                {
+                    "title": "Interpretation",
+                    "body": "High-need results should be interpreted within the coverage limits of the FY25 SSI file and the current match logic.",
+                },
+            ],
+        },
+        {
+            "id": "comparative-explorer",
+            "kicker": "Comparative Explorer",
+            "title": "Region Tradeoff Views",
+            "intro": "These comparative charts are meant to help stakeholders inspect scale, need, and outreach together without turning the analysis into a prescriptive decision rule.",
+            "tabs": [
+                {
+                    "title": "Scale vs Need",
+                    "figures": [
+                        {
+                            "title": "Scale vs High-Need Concentration",
+                            "html": _plotly_html(_build_bubble(region_metrics, "youth_population", "high_need_share", "total_schools", "Scale vs High-Need Concentration", "Youth population", "High-need school share")),
+                            "caption": "Bubble size reflects total schools, allowing scale and concentration to be compared at the same time.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Scale vs Outreach",
+                    "figures": [
+                        {
+                            "title": "Scale vs Outreach Activity",
+                            "html": _plotly_html(_build_bubble(region_metrics.fillna({"outreach_records": 0, "positive_responses": 0, "high_need_share": 0}), "youth_population", "outreach_per_100_schools", "total_schools", "Youth Reach vs Outreach Intensity", "Youth population", "Outreach records per 100 schools")),
+                            "caption": "This view helps compare scale against current outreach intensity, normalized by school volume.",
+                        }
+                    ],
+                },
+                {
+                    "title": "Anchor Distance",
+                    "figures": [
+                        {
+                            "title": "Anchor Distance Summary",
+                            "html": _plotly_html(_build_horizontal_bar(region_metrics, "max_anchor_distance_miles", "Maximum Anchor-to-County Distance by Region")),
+                            "caption": "Distances use county centroids and are intended as a transparent proximity screen, not a road-network model.",
+                        }
+                    ],
+                },
+            ],
+            "tab_group": "tradeoff-views",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [],
+            "notes": [{"title": "Interpretive note", "body": "These views are analytical and comparative only; they do not impose a preferred region or rank order."}],
+        },
+        {
+            "id": "county-explorer",
+            "kicker": "County Explorer",
+            "title": "County-Level Interactive Table",
+            "intro": "The county explorer makes it easier to inspect how reach, school inventory, outreach activity, and high-need concentration stack up at the county level across and beyond the JACO footprint.",
+            "tabs": [],
+            "tab_group": "",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [
+                {
+                    "title": "County Metrics",
+                    "html": _build_sortable_table(county_table, "county-table"),
+                    "table_id": "county-table",
+                    "search_id": "county-search",
+                }
+            ],
+            "notes": [{"title": "Table interaction", "body": "The search box and sortable columns make it easier to isolate specific counties or compare counties on one metric at a time."}],
+        },
+        {
+            "id": "validation",
+            "kicker": "Validation",
+            "title": "Join Validation and Data Quality",
+            "intro": "Join quality is intentionally kept visible because the report combines multiple public and operational data sources. The cards and audit tables below separate exact matches from fallback logic and show unmatched counts directly.",
+            "tabs": [],
+            "tab_group": "",
+            "figure_grid_class": "",
+            "figures": [],
+            "tables": [
+                {
+                    "title": "Join Audit Summary",
+                    "html": _build_sortable_table(
+                        artifacts.join_audit_summary.assign(
+                            match_rate=artifacts.join_audit_summary["match_rate"].map(format_pct),
+                            matched_records=artifacts.join_audit_summary["matched_records"].map(format_int),
+                            total_records=artifacts.join_audit_summary["total_records"].map(format_int),
+                        ),
+                        "join-audit-table",
+                    ),
+                    "table_id": "join-audit-table",
+                    "search_id": "join-audit-search",
+                },
+                {
+                    "title": "School Coordinate Match Summary",
+                    "html": _build_sortable_table(
+                        artifacts.school_coordinate_match_summary.rename(
+                            columns={"coordinate_match_method": "Coordinate Match Method", "school_records": "School Records"}
+                        ),
+                        "coordinate-match-table",
+                    ),
+                    "table_id": "coordinate-match-table",
+                    "search_id": "coordinate-match-search",
+                }
+            ],
+            "notes": [],
+        },
+    ]
+
+    validation_section = sections[-1]
+    validation_section["notes"] = [
+        {"title": "Exact vs fallback joins", "body": "Exact and fallback joins are separated in the audit rather than pooled together into a single match-rate number."},
+        {"title": "Unmatched handling", "body": "Rows that cannot be mapped confidently remain visible as unmatched rather than being imputed into analytical sections."},
+        {"title": "Interested rule", "body": "Cold-call positivity is defined narrowly and transparently as Outcome = Interested."},
+        {
+            "title": "Coordinate matching",
+            "body": (
+                f"School coordinate matching now uses the added <code>ohio_schools_coordinates_v2.xlsx</code> workbook. Within the JACO footprint, "
+                f"{format_pct(metadata['schools']['exact_coordinate_match_rate_within_region'])} of mapped school rows now have exact coordinates from the source file or supplement. "
+                f"The remaining rows stay visible on the map through a clearly labeled county-based fallback."
             ),
-            "limitations": "Because the NCES file does not include usable latitude/longitude fields, the school map uses approximate county-centroid placement with deterministic jitter instead of true school coordinates. Outreach highlighting depends on school-name matching from the tracker and therefore reflects matched Interested rows only.",
         },
         {
-            "kicker": "Feasibility",
-            "title": "1-Hour Radius Feasibility Check",
-            "intro": "This section checks whether each anchor county appears to cover its assigned counties within a reasonable one-hour proxy. Because no drive-time API is used, the test relies on centroid-to-centroid distance and should be read as a planning screen rather than a route model.",
-            "figures": [
-                {
-                    "title": "Anchor Feasibility by Region",
-                    "path": figure_paths["one_hour_radius_feasibility"],
-                    "caption": "Each bar shows the farthest county-centroid distance from the anchor county inside that region. Regions entirely below the 50-mile proxy threshold appear more feasible for a one-hour anchor model.",
-                },
-            ],
-            "table_title": "Feasibility Summary",
-            "table_html": render_html_summary_table(
-                region_summary[
-                    ["region", "anchor_county", "max_anchor_distance_miles", "avg_anchor_distance_miles", "counties_outside_proxy_radius", "feasible_1hr_proxy"]
-                ]
-            ),
-            "limitations": "The feasibility screen uses centroid distance rather than true road-network travel time, so it is best treated as a transparent proxy rather than a definitive operating test.",
+            "title": "Report table usage",
+            "body": "The main report surfaces the cleaned summary tables that directly support interpretation. Intermediate technical tables are still written to <code>outputs/tables</code> for auditability without overwhelming the main report layout.",
+        },
+    ]
+
+    validation_cards_html = "<div class='audit-grid'>" + "".join(
+        [
+            (
+                f"<div class='audit-card'><div class='kicker'>{card['label']}</div>"
+                f"<div class='value'>{card['value']}</div>"
+                f"<div class='small'>Rate: {card['rate']}<br>{card['notes']}</div></div>"
+            )
+            for card in join_audit_cards
+        ]
+    ) + "</div>"
+    sections[-1]["notes"].insert(0, {"title": "Join audit cards", "body": validation_cards_html})
+
+    section_nav = [{"id": section["id"], "label": section["title"]} for section in sections]
+
+    caveats = [
+        {
+            "title": "School coordinates",
+            "body": "The NCES source file still does not expose usable school latitude and longitude fields, but the added school-coordinate workbook supplies exact coordinates for a matched subset of schools. The map uses those exact coordinates wherever available and uses transparent county-based fallback placement only for the remaining unmatched schools.",
         },
         {
-            "kicker": "Need",
-            "title": "High-Need Analysis",
-            "intro": "The FY25 SSI workbook highlights a subset of high-need schools. These charts show where that need is most concentrated across the five required regions.",
-            "figures": [
-                {
-                    "title": "High-Need Schools by Region",
-                    "path": figure_paths["high_need_by_region"],
-                    "caption": "This compares total schools against the number of high-need schools identified through the SSI building allocation file.",
-                },
-                {
-                    "title": "High-Need Share by Region",
-                    "path": figure_paths["high_need_share_by_region"],
-                    "caption": "The share view controls for size and makes Southern Corridor stand out most clearly on concentration of identified need.",
-                },
-            ],
-            "table_title": "Region Summary Table",
-            "table_html": render_html_summary_table(
-                region_summary[
-                    ["region", "anchor_county", "counties_in_region", "youth_population", "total_schools", "high_need_schools", "high_need_share", "priority_label"]
-                ]
-            ),
-            "limitations": "High-need results come from the FY25 SSI building allocation file and currently match only a subset of Ohio schools, so the need analysis should be treated as directional rather than exhaustive.",
+            "title": "High-need coverage",
+            "body": "High-need analysis is limited by the coverage of the FY25 SSI workbook and by match quality across identifiers and school names. Exact IRN matches are prioritized, exact unique-name matches are kept distinct, and the fallback district-level normalized-name match is shown separately in diagnostics.",
         },
         {
-            "kicker": "Tradeoff",
-            "title": "Final Tradeoff View",
-            "intro": "The final tradeoff chart positions each region by scale and need at the same time. It is the clearest bridge from descriptive analysis to planning recommendation.",
-            "figures": [
-                {
-                    "title": "Scale vs Need Tradeoff",
-                    "path": figure_paths["strategy_tradeoff_matrix"],
-                    "caption": "Bubble size represents total schools, the x-axis captures youth reach, and the y-axis captures high-need concentration.",
-                },
-            ],
-            "table_title": "",
-            "table_html": None,
-            "limitations": "The tradeoff view combines the available reach and high-need measures, but it does not yet model travel time, staffing constraints, or partnership conversion rates.",
+            "title": "Outreach interpretation",
+            "body": "Interested outcomes are defined only as tracker rows where Outcome equals Interested. No additional stages or outcomes are counted as positive. Match-rate diagnostics are shown so the interested-school subset can be interpreted with the correct level of caution.",
+        },
+        {
+            "title": "Anchor feasibility",
+            "body": "The anchor feasibility screen uses county centroid distance from each anchor county rather than road-network travel time. It should be interpreted as a transparent spatial proxy, not as a final operating-time model.",
         },
     ]
 
     html = HTML_TEMPLATE.render(
-        scale_region=scale_leader["region"],
-        scale_youth=format_int(scale_leader["youth_population"]),
-        scale_schools=format_int(scale_leader["total_schools"]),
-        need_region=need_leader["region"],
-        need_share=format_pct(need_leader["high_need_share"]),
-        outreach_region=outreach_leader["region"],
-        outreach_rate=format_pct(outreach_leader["positive_response_rate"]),
-        feasibility_status=feasibility_status,
-        tracker_match_rate=tracker_match_rate,
-        executive_summary=executive_summary,
-        executive_findings=executive_findings,
-        recommendation=recommendation,
-        youth_age_groups=", ".join(str(code) for code in metadata["population"]["selected_youth_age_groups"]),
-        high_need_match_summary=", ".join(f"{row.match_method}: {int(row.school_records)}" for row in metadata["high_need_match_summary"].itertuples()),
-        tracker_match_summary=", ".join(f"{row.match_method}: {int(row.rows)}" for row in metadata["tracker_match_summary"].itertuples()),
-        join_audit_rows=join_audit_rows,
-        limitations_summary=limitations_summary,
-        tracker_value_audit_html=tracker_value_audit_html,
-        tracker_response_rules_html=tracker_response_rules_html,
+        plotly_js=get_plotlyjs(),
+        summary_cards=summary_cards,
+        summary_note=summary_note,
+        overview_pills=overview_pills,
+        section_nav=section_nav,
         sections=sections,
+        caveats=caveats,
     )
     REPORT_PATH.write_text(html, encoding="utf-8")
